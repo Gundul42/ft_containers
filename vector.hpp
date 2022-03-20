@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/03/19 18:55:47 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/20 15:39:10 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <iostream>
 # include <stdexcept>
 # include <memory>
+# include <iterator>
 
 namespace ft
 {
@@ -29,6 +30,22 @@ namespace ft
 			Alloc	_alloc;
 
 		public:
+			typedef	T					value_type;
+			typedef Alloc					allocator_type;
+			typedef	std::size_t				size_type;
+			typedef std::ptrdiff_t				difference_type;
+			typedef	value_type&				reference;
+			typedef	const value_type&			const_reference;
+			typedef typename Alloc::pointer			pointer;
+			typedef typename Alloc::const_pointer		const_pointer;
+			/*
+			typedef 		iterator;
+			typedef 		const_iterator;
+			typedef			reverse_iterator;
+			typedef			const_reverse_iterator;
+			*/
+
+
 			vector(void): _start(_alloc.allocate(1)), _finish(_start),
 					_end_of_storage(_start) {}
 			vector(size_t n): _start(_alloc.allocate(n)), _finish(_start + n),
@@ -40,7 +57,7 @@ namespace ft
 
 			vector<T> & operator=(vector<T> const & right)
 			{
-				size_t	i = 0;
+				size_type	i = 0;
 				if (this->size() < right.size())
 				{
 					std::cout << "Realloc needed" << std::endl;
@@ -54,13 +71,13 @@ namespace ft
 				return (*this);
 			}
 
-			size_t	size(void) const {return (_finish - _start);}
-			size_t	capacity(void) const {return (_end_of_storage - _start);}
-			size_t	max_size(void) const {return (_alloc.max_size());}
-			bool	empty(void) const {if (!this->size()) return (true);
-					else return (false);}
-			void	pop_back(void) {_finish--;}
-			void	push_back(T data)
+			size_type	size(void) const {return (_finish - _start);}
+			size_type	capacity(void) const {return (_end_of_storage - _start);}
+			size_type	max_size(void) const {return (_alloc.max_size());}
+			bool		empty(void) const {if (!this->size()) return (true);
+						else return (false);}
+			void		pop_back(void) {_finish--;}
+			void		push_back(T data)
 			{
 				if (this->capacity() > this->size())
 				{
