@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/03/21 15:45:45 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/21 18:22:59 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ int main(void)
 	std::cout << std::endl;
 	vprint(d);
 	d.pop_back();
+	d.reserve(100);
+	vprint(d);
+	d.resize(1, 666);
 	vprint(d);
 	std::cout << "size = " << d.size() << " -- capacity = " << d.capacity();
 	std::cout << " -- empty = " << d.empty() << " -- max_size = " << d.max_size();
@@ -56,7 +59,22 @@ int main(void)
 	std::cout << "size = " << a.size() << " -- capacity = " << a.capacity();
 	std::cout << " -- empty = " << a.empty() << " -- max_size = " << a.max_size();
 	std::cout << std::endl;
-	std::cout << d.front() << " : " << d.back() <<  " : " << d.at(8) << std::endl;
+	std::cout << d.front() << " : " << d.back() <<  " : " << d[20] << std::endl;
+	d.swap(a);
+	std::cout << "size = " << d.size() << " -- capacity = " << d.capacity();
+	std::cout << " -- empty = " << d.empty() << " -- max_size = " << d.max_size();
+	std::cout << std::endl;
+	std::cout << "size = " << a.size() << " -- capacity = " << a.capacity();
+	std::cout << " -- empty = " << a.empty() << " -- max_size = " << a.max_size();
+	std::cout << std::endl;
+	std::cout << d.front() << " : " << d.back() <<  " : " << d[1] << std::endl;
+	std::cout << a.front() << " : " << a.back() <<  " : " << a[1] << std::endl;
+	d.clear();
+	std::cout << "size = " << d.size() << " -- capacity = " << d.capacity();
+	std::cout << " -- empty = " << d.empty() << " -- max_size = " << d.max_size();
+	std::cout << std::endl;
+
+
 	/*
 	std::cout << "size = " << b.size() << " -- capacity = " << b.capacity();
 	std::cout << " -- empty = " << b.empty() << " -- max_size = " << b.max_size();

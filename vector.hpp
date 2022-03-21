@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/03/21 15:54:23 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/21 18:29:27 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ namespace ft
 				{
 					_realloc(right.size(), right.capacity());
 				}
+				_finish = _start + right.size();
 				while (i < right.size())
 				{
 					*(_start + i) = *(right._start + i);
@@ -88,22 +89,41 @@ namespace ft
 				return (*this);
 			}
 
+			//Capacity member functions
 			size_type	size(void) const {return (_finish - _start);}
-			size_type	capacity(void) const {return (_end_of_storage - _start);}
 			size_type	max_size(void) const {return (_alloc.max_size());}
+			void		resize(size_type n, value_type val = value_type())
+		       	{
+				size_type	i = size() + 1;
+
+				if (n <= size())
+				{
+					_realloc(n, n);
+					return ;
+				}
+				else if (n > capacity())
+					_realloc(size(), n);
+				_finish = _start + n;
+				while (i <= n)
+				{
+					_start[i - 1] = val;
+					i++;
+				}
+			}
+			size_type	capacity(void) const {return (_end_of_storage - _start);}
 			bool		empty(void) const {if (!this->size()) return (true);
 						else return (false);}
-			void		pop_back(void) {_finish--;}
-			void		push_back(T data)
+			void		reserve(size_type n)
 			{
-				if (this->capacity() == this->size())
-					_realloc(this->size(), this->size() * 2);
-				*_finish = data;
-				_finish++;
+				if (!n || n <= capacity())
+					return ;
+				if (n > max_size())
+					throw std::length_error("Out of bounds");
+				_realloc(size(), n);
 			}
 		
 
-			// Capacity member functions	
+			// Element access member functions
 			T &	operator[](size_type n)
 			{
 				return (*(this->_start + n));
@@ -135,7 +155,29 @@ namespace ft
 
 			T &		back(void) {return ((_start[size() - 1]));}
 			T const &	back(void) const  {return ((this[size() - 1]));}
-			
+
+	
+			//Modifiers member functions	
+			void		pop_back(void) {_finish--;}
+			void		push_back(T data)
+			{
+				if (this->capacity() == this->size())
+					_realloc(this->size(), this->size() * 2);
+				*_finish = data;
+				_finish++;
+			}
+			void		swap(vector<T> & swp)
+			{
+				vector<T>	tmp(*this);
+
+				*this = swp;
+				swp = tmp;
+			}
+			void		clear(void) {_realloc(0,0);}
+
+
+			//Allocator member function
+			allocator_type	get_allocator() const {return (_alloc);}
 	};
 }
 
