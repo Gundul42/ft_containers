@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/03/21 18:29:27 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/22 15:22:04 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,165 +20,186 @@
 
 namespace ft
 {
-	template <typename T, typename Alloc = std::allocator<T> >
-	class vector
-	{
-		private:
-			T	*_start;
-			T	*_finish;
-			T	*_end_of_storage;
-			Alloc	_alloc;
 
-			typedef	std::size_t				size_type;
-			typedef std::ptrdiff_t				difference_type;
+template <typename T, typename Alloc = std::allocator<T> >
+class vector
+{
+	private:
+		typedef	T					value_type;
+		typedef	std::size_t				size_type;
+		typedef std::ptrdiff_t				difference_type;
+		typedef Alloc					allocator_type;
+		typedef	value_type&				reference;
+		typedef	const value_type&			const_reference;
+		typedef typename Alloc::pointer			pointer;
+		typedef typename Alloc::const_pointer		const_pointer;
 
-			void	_realloc(size_type newsize, size_type newcapacity)
+		pointer		_start;
+		pointer		_finish;
+		pointer		_end_of_storage;
+		allocator_type	_alloc;
+
+		void	_realloc(size_type newsize, size_type newcapacity)
+		{
+			T		*_ns;
+			difference_type	i = 0;
+
+			_ns = _alloc.allocate(newcapacity);
+			while (i < _finish - _start)
 			{
-				T		*_ns;
-				difference_type	i = 0;
-
-				_ns = _alloc.allocate(newcapacity);
-				while (i < _finish - _start)
-				{
-					_ns[i] = _start[i];
-					i++;
-				}
-				_alloc.deallocate(_start, _end_of_storage - _start);
-				_start = _ns;
-				_finish = _start + newsize;
-				_end_of_storage = _start + newcapacity;
+				_ns[i] = _start[i];
+				i++;
 			}
+			_alloc.deallocate(_start, _end_of_storage - _start);
+			_start = _ns;
+			_finish = _start + newsize;
+			_end_of_storage = _start + newcapacity;
+		}
 
-		public:
-			typedef	T					value_type;
-			typedef Alloc					allocator_type;
-			typedef	value_type&				reference;
-			typedef	const value_type&			const_reference;
-			typedef typename Alloc::pointer			pointer;
-			typedef typename Alloc::const_pointer		const_pointer;
-			/*
-			typedef 		iterator;
-			typedef 		const_iterator;
-			typedef			reverse_iterator;
-			typedef			const_reverse_iterator;
-			*/
+	public:
 
+		vector(void): _start(_alloc.allocate(1)), _finish(_start),
+				_end_of_storage(_start) {}
+		vector(size_type n): _start(_alloc.allocate(n)), _finish(_start + n),
+				_end_of_storage(_start + n) {}
+		vector(vector<T> const & cpy): _start(_alloc.allocate(cpy.capacity() + 1)),
+			       	_finish(_start + cpy.size()),
+				_end_of_storage(_start + cpy.capacity()) {*this = cpy;}
+		~vector(void) {_alloc.deallocate(_start, _end_of_storage - _start);}
 
-			vector(void): _start(_alloc.allocate(1)), _finish(_start),
-					_end_of_storage(_start) {}
-			vector(size_type n): _start(_alloc.allocate(n)), _finish(_start + n),
-					_end_of_storage(_start + n) {}
-			vector(vector<T> const & cpy): _start(_alloc.allocate(cpy.capacity() + 1)),
-				       	_finish(_start + cpy.size()),
-					_end_of_storage(_start + cpy.capacity()) {*this = cpy;}
-			~vector(void) {_alloc.deallocate(_start, _end_of_storage - _start);}
-
-			vector<T> & operator=(vector<T> const & right)
+		vector<T> & operator=(vector<T> const & right)
+		{
+			size_type	i = 0;
+			if (this->size() < right.size())
 			{
-				size_type	i = 0;
-				if (this->size() < right.size())
-				{
-					_realloc(right.size(), right.capacity());
-				}
-				_finish = _start + right.size();
-				while (i < right.size())
-				{
-					*(_start + i) = *(right._start + i);
-					i++;
-				}
-				return (*this);
+				_realloc(right.size(), right.capacity());
 			}
-
-			//Capacity member functions
-			size_type	size(void) const {return (_finish - _start);}
-			size_type	max_size(void) const {return (_alloc.max_size());}
-			void		resize(size_type n, value_type val = value_type())
-		       	{
-				size_type	i = size() + 1;
-
-				if (n <= size())
-				{
-					_realloc(n, n);
-					return ;
-				}
-				else if (n > capacity())
-					_realloc(size(), n);
-				_finish = _start + n;
-				while (i <= n)
-				{
-					_start[i - 1] = val;
-					i++;
-				}
-			}
-			size_type	capacity(void) const {return (_end_of_storage - _start);}
-			bool		empty(void) const {if (!this->size()) return (true);
-						else return (false);}
-			void		reserve(size_type n)
+			_finish = _start + right.size();
+			while (i < right.size())
 			{
-				if (!n || n <= capacity())
-					return ;
-				if (n > max_size())
-					throw std::length_error("Out of bounds");
+				*(_start + i) = *(right._start + i);
+				i++;
+			}
+			return (*this);
+		}
+
+		//Capacity member functions
+		size_type	size(void) const {return (_finish - _start);}
+		size_type	max_size(void) const {return (_alloc.max_size());}
+		void		resize(size_type n, value_type val = value_type())
+	       	{
+			size_type	i = size() + 1;
+
+			if (n <= size())
+			{
+				_realloc(n, n);
+				return ;
+			}
+			else if (n > capacity())
 				_realloc(size(), n);
-			}
-		
-
-			// Element access member functions
-			T &	operator[](size_type n)
+			_finish = _start + n;
+			while (i <= n)
 			{
-				return (*(this->_start + n));
+				_start[i - 1] = val;
+				i++;
 			}
-			
-			T const &	operator[](size_type n) const
-			{
-				return (*(this->_start + n));
-			}
-
-			T &	at(size_type n)
-			{
-				if (n < 0 || n > this->size())
-					throw std::out_of_range("Index out of range");
-				else
-					return (_start[n]);
-			}
-
-			T const &	at(size_type n) const
-			{
-				if (n < 0 || n > this->size())
-					throw std::out_of_range("Index out of range");
-				else
-					return (_start[n]);
-			}
-
-			T &		front(void) {return (*(this->_start));}
-			T const &	front(void) const  {return (*(this->_start));}
-
-			T &		back(void) {return ((_start[size() - 1]));}
-			T const &	back(void) const  {return ((this[size() - 1]));}
-
+		}
+		size_type	capacity(void) const {return (_end_of_storage - _start);}
+		bool		empty(void) const {if (!this->size()) return (true);
+					else return (false);}
+		void		reserve(size_type n)
+		{
+			if (!n || n <= capacity())
+				return ;
+			if (n > max_size())
+				throw std::length_error("Out of bounds");
+			_realloc(size(), n);
+		}
 	
-			//Modifiers member functions	
-			void		pop_back(void) {_finish--;}
-			void		push_back(T data)
-			{
-				if (this->capacity() == this->size())
-					_realloc(this->size(), this->size() * 2);
-				*_finish = data;
-				_finish++;
-			}
-			void		swap(vector<T> & swp)
-			{
-				vector<T>	tmp(*this);
 
-				*this = swp;
-				swp = tmp;
-			}
-			void		clear(void) {_realloc(0,0);}
+		// Element access member functions
+		T &	operator[](size_type n)
+		{
+			return (*(this->_start + n));
+		}
+		
+		T const &	operator[](size_type n) const
+		{
+			return (*(this->_start + n));
+		}
+
+		T &	at(size_type n)
+		{
+			if (n < 0 || n > this->size())
+				throw std::out_of_range("Index out of range");
+			else
+				return (_start[n]);
+		}
+
+		T const &	at(size_type n) const
+		{
+			if (n < 0 || n > this->size())
+				throw std::out_of_range("Index out of range");
+			else
+				return (_start[n]);
+		}
+
+		T &		front(void) {return (*(this->_start));}
+		T const &	front(void) const  {return (*(this->_start));}
+
+		T &		back(void) {return ((_start[size() - 1]));}
+		T const &	back(void) const  {return ((this[size() - 1]));}
 
 
-			//Allocator member function
-			allocator_type	get_allocator() const {return (_alloc);}
-	};
-}
+		//Modifiers member functions	
+		void		pop_back(void) {_finish--;}
+		void		push_back(T data)
+		{
+			if (this->capacity() == this->size())
+				_realloc(this->size(), this->size() * 2);
+			*_finish = data;
+			_finish++;
+		}
+		void		swap(vector<T> & swp)
+		{
+			vector<T>	tmp(*this);
+
+			*this = swp;
+			swp = tmp;
+		}
+		void		clear(void) {_realloc(0,0);}
+
+
+		//Allocator member function
+		allocator_type	get_allocator() const {return (_alloc);}
+
+
+		//Iterators
+
+		class iterator : public std::iterator<std::input_iterator_tag, value_type>
+		{
+			private:
+				value_type	*_p;
+
+			public:
+				iterator(void) :_p(NULL) {}
+				iterator(value_type *x) :_p(x) {}
+				iterator(const iterator & mit) : _p(mit._p) {}
+				iterator&	operator++() {++_p;return *this;}
+				iterator	operator++(int) 
+					{iterator tmp(*this); operator++(); return tmp;}
+				bool	operator==(const iterator& rhs) const
+					{return _p == rhs._p;}
+				bool	operator!=(const iterator& rhs) const
+					{return _p != rhs._p;}
+				T &	operator*() {return *_p;}
+		};
+		iterator	begin(void) {return (iterator(_start));}
+		iterator	end(void) {return (iterator(_finish));}
+
+
+}; //end class
+
+} //end namespace
 
 #endif

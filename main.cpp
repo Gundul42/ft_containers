@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/03/21 18:22:59 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/22 15:16:19 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main(void)
 	ft::vector<float>	d(0);
 	std::vector<float>	b(10);
 	std::vector<float>	c(20);
-	std::vector<float>::iterator	it;
+	ft::vector<float>::iterator	it;
 
 
 	std::cout << "size = " << a.size() << " -- capacity = " << a.capacity();
@@ -41,6 +41,15 @@ int main(void)
 	a.push_back(100);
 	a.push_back(11);
 	a.push_back(-32511);
+	it = a.begin();
+	std::cout << "ITERATORS:" << std::endl;
+	while (it != a.end())
+	{
+		std::cout << *it << " -- ";
+		it++;
+	}
+	std::cout << std::endl;
+	std::cout << std::endl;
 	vprint(a);
 	d = a;
 	d[0] = -1213;
