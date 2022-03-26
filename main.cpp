@@ -6,12 +6,20 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/03/22 15:16:19 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/26 12:35:36 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
+#include "mclass.hpp"
 #include <vector>
+
+typedef	struct	s_lala {
+	int	start;
+	int	end;
+	char	flag;
+	char	names[1024];
+}	t_lala;
 
 static
 void	vprint(ft::vector<float> tmp)
@@ -29,12 +37,22 @@ void	vprint(ft::vector<float> tmp)
 int main(void)
 {
 	ft::vector<float>	a(2);
+	ft::vector<t_lala>	t;
+	ft::vector<Mclass>	segf;
 	ft::vector<float>	d(0);
 	std::vector<float>	b(10);
 	std::vector<float>	c(20);
 	ft::vector<float>::iterator	it;
+	t_lala			neu;
+	Mclass			tes;
 
+	neu.start = 10;
+	neu.end = 20;
+	neu.flag = 'P';
 
+	//t.push_back(neu);
+	segf.push_back(tes);
+	std::cout << "Size of t: " << segf.size() << " value of flag : " << segf[0].getFlag() << std::endl;
 	std::cout << "size = " << a.size() << " -- capacity = " << a.capacity();
 	std::cout << " -- empty = " << a.empty() << " -- max_size = " << a.max_size();
 	std::cout << std::endl;
