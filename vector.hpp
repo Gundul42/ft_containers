@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/03/28 15:57:13 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/28 19:29:41 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,7 @@ class vector
 					{return _p <= rhs._p;}
 				
 				T &	operator*() {return *_p;}
+				T &	operator->() {return *_p;}
 		};
 
 		iterator	begin(void) {return (iterator(_start));}
