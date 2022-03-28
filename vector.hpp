@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/03/26 17:55:40 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/28 15:57:13 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <iostream>
 # include <stdexcept>
 # include <memory>
-# include <iterator>
+# include "iterator.hpp"
 
 namespace ft
 {
@@ -176,7 +176,7 @@ class vector
 
 		//Iterators
 
-		class iterator : public std::iterator<std::input_iterator_tag, value_type>
+		class iterator : public ft::iterator<std::random_access_iterator_tag, value_type>
 		{
 			private:
 				value_type	*_p;
@@ -184,16 +184,41 @@ class vector
 			public:
 				iterator(void) :_p(NULL) {}
 				iterator(value_type *x) :_p(x) {}
+				~iterator(void) {}
+
 				iterator(const iterator & mit) : _p(mit._p) {}
+
+				iterator & operator=(const iterator & right)
+					{this->_p = right._p; return (*this);}
+
 				iterator&	operator++() {++_p;return *this;}
 				iterator	operator++(int) 
 					{iterator tmp(*this); operator++(); return tmp;}
+				iterator&	operator--() {--_p;return *this;}
+				iterator	operator--(int) 
+					{iterator tmp(*this); operator--(); return tmp;}
+				iterator &	operator+=(const size_type n)
+					{_p = _p + n; return (*this);}
+				iterator &	operator-=(const size_type n)
+					{_p = _p - n; return (*this);}
+				iterator &	operator+(const size_type n)
+					{_p = _p + n; return (*this);}
 				bool	operator==(const iterator& rhs) const
 					{return _p == rhs._p;}
 				bool	operator!=(const iterator& rhs) const
 					{return _p != rhs._p;}
+				bool	operator>(const iterator& rhs) const
+					{return _p > rhs._p;}
+				bool	operator<(const iterator& rhs) const
+					{return _p < rhs._p;}
+				bool	operator>=(const iterator& rhs) const
+					{return _p >= rhs._p;}
+				bool	operator<=(const iterator& rhs) const
+					{return _p <= rhs._p;}
+				
 				T &	operator*() {return *_p;}
 		};
+
 		iterator	begin(void) {return (iterator(_start));}
 		iterator	end(void) {return (iterator(_finish));}
 

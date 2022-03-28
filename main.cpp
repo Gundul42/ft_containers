@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/03/26 12:35:36 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/28 15:50:56 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int main(void)
 	while (it != a.end())
 	{
 		std::cout << *it << " -- ";
-		it++;
+		it = 1 + it;
 	}
 	std::cout << std::endl;
 	std::cout << std::endl;

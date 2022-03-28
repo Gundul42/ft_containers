@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 15:36:39 by graja             #+#    #+#             */
-/*   Updated: 2022/03/28 14:19:54 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/28 14:32:21 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,17 @@ struct iterator_traits<const T *>
 	typedef const T				&reference;
 	typedef random_access_iterator_tag	iterator_category;
 };
-}
 
+//empty Iterator base class to be derived from
+template <typename Category, typename T, typename Distance = ptrdiff_t,
+         typename Pointer = T*, typename Reference = T&>
+ struct iterator {
+   typedef T         value_type;
+   typedef Distance  difference_type;
+   typedef Pointer   pointer;
+   typedef Reference reference;
+   typedef Category  iterator_category;
+};
+
+}
 #endif
