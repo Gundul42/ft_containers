@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/03/29 18:32:01 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/29 19:08:23 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,13 +179,15 @@ class vector
 			_alloc.destroy(_finish);
 			_finish--;
 		}
-		void		push_back(T data)
+
+		void		push_back(const value_type & data)
 		{
 			if (this->capacity() == this->size())
 				_realloc(this->size(), this->size() * 2);
 			_alloc.construct(_finish,  data);
 			_finish++;
 		}
+
 		void		swap(vector<T> & swp)
 		{
 			vector<T>	tmp(*this);

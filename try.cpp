@@ -59,6 +59,7 @@ int main(int argc, char** argv) {
 
 	for (int i = 0; i < COUNT; i++)
 	{
+		//std::cout << i << ", ";
 		vector_buffer.push_back(Buffer());
 	}
 	std::cout << "2" << std::endl;
