@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/03/29 11:34:41 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/29 14:44:16 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,15 @@ class vector
 
 		void	_realloc(size_type newsize, size_type newcapacity)
 		{
-			T		*_ns;
+			pointer		_ns;
 			difference_type	i = 0;
 
 			_ns = _alloc.allocate(newcapacity);
 			while (i < _finish - _start)
 			{
 				_alloc.construct(_ns + i, _start[i]);
-				_alloc.destroy(_start + i);
 				i++;
 			}
-			_alloc.deallocate(_start, _end_of_storage - _start);
 			_start = _ns;
 			_finish = _start + newsize;
 			_end_of_storage = _start + newcapacity;
@@ -153,12 +151,16 @@ class vector
 
 
 		//Modifiers member functions	
-		void		pop_back(void) {_finish--;}
+		void		pop_back(void) 
+		{
+			_alloc.destroy(_finish);
+			_finish--;
+		}
 		void		push_back(T data)
 		{
 			if (this->capacity() == this->size())
 				_realloc(this->size(), this->size() * 2);
-			*_finish = data;
+			_alloc.construct(_finish,  data);
 			_finish++;
 		}
 		void		swap(vector<T> & swp)
