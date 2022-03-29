@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/03/29 11:08:24 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/29 11:34:41 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ class vector
 			_ns = _alloc.allocate(newcapacity);
 			while (i < _finish - _start)
 			{
-				_ns[i] = _start[i];
+				_alloc.construct(_ns + i, _start[i]);
+				_alloc.destroy(_start + i);
 				i++;
 			}
 			_alloc.deallocate(_start, _end_of_storage - _start);

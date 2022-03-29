@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/03/29 11:22:46 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/29 11:44:19 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int main(void)
 	neu.end = 20;
 	neu.flag = 'P';
 
-	//t.push_back(neu);
+	t.push_back(neu);
 	segf.push_back(tes);
 	std::cout << "Size of t: " << segf.size() << " value of flag : " << segf[0].getFlag() << std::endl;
 	std::cout << "size = " << a.size() << " -- capacity = " << a.capacity();
