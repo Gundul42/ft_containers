@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/03/29 14:44:16 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/29 18:32:01 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ class vector
 			while (i < _finish - _start)
 			{
 				_alloc.construct(_ns + i, _start[i]);
+				_alloc.destroy(_start + i);
 				i++;
 			}
+			_alloc.deallocate(_start, capacity());
 			_start = _ns;
 			_finish = _start + newsize;
 			_end_of_storage = _start + newcapacity;
@@ -60,15 +62,36 @@ class vector
 		vector(void): _start(_alloc.allocate(1)), _finish(_start),
 				_end_of_storage(_start) {}
 		vector(size_type n): _start(_alloc.allocate(n)), _finish(_start + n),
-				_end_of_storage(_start + n) {}
+				_end_of_storage(_start + n) 
+		{
+			size_type	i = 0;
+
+			while (i < n)
+			{
+				_alloc.construct(_start + i, 0);
+				i++;
+			}
+		}
 		vector(vector<T> const & cpy): _start(_alloc.allocate(cpy.capacity() + 1)),
 			       	_finish(_start + cpy.size()),
 				_end_of_storage(_start + cpy.capacity()) {*this = cpy;}
-		~vector(void) {_alloc.deallocate(_start, _end_of_storage - _start);}
+		~vector(void) 
+		{
+			size_type	i = 0;
+			
+			std::cout << "Destroyed" << std::endl;
+			while (i < size())
+			{
+				_alloc.destroy(_start + i);
+				i++;
+			}
+			_alloc.deallocate(_start, capacity());
+		}
 
 		vector<T> & operator=(vector<T> const & right)
 		{
 			size_type	i = 0;
+			std::cout << "Copy construction" << std::endl;
 			if (this->size() < right.size())
 			{
 				_realloc(right.size(), right.capacity());

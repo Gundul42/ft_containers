@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/03/29 11:44:19 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/29 18:46:10 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ typedef	struct	s_lala {
 	int	start;
 	int	end;
 	char	flag;
-	char	names[1024];
+	char	names[100];
 }	t_lala;
 
 static
@@ -40,26 +40,29 @@ int main(void)
 	ft::vector<float>	a(2);
 	ft::vector<t_lala>	t;
 	ft::vector<Mclass>	segf;
-	ft::vector<float>	d(0);
-	std::vector<float>	b(10);
-	std::vector<float>	c(20);
+	//ft::vector<float>	d(0);
+	//std::vector<float>	b(10);
+	//std::vector<float>	c(20);
 	ft::vector<float>::iterator	it;
-	t_lala			neu;
+	
+	//t_lala			neu;
 	Mclass			tes;
 
-	neu.start = 10;
-	neu.end = 20;
-	neu.flag = 'P';
+	//neu.start = 100;
+	//neu.end = 200;
+	//neu.flag = 'R';
 
-	t.push_back(neu);
+	//t.push_back(neu);
 	segf.push_back(tes);
-	std::cout << "Size of t: " << segf.size() << " value of flag : " << segf[0].getFlag() << std::endl;
+	std::cout << "Size of segf: " << segf.size() << " value of flag : " << segf[0].getFlag() << std::endl;
 	std::cout << "size = " << a.size() << " -- capacity = " << a.capacity();
 	std::cout << " -- empty = " << a.empty() << " -- max_size = " << a.max_size();
 	std::cout << std::endl;
+	
 	a.push_back(100);
 	a.push_back(11);
 	a.push_back(-32511);
+	
 	it = a.begin();
 	std::cout << "ITERATORS:" << std::endl;
 	while (it != a.end())
@@ -71,18 +74,19 @@ int main(void)
 	it = a.begin();
 	std::cout << "by [] overload #4 : " << it[4] << std::endl;
 	std::cout << std::endl;
-	vprint(a);
+	/*
+	//vprint(a);
 	d = a;
 	d[0] = -1213;
 	std::cout << "size = " << d.size() << " -- capacity = " << d.capacity();
 	std::cout << " -- empty = " << d.empty() << " -- max_size = " << d.max_size();
 	std::cout << std::endl;
-	vprint(d);
+	//vprint(d);
 	d.pop_back();
 	d.reserve(100);
-	vprint(d);
+	//vprint(d);
 	d.resize(1, 666);
-	vprint(d);
+	//vprint(d);
 	std::cout << "size = " << d.size() << " -- capacity = " << d.capacity();
 	std::cout << " -- empty = " << d.empty() << " -- max_size = " << d.max_size();
 	std::cout << std::endl;
