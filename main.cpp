@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/03/28 19:32:52 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/29 11:22:46 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ typedef	struct	s_lala {
 static
 void	vprint(ft::vector<float> tmp)
 {
-	size_t	i = 0;
+	ft::vector<float>::iterator	it;
 
-	while (i < tmp.size())
+	it = tmp.begin();
+	while (it != tmp.end())
 	{
-		std::cout << tmp[i] << ", ";
-		i++;
+		std::cout << *it << ", ";
+		it++;
 	}
 	std::cout << std::endl;
 }
@@ -64,9 +65,11 @@ int main(void)
 	while (it != a.end())
 	{
 		std::cout << *it << " -- ";
-		it = it + 1;
+		it = 1 + it;
 	}
 	std::cout << std::endl;
+	it = a.begin();
+	std::cout << "by [] overload #4 : " << it[4] << std::endl;
 	std::cout << std::endl;
 	vprint(a);
 	d = a;

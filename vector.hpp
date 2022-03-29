@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/03/28 19:29:41 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/29 11:08:24 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,8 @@ class vector
 					{_p = _p - n; return (*this);}
 				iterator &	operator+(const size_type n)
 					{_p = _p + n; return (*this);}
+				value_type	operator[](const size_type n)
+					{return (*(_p + n));}
 				bool	operator==(const iterator& rhs) const
 					{return _p == rhs._p;}
 				bool	operator!=(const iterator& rhs) const
@@ -215,9 +217,26 @@ class vector
 					{return _p >= rhs._p;}
 				bool	operator<=(const iterator& rhs) const
 					{return _p <= rhs._p;}
-				
 				T &	operator*() {return *_p;}
 				T &	operator->() {return *_p;}
+
+				//non member overloads
+				friend	iterator operator+(const size_type n, const iterator right)
+				{
+					iterator	tmp(right);
+
+					tmp._p = right._p + n;
+					return (tmp);
+				}
+				
+				friend	iterator operator-(const size_type n, const iterator right)
+				{
+					iterator	tmp(right);
+
+					tmp._p = right._p - n;
+					return (tmp);
+				}
+				
 		};
 
 		iterator	begin(void) {return (iterator(_start));}
@@ -225,6 +244,7 @@ class vector
 
 
 }; //end class
+
 
 } //end namespace
 
