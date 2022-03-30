@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   amain.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/03/30 12:45:56 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/30 12:14:46 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,13 @@ void	vprint(ft::vector<float> tmp)
 
 int main(void)
 {
-	ft::vector<float>	a(2);
-	ft::vector<float>	b(a);
-	ft::vector<t_lala>	t;
-	ft::vector<Mclass>	segf;
+	std::vector<float>	a(2);
+	std::vector<t_lala>	t;
+	std::vector<Mclass>	segf;
 	//ft::vector<float>	d(0);
 	//std::vector<float>	b(10);
 	//std::vector<float>	c(20);
-	ft::vector<float>::iterator	it;
+	std::vector<float>::iterator	it;
 	
 	t_lala			neu;
 	Mclass			tes;

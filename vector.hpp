@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/03/29 19:08:23 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/30 12:44:45 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ class vector
 			_ns = _alloc.allocate(newcapacity);
 			while (i < _finish - _start)
 			{
-				_alloc.construct(_ns + i, _start[i]);
-				_alloc.destroy(_start + i);
+				_alloc.construct(&_ns[i], _start[i]);
+				_alloc.destroy(&_start[i]);
 				i++;
 			}
 			_alloc.deallocate(_start, capacity());
@@ -59,20 +59,24 @@ class vector
 
 	public:
 
-		vector(void): _start(_alloc.allocate(1)), _finish(_start),
-				_end_of_storage(_start) {}
-		vector(size_type n): _start(_alloc.allocate(n)), _finish(_start + n),
+		explicit vector(const allocator_type& alloc = allocator_type()): 
+			_start(_alloc.allocate(0)), _finish(_start), _end_of_storage(_start) {}
+
+		explicit vector(size_type n, const value_type & val = value_type(),
+				const allocator_type & alloc = allocator_type()):
+				_start(_alloc.allocate(n)), _finish(_start + n),
 				_end_of_storage(_start + n) 
 		{
 			size_type	i = 0;
 
 			while (i < n)
 			{
-				_alloc.construct(_start + i, 0);
+				_alloc.construct(&_start[i], val);
 				i++;
 			}
 		}
-		vector(vector<T> const & cpy): _start(_alloc.allocate(cpy.capacity() + 1)),
+
+		vector(vector const & cpy): _start(_alloc.allocate(cpy.capacity())),
 			       	_finish(_start + cpy.size()),
 				_end_of_storage(_start + cpy.capacity()) {*this = cpy;}
 		~vector(void) 
