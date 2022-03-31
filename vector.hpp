@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/03/30 12:44:45 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/31 18:31:50 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,17 @@ class vector
 		typedef typename Alloc::const_pointer		const_pointer;
 
 		pointer		_start;
-		pointer		_finish;
-		pointer		_end_of_storage;
+		size_type	_size;
+		size_type	_end_of_storage;
 		allocator_type	_alloc;
 
 		void	_realloc(size_type newsize, size_type newcapacity)
 		{
 			pointer		_ns;
-			difference_type	i = 0;
+			size_type 	i = 0;
 
 			_ns = _alloc.allocate(newcapacity);
-			while (i < _finish - _start)
+			while (i < _size)
 			{
 				_alloc.construct(&_ns[i], _start[i]);
 				_alloc.destroy(&_start[i]);
@@ -53,19 +53,19 @@ class vector
 			}
 			_alloc.deallocate(_start, capacity());
 			_start = _ns;
-			_finish = _start + newsize;
-			_end_of_storage = _start + newcapacity;
+			_size = newsize;
+			_end_of_storage = newcapacity;
 		}
 
 	public:
 
 		explicit vector(const allocator_type& alloc = allocator_type()): 
-			_start(_alloc.allocate(0)), _finish(_start), _end_of_storage(_start) {}
+			_start(_alloc.allocate(0)), _size(0), _end_of_storage(0) {}
 
 		explicit vector(size_type n, const value_type & val = value_type(),
 				const allocator_type & alloc = allocator_type()):
-				_start(_alloc.allocate(n)), _finish(_start + n),
-				_end_of_storage(_start + n) 
+				_start(_alloc.allocate(n)), _size(n),
+				_end_of_storage(n) 
 		{
 			size_type	i = 0;
 
@@ -77,8 +77,8 @@ class vector
 		}
 
 		vector(vector const & cpy): _start(_alloc.allocate(cpy.capacity())),
-			       	_finish(_start + cpy.size()),
-				_end_of_storage(_start + cpy.capacity()) {*this = cpy;}
+			       	_size(cpy.size()),
+				_end_of_storage(cpy.capacity()) {*this = cpy;}
 		~vector(void) 
 		{
 			size_type	i = 0;
@@ -100,7 +100,7 @@ class vector
 			{
 				_realloc(right.size(), right.capacity());
 			}
-			_finish = _start + right.size();
+			_size = right.size();
 			while (i < right.size())
 			{
 				*(_start + i) = *(right._start + i);
@@ -110,7 +110,7 @@ class vector
 		}
 
 		//Capacity member functions
-		size_type	size(void) const {return (_finish - _start);}
+		size_type	size(void) const {return (_size);}
 		size_type	max_size(void) const {return (_alloc.max_size());}
 		void		resize(size_type n, value_type val = value_type())
 	       	{
@@ -123,14 +123,14 @@ class vector
 			}
 			else if (n > capacity())
 				_realloc(size(), n);
-			_finish = _start + n;
+			_size = n;
 			while (i <= n)
 			{
 				_start[i - 1] = val;
 				i++;
 			}
 		}
-		size_type	capacity(void) const {return (_end_of_storage - _start);}
+		size_type	capacity(void) const {return (_end_of_storage);}
 		bool		empty(void) const {if (!this->size()) return (true);
 					else return (false);}
 		void		reserve(size_type n)
@@ -180,16 +180,16 @@ class vector
 		//Modifiers member functions	
 		void		pop_back(void) 
 		{
-			_alloc.destroy(_finish);
-			_finish--;
+			_alloc.destroy(_start + _size);
+			_size--;
 		}
 
 		void		push_back(const value_type & data)
 		{
 			if (this->capacity() == this->size())
 				_realloc(this->size(), this->size() * 2);
-			_alloc.construct(_finish,  data);
-			_finish++;
+			_alloc.construct(_start + _size,  data);
+			_size++;
 		}
 
 		void		swap(vector<T> & swp)
@@ -272,7 +272,7 @@ class vector
 		};
 
 		iterator	begin(void) {return (iterator(_start));}
-		iterator	end(void) {return (iterator(_finish));}
+		iterator	end(void) {return (iterator(_start + _size));}
 
 
 }; //end class
