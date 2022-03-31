@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/03/30 12:45:56 by graja            ###   ########.fr       */
+/*   Updated: 2022/03/31 19:13:55 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,29 @@ void	vprint(ft::vector<float> tmp)
 
 int main(void)
 {
-	ft::vector<float>	a(2);
-	ft::vector<float>	b(a);
+	ft::vector<t_lala>	a(2);
+	t_lala			lala;
+	Mclass			test;
+	ft::vector<Mclass>	yeah(1);
+
+	yeah.push_back(test);
+
+	lala.start = 10;
+	lala.end = 20;
+	lala.flag = 'd';
+
+	std::cout << test.getStart() << ", " << test.getEnd() << ", " << test.getFlag() << std::endl;
+	std::cout << yeah[1].getStart() << ", " << yeah[1].getEnd() << ", " << yeah[1].getFlag() << std::endl;
+	std::cout << "size is " << a.size() << std::endl;
+	a[0] = lala;
+
+	a.push_back(lala);
+
+	std::cout << "size is " << a.size() << std::endl;
+	std::cout << "Flag is " << a[2].flag << std::endl;
+
+
+	/*
 	ft::vector<t_lala>	t;
 	ft::vector<Mclass>	segf;
 	//ft::vector<float>	d(0);
@@ -75,7 +96,7 @@ int main(void)
 	it = a.begin();
 	std::cout << "by [] overload #4 : " << it[4] << std::endl;
 	std::cout << std::endl;
-	/*
+	
 	//vprint(a);
 	d = a;
 	d[0] = -1213;
