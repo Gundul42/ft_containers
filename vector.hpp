@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/01 11:10:39 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/01 11:58:29 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,8 +191,9 @@ class vector
 
 		void		push_back(const value_type & data)
 		{
+
 			if (this->capacity() == this->size())
-				_realloc(this->size(), this->size() * 2);
+				_realloc(this->size(), 1 + this->size() * 2);
 			_alloc.construct(_start + _size,  data);
 			_size++;
 		}

@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/01 11:17:10 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/01 11:33:22 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int main(void)
 	*/
 	ft::vector<float>	a(2,10.10);
 	ft::vector<float>	d;
-	ft::vector<t_lala>	t(1);
+	ft::vector<t_lala>	t;
 	Mclass			tes;
 	ft::vector<Mclass>	segf(2);
 	//ft::vector<float>	d(0);
