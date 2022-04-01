@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/01 11:58:29 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/01 15:27:37 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,10 @@ class vector
 					{_p = _p - n; return (*this);}
 				iterator &	operator+(const size_type n)
 					{_p = _p + n; return (*this);}
+				iterator &	operator-(const size_type n)
+					{_p = _p - n; return (*this);}
+				difference_type	operator-(const iterator & right)
+					{return (_p - right._p);}
 				value_type	operator[](const size_type n)
 					{return (*(_p + n));}
 				bool	operator==(const iterator& rhs) const
@@ -279,6 +283,43 @@ class vector
 
 		iterator	begin(void) {return (iterator(_start));}
 		iterator	end(void) {return (iterator(_start + _size));}
+
+		//Modifiers member functions with iterators
+		iterator	erase(iterator pos)
+		{
+			iterator	tmp = pos + 1;
+
+			_alloc.destroy(&(*pos));
+			while ((pos + 1) != end())
+			{
+				_alloc.construct(&(*pos), *(pos + 1));
+				_alloc.destroy(&(*(pos + 1)));
+				pos++;
+			}
+			_size--;
+			return (tmp);
+		}
+
+		iterator	erase(iterator first, iterator last)
+		{
+			iterator	start = first;
+			iterator	fin = last;
+
+			while (first != last)
+			{
+				_alloc.destroy(&(*first));
+				first++;
+			}
+			first = start;
+			while (last != end())
+			{
+				_alloc.construct(&(*first), *last);
+				first++;
+				last++;
+			}
+			_size -= fin - start;
+			return (fin);
+		}
 
 
 }; //end class

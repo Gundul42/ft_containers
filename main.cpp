@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/01 11:33:22 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/01 15:25:46 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,25 @@ int main(void)
 	std::cout << "size = " << a.size() << " -- capacity = " << a.capacity();
 	std::cout << " -- empty = " << a.empty() << " -- max_size = " << a.max_size();
 	std::cout << std::endl;
+	it = d.begin();
+	std::cout << "ITERATORS:" << std::endl;
+	while (it != d.end())
+	{
+		std::cout << *it << " -- ";
+		it = 1 + it;
+	}
+	std::cout << std::endl;
+	it = d.begin();
+	d.erase(it + 10);
+	std::cout << "size = " << d.size() << " -- capacity = " << d.capacity();
+	std::cout << " -- empty = " << d.empty() << " -- max_size = " << d.max_size();
+	std::cout << std::endl;
+	it = d.begin();
+	d.erase(it, d.end());
+	std::cout << "size = " << d.size() << " -- capacity = " << d.capacity();
+	std::cout << " -- empty = " << d.empty() << " -- max_size = " << d.max_size();
+	std::cout << std::endl;
+
 	/*
 	std::cout << d.front() << " : " << d.back() <<  " : " << d[20] << std::endl;
 	d.swap(a);
