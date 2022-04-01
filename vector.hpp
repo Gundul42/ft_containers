@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/03/31 18:31:50 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/01 11:10:39 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ class vector
 			_ns = _alloc.allocate(newcapacity);
 			while (i < _size)
 			{
-				_alloc.construct(&_ns[i], _start[i]);
+				if (i < newsize)
+					_alloc.construct(&_ns[i], _start[i]);
 				_alloc.destroy(&_start[i]);
 				i++;
 			}
@@ -96,10 +97,12 @@ class vector
 		{
 			size_type	i = 0;
 			std::cout << "Copy construction" << std::endl;
+			std::cout << "This: " << this->size() << "   right: " << right.size() << std::endl;
 			if (this->size() < right.size())
 			{
 				_realloc(right.size(), right.capacity());
 			}
+			std::cout << std::endl;
 			_size = right.size();
 			while (i < right.size())
 			{
@@ -114,9 +117,11 @@ class vector
 		size_type	max_size(void) const {return (_alloc.max_size());}
 		void		resize(size_type n, value_type val = value_type())
 	       	{
-			size_type	i = size() + 1;
+			size_type	i = size();
 
-			if (n <= size())
+			std::cout << "resize: " << size() << ", newsize: " << n << std::endl;
+
+			if (n < size())
 			{
 				_realloc(n, n);
 				return ;
@@ -124,9 +129,9 @@ class vector
 			else if (n > capacity())
 				_realloc(size(), n);
 			_size = n;
-			while (i <= n)
+			while (i < n)
 			{
-				_start[i - 1] = val;
+				_alloc.construct(&_start[i], val);
 				i++;
 			}
 		}
@@ -156,7 +161,7 @@ class vector
 
 		T &	at(size_type n)
 		{
-			if (n < 0 || n > this->size())
+			if (!size() || n > (this->size() - 1))
 				throw std::out_of_range("Index out of range");
 			else
 				return (_start[n]);
@@ -164,7 +169,7 @@ class vector
 
 		T const &	at(size_type n) const
 		{
-			if (n < 0 || n > this->size())
+			if (!size() || n > (this->size() - 1))
 				throw std::out_of_range("Index out of range");
 			else
 				return (_start[n]);
@@ -174,13 +179,13 @@ class vector
 		T const &	front(void) const  {return (*(this->_start));}
 
 		T &		back(void) {return ((_start[size() - 1]));}
-		T const &	back(void) const  {return ((this[size() - 1]));}
+		T const &	back(void) const  {return ((_start[size() - 1]));}
 
 
 		//Modifiers member functions	
 		void		pop_back(void) 
 		{
-			_alloc.destroy(_start + _size);
+			_alloc.destroy(_start + _size - 1);
 			_size--;
 		}
 
