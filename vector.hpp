@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/03 14:23:53 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/03 15:07:49 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,11 +354,38 @@ class vector
 			while (i < n)
 			{
 				_alloc.construct(&(*(begin() + stp + i)), val);
-				pos++;
 				i++;
 			}
 			_size += n;
 		}
+
+		template <typename InputIterator>
+		void insert (iterator pos, InputIterator ifirst, InputIterator ilast)
+		{
+			size_type	n = ilast - ifirst;
+			iterator	last;
+			size_type	stp = pos - begin();
+			size_type	i = 0;
+			
+			if (this->capacity() < this->size() + n)
+				_realloc(this->size(), n + this->size() * 2);
+			last = this->end();
+			while (last != (begin() + stp))
+			{
+				_alloc.construct(&(*(last + n)), *last);
+				_alloc.destroy(&(*last));
+				last--;
+			}
+			_alloc.construct(&(*(last + n)), *last);
+			while (i < n)
+			{
+				_alloc.construct(&(*(begin() + stp + i)), ifirst);
+				ifirst++;
+				i++;
+			}
+			_size += n;
+		}
+
 
 }; //end class
 
