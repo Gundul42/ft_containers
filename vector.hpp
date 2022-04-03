@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/03 13:04:00 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/03 14:12:37 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,7 @@ class vector
 			}
 		}
 		size_type	capacity(void) const {return (_end_of_storage);}
-		bool		empty(void) const {if (!this->size()) return (true);
-					else return (false);}
+		bool		empty(void) const {return (size() == 0);}
 		void		reserve(size_type n)
 		{
 			if (!n || n <= capacity())
@@ -339,11 +338,12 @@ class vector
 		void	insert(iterator pos, size_type n, const value_type& val)
 		{
 			iterator	last;
+			size_type	stp = pos - begin();
 
 			if (this->capacity() < this->size() + n)
 				_realloc(this->size(), n + this->size() * 2);
 			last = this->end();
-			while (last != pos)
+			while (last != (begin() + stp))
 			{
 				_alloc.construct(&(*(last + n)), *last);
 				_alloc.destroy(&(*last));
@@ -351,7 +351,7 @@ class vector
 			}
 			while (n)
 			{
-				_alloc.construct(&(*pos), val);
+				_alloc.construct(&(*(begin() + stp)), val);
 				pos++;
 				n--;
 			}

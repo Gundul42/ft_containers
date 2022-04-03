@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/03 12:32:37 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/03 13:58:25 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,9 @@ int main(void)
 	std::cout << "size = " << d.size() << " -- capacity = " << d.capacity();
 	std::cout << " -- empty = " << d.empty() << " -- max_size = " << d.max_size();
 	std::cout << std::endl;
-	it = d.begin() + 5;
-	d.insert(it, 333);
+	d.resize(5, 111);
+	it = d.begin() + 3;
+	d.insert(it, 111);
 	it = d.begin();
 	std::cout << "ITERATORS:" << std::endl;
 	while (it != d.end())
