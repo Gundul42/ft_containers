@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/03 15:07:49 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/03 16:00:07 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,8 +331,9 @@ class vector
 
 		iterator	insert(iterator pos, const value_type& val)
 		{
+			size_type	n = pos - begin();
 			insert (pos, 1, val);
-			return (pos);
+			return (begin() + n);
 		}
 
 		void	insert(iterator pos, size_type n, const value_type& val)
