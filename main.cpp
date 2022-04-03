@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/01 15:25:46 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/03 11:59:09 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int main(void)
 	//std::vector<float>	b(10);
 	//std::vector<float>	c(20);
 	ft::vector<float>::iterator	it;
+	ft::vector<float>::iterator	itb;
 	
 	t_lala			neu;
 
@@ -114,14 +115,15 @@ int main(void)
 	d.pop_back();
 	d.reserve(100);
 	//vprint(d);
+	std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << std::endl;
 	d.resize(20, 666);
 	//vprint(d);
 	std::cout << "size = " << d.size() << " -- capacity = " << d.capacity();
 	std::cout << " -- empty = " << d.empty() << " -- max_size = " << d.max_size();
-	std::cout << std::endl;
-	std::cout << "size = " << a.size() << " -- capacity = " << a.capacity();
-	std::cout << " -- empty = " << a.empty() << " -- max_size = " << a.max_size();
-	std::cout << std::endl;
+	//std::cout << "size = " << a.size() << " -- capacity = " << a.capacity();
+	//std::cout << " -- empty = " << a.empty() << " -- max_size = " << a.max_size();
 	it = d.begin();
 	std::cout << "ITERATORS:" << std::endl;
 	while (it != d.end())
@@ -131,15 +133,28 @@ int main(void)
 	}
 	std::cout << std::endl;
 	it = d.begin();
-	d.erase(it + 10);
+	std::cout << "Delete first" << std::endl;
+	d.erase(it);
 	std::cout << "size = " << d.size() << " -- capacity = " << d.capacity();
 	std::cout << " -- empty = " << d.empty() << " -- max_size = " << d.max_size();
 	std::cout << std::endl;
 	it = d.begin();
-	d.erase(it, d.end());
+	itb = d.begin();
+	std::cout << "Delete fourth" << std::endl;
+	d.erase(it, (4 + it));
+	it = d.begin();
+	std::cout << "ITERATORS:" << std::endl;
+	while (it != d.end())
+	{
+		std::cout << *it << " -- ";
+		it = 1 + it;
+	}
+	std::cout << std::endl;
 	std::cout << "size = " << d.size() << " -- capacity = " << d.capacity();
 	std::cout << " -- empty = " << d.empty() << " -- max_size = " << d.max_size();
 	std::cout << std::endl;
+	d.push_back(144.441);
+	std::cout << std::endl << "last entry is : " << d.back() << std::endl;
 
 	/*
 	std::cout << d.front() << " : " << d.back() <<  " : " << d[20] << std::endl;

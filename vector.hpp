@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/01 15:27:37 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/03 11:52:55 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ class vector
 		{
 			size_type	i = 0;
 			
-			std::cout << "Destroyed" << std::endl;
 			while (i < size())
 			{
 				_alloc.destroy(_start + i);
@@ -119,7 +118,7 @@ class vector
 	       	{
 			size_type	i = size();
 
-			std::cout << "resize: " << size() << ", newsize: " << n << std::endl;
+			std::cout << "!!!>>> resize: " << size() << ", newsize: " << n << std::endl;
 
 			if (n < size())
 			{
@@ -239,10 +238,20 @@ class vector
 					{_p = _p + n; return (*this);}
 				iterator &	operator-=(const size_type n)
 					{_p = _p - n; return (*this);}
-				iterator &	operator+(const size_type n)
-					{_p = _p + n; return (*this);}
-				iterator &	operator-(const size_type n)
-					{_p = _p - n; return (*this);}
+				iterator 	operator-(const size_type n)
+					{
+						iterator	tmp(this->_p);
+						
+						tmp._p = this->_p - n;
+					       	return (tmp);
+					}
+				iterator 	operator+(const size_type n)
+					{
+						iterator	tmp(this->_p);
+						
+						tmp._p = this->_p + n;
+					       	return (tmp);
+					}
 				difference_type	operator-(const iterator & right)
 					{return (_p - right._p);}
 				value_type	operator[](const size_type n)
