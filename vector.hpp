@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/03 11:52:55 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/03 13:04:00 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,6 +330,33 @@ class vector
 			return (fin);
 		}
 
+		iterator	insert(iterator pos, const value_type& val)
+		{
+			insert (pos, 1, val);
+			return (pos);
+		}
+
+		void	insert(iterator pos, size_type n, const value_type& val)
+		{
+			iterator	last;
+
+			if (this->capacity() < this->size() + n)
+				_realloc(this->size(), n + this->size() * 2);
+			last = this->end();
+			while (last != pos)
+			{
+				_alloc.construct(&(*(last + n)), *last);
+				_alloc.destroy(&(*last));
+				last--;
+			}
+			while (n)
+			{
+				_alloc.construct(&(*pos), val);
+				pos++;
+				n--;
+			}
+			_size += n + 1;
+		}
 
 }; //end class
 

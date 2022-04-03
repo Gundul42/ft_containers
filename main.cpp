@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/03 11:59:09 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/03 12:32:37 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,22 @@ int main(void)
 	std::cout << std::endl;
 	d.push_back(144.441);
 	std::cout << std::endl << "last entry is : " << d.back() << std::endl;
+	std::cout << "size = " << d.size() << " -- capacity = " << d.capacity();
+	std::cout << " -- empty = " << d.empty() << " -- max_size = " << d.max_size();
+	std::cout << std::endl;
+	it = d.begin() + 5;
+	d.insert(it, 333);
+	it = d.begin();
+	std::cout << "ITERATORS:" << std::endl;
+	while (it != d.end())
+	{
+		std::cout << *it << " -- ";
+		it = 1 + it;
+	}
+	std::cout << std::endl;
+	std::cout << "size = " << d.size() << " -- capacity = " << d.capacity();
+	std::cout << " -- empty = " << d.empty() << " -- max_size = " << d.max_size();
+	std::cout << std::endl;
 
 	/*
 	std::cout << d.front() << " : " << d.back() <<  " : " << d[20] << std::endl;
