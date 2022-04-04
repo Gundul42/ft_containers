@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/04 11:44:36 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/04 15:24:05 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -378,9 +378,78 @@ class vector
 			_size += n;
 		}
 
+		void	assign (size_type n, const value_type& val)
+		{
+			size_type	i = 0;
 
-}; //end class
+			_realloc(n, n * 2);
+			while (i < n)
+			{
+				_alloc.construct(_start + i, val);
+				i++;
+			}
+		}
 
+		template <class InputIterator>
+		void assign (InputIterator first, InputIterator last)
+		{
+			size_type	n = last - first;
+			size_type	i = 0;
+
+			_realloc(n, n * 2);
+			while (first != last)
+			{
+				_alloc.construct(_start + i, *first);
+				i++;
+				first++;
+			}
+		}
+
+}; //end classi
+
+
+//nonmember relational operators
+template <class T, class Alloc>
+bool	operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+{
+	typename vector<T>::iterator	left;
+	typename vector<T>::iterator	right;
+
+	if (lhs.size() != rhs.size())
+		return (false);
+	//add equal check here
+	return (true);
+}
+
+template <class T, class Alloc>
+bool	operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+{
+	return (!(lhs == rhs));
+}
+
+template <class T, class Alloc>
+bool	operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+{
+	return (!(lhs >= rhs));
+}
+
+template <class T, class Alloc>
+bool	operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+{
+	return (!(lhs <= rhs));
+}
+
+template <class T, class Alloc>
+bool	operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+{
+	//implement equal and lexi_comp
+}
+
+template <class T, class Alloc>
+bool	operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+{
+	//implement equal and lexi_comp
+}
 
 } //end namespace
 
