@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/04 09:28:42 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/04 11:44:36 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,21 +82,14 @@ class vector
 				_end_of_storage(cpy.capacity()) {*this = cpy;}
 		~vector(void) 
 		{
-			size_type	i = 0;
-			
-			while (i < size())
-			{
-				_alloc.destroy(_start + i);
-				i++;
-			}
+			clear();
 			_alloc.deallocate(_start, capacity());
 		}
 
 		vector<T> & operator=(vector<T> const & right)
 		{
 			size_type	i = 0;
-			std::cout << "Copy construction" << std::endl;
-			std::cout << "This: " << this->size() << "   right: " << right.size() << std::endl;
+			
 			if (this->size() < right.size())
 			{
 				_realloc(right.size(), right.capacity());
@@ -117,8 +110,6 @@ class vector
 		void		resize(size_type n, value_type val = value_type())
 	       	{
 			size_type	i = size();
-
-			std::cout << "!!!>>> resize: " << size() << ", newsize: " << n << std::endl;
 
 			if (n < size())
 			{
@@ -147,17 +138,17 @@ class vector
 	
 
 		// Element access member functions
-		T &	operator[](size_type n)
+		reference	operator[](size_type n)
 		{
 			return (*(this->_start + n));
 		}
 		
-		T const &	operator[](size_type n) const
+		const_reference	operator[](size_type n) const
 		{
 			return (*(this->_start + n));
 		}
 
-		T &	at(size_type n)
+		reference	at(size_type n)
 		{
 			if (!size() || n > (this->size() - 1))
 				throw std::out_of_range("Index out of range");
@@ -165,7 +156,7 @@ class vector
 				return (_start[n]);
 		}
 
-		T const &	at(size_type n) const
+		const_reference	at(size_type n) const
 		{
 			if (!size() || n > (this->size() - 1))
 				throw std::out_of_range("Index out of range");
@@ -173,11 +164,11 @@ class vector
 				return (_start[n]);
 		}
 
-		T &		front(void) {return (*(this->_start));}
-		T const &	front(void) const  {return (*(this->_start));}
+		reference		front(void) {return (*(this->_start));}
+		const_reference	front(void) const  {return (*(this->_start));}
 
-		T &		back(void) {return ((_start[size() - 1]));}
-		T const &	back(void) const  {return ((_start[size() - 1]));}
+		reference		back(void) {return ((_start[size() - 1]));}
+		const_reference	back(void) const  {return ((_start[size() - 1]));}
 
 
 		//Modifiers member functions	
@@ -267,8 +258,8 @@ class vector
 					{return _p >= rhs._p;}
 				bool	operator<=(const iterator& rhs) const
 					{return _p <= rhs._p;}
-				T &	operator*() {return *_p;}
-				T &	operator->() {return *_p;}
+				reference	operator*() {return *_p;}
+				reference	operator->() {return *_p;}
 
 				//non member overloads
 				friend	iterator operator+(const size_type n, const iterator right)
@@ -380,7 +371,7 @@ class vector
 			_alloc.construct(&(*(last + n)), *last);
 			while (i < n)
 			{
-				_alloc.construct(&(*(begin() + stp + i)), ifirst);
+				_alloc.construct(&(*(begin() + stp + i)), *ifirst);
 				ifirst++;
 				i++;
 			}
