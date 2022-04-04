@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/04 15:24:05 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/04 18:32:36 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdexcept>
 # include <memory>
 # include "iterator.hpp"
+# include "utility.hpp"
 
 namespace ft
 {
@@ -410,15 +411,11 @@ class vector
 
 //nonmember relational operators
 template <class T, class Alloc>
-bool	operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+bool	operator== (vector<T,Alloc>& lhs, vector<T,Alloc>& rhs)
 {
-	typename vector<T>::iterator	left;
-	typename vector<T>::iterator	right;
-
 	if (lhs.size() != rhs.size())
 		return (false);
-	//add equal check here
-	return (true);
+	return (equal(lhs.begin(), lhs.end(), rhs.begin()));
 }
 
 template <class T, class Alloc>

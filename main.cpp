@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/04 14:42:54 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/04 18:12:35 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,12 @@ int main(void)
 		it = 1 + it;
 	}
 	std::cout << std::endl;
-
+	a.assign(2, 10.132);
+	d.assign(2, 10.13);
+	if (a == d)
+		std::cout << "Yeah!" << std::endl;
+	else
+		std::cout << "Nope!" << std::endl;
 	/*
 	std::cout << d.front() << " : " << d.back() <<  " : " << d[20] << std::endl;
 	d.swap(a);
