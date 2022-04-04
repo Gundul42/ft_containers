@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/03 14:26:58 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/04 09:18:39 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ int main(void)
 	std::cout << std::endl;
 	d.resize(5, 111);
 	it = d.begin() + 3;
-	d.insert(it, 11,111);
+	d.insert(it, 11,111.0);
 	it = d.begin();
 	std::cout << "ITERATORS:" << std::endl;
 	while (it != d.end())
