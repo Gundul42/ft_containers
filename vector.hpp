@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/04 18:32:36 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/05 11:54:38 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,17 +406,17 @@ class vector
 			}
 		}
 
-}; //end classi
-
-
 //nonmember relational operators
-template <class T, class Alloc>
-bool	operator== (vector<T,Alloc>& lhs, vector<T,Alloc>& rhs)
+friend bool	operator== (const vector & lhs, const vector & rhs)
 {
 	if (lhs.size() != rhs.size())
 		return (false);
-	return (equal(lhs.begin(), lhs.end(), rhs.begin()));
+	return (true); //equal(lhs.begin(), lhs.end(), rhs.begin()));
 }
+
+
+}; //end class
+
 
 template <class T, class Alloc>
 bool	operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)

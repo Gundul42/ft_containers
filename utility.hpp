@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:30:52 by graja             #+#    #+#             */
-/*   Updated: 2022/04/04 17:28:01 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/05 12:13:34 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,28 @@ bool	lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
 	}
 	return (false);
 }
+
+
+//utility pair -- can hold two different types
+
+template <typename T1, typename T2>
+struct pair
+{
+	typedef	T1	first_type;
+	typedef	T2	second_type;
+
+	first_type	first;
+	second_type	second;
+
+	pair(void) {}
+	pair(const first_type & a, const second_type & b): first(a),  second(b) {}
+
+	template <typename V, typename U> 
+	pair (const pair<U, V>& pr) {}
+};
+
+
+
 
 } //end namespace
 

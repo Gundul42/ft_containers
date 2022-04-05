@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/04 18:12:35 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/05 12:11:53 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,5 +229,11 @@ int main(void)
 		std::cout << *it << std::endl;
 		it++;
 	}*/
+
+	ft::pair<std::string, float>	dua;
+	ft::pair<std::string, float>	dua1("Yes", 10.10f);
+
+	dua.first = "Kruemelmmonster";
+	dua.second = 3.14159261479;
 	return (0);
 }
