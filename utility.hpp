@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:30:52 by graja             #+#    #+#             */
-/*   Updated: 2022/04/05 12:13:34 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/05 14:09:56 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,20 +86,41 @@ bool	lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
 //utility pair -- can hold two different types
 
 template <typename T1, typename T2>
-struct pair
+class pair
 {
+	public:
+
 	typedef	T1	first_type;
 	typedef	T2	second_type;
 
 	first_type	first;
 	second_type	second;
 
-	pair(void) {}
+	pair(void): first(), second() {}
 	pair(const first_type & a, const second_type & b): first(a),  second(b) {}
+	~pair(void) {}
 
 	template <typename V, typename U> 
 	pair (const pair<U, V>& pr) {}
+
+	pair const &	operator=(pair const & right)
+	{
+		first = right.first;
+		second = right.second;
+
+		return (*this);
+	}
 };
+
+
+//function template to return a pair object with two different types
+
+template <typename T1, typename T2>
+ft::pair<T1, T2> make_pair(T1 x, T2 y)
+{
+	return (ft::pair<T1, T2>(x, y));
+}
+
 
 
 

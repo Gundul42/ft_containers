@@ -6,13 +6,14 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/05 12:11:53 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/05 13:51:33 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
 #include "mclass.hpp"
 #include <vector>
+#include "string"
 
 typedef	struct	s_lala {
 	int	start;
@@ -232,8 +233,16 @@ int main(void)
 
 	ft::pair<std::string, float>	dua;
 	ft::pair<std::string, float>	dua1("Yes", 10.10f);
+	ft::pair<std::string, float>	dua2(dua1);
 
-	dua.first = "Kruemelmmonster";
+	dua.first = "Kruemelmonster";
 	dua.second = 3.14159261479;
+
+	std::cout << dua.first << dua.second << std::endl;
+	std::cout << dua1.first << dua1.second << std::endl;
+	std::cout << dua2.first << dua2.second << std::endl;
+	dua1 = ft::make_pair("HELLO", 9.81f);
+	dua = dua1;
+	std::cout << dua.first << dua.second << std::endl;
 	return (0);
 }
