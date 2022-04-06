@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:30:52 by graja             #+#    #+#             */
-/*   Updated: 2022/04/05 14:09:56 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/06 11:51:24 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ class pair
 	~pair(void) {}
 
 	template <typename V, typename U> 
-	pair (const pair<U, V>& pr) {}
+	pair (const pair<U, V>& pr): first(pr.first), second(pr.second) {}
 
 	pair const &	operator=(pair const & right)
 	{
@@ -114,16 +114,14 @@ class pair
 
 
 //function template to return a pair object with two different types
+//making it inline to improve code execution time
 
 template <typename T1, typename T2>
-ft::pair<T1, T2> make_pair(T1 x, T2 y)
+inline ft::pair<T1, T2> make_pair(T1 x, T2 y)
 {
+	std::cout << x << " : " << y << std::endl;
 	return (ft::pair<T1, T2>(x, y));
 }
-
-
-
-
 
 } //end namespace
 
