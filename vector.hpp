@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/05 11:54:38 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/06 15:05:12 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,47 +406,57 @@ class vector
 			}
 		}
 
-//nonmember relational operators
-friend bool	operator== (const vector & lhs, const vector & rhs)
-{
-	if (lhs.size() != rhs.size())
-		return (false);
-	return (true); //equal(lhs.begin(), lhs.end(), rhs.begin()));
-}
+		//nonmember relational operators
+		friend bool	operator== (const vector<T> & lhs, const vector<T> & rhs)
+		{
+			vector<T>	lcpy(lhs);
+			vector<T>	rcpy(rhs);
 
+		if (lhs.size() != rhs.size())
+			return (false);
+		return (equal(lcpy.begin(), lcpy.end(), rcpy.begin()));
+		}
+		
+		friend bool	operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		{
+		return (!(lhs == rhs));
+		}
+	
+		friend bool	operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		{
+			return (!(lhs >= rhs));
+		}
 
+		friend bool	operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		{
+			return (!(lhs <= rhs));
+		}
+		
+		friend bool	operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+                {
+			vector<T>	lcpy(lhs);
+			vector<T>	rcpy(rhs);
+
+			if (equal(lcpy.begin(), lcpy.end(), rcpy.begin()))
+				return (true);
+			return (!(lexicographical_compare(lcpy.begin(), lcpy.end(),
+						rcpy.begin(), rcpy.end())));
+		}
+		
+		friend bool 	operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+                {
+			vector<T>	lcpy(lhs);
+			vector<T>	rcpy(rhs);
+
+			if (equal(lcpy.begin(), lcpy.end(), rcpy.begin()))
+				return (true);
+			return (lexicographical_compare(lcpy.begin(), lcpy.end(),
+						rcpy.begin(), rcpy.end()));
+		}
 }; //end class
+	
+	
 
-
-template <class T, class Alloc>
-bool	operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-{
-	return (!(lhs == rhs));
-}
-
-template <class T, class Alloc>
-bool	operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-{
-	return (!(lhs >= rhs));
-}
-
-template <class T, class Alloc>
-bool	operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-{
-	return (!(lhs <= rhs));
-}
-
-template <class T, class Alloc>
-bool	operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-{
-	//implement equal and lexi_comp
-}
-
-template <class T, class Alloc>
-bool	operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-{
-	//implement equal and lexi_comp
-}
 
 } //end namespace
 
