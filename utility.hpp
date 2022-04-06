@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:30:52 by graja             #+#    #+#             */
-/*   Updated: 2022/04/06 11:51:24 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/06 13:16:38 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,43 @@ class pair
 //making it inline to improve code execution time
 
 template <typename T1, typename T2>
-inline ft::pair<T1, T2> make_pair(T1 x, T2 y)
+inline pair<T1, T2> make_pair(T1 x, T2 y)
 {
 	std::cout << x << " : " << y << std::endl;
-	return (ft::pair<T1, T2>(x, y));
+	return (pair<T1, T2>(x, y));
 }
+
+
+//enable_if implementation
+
+template<bool Cond, class T = void>
+struct enable_if {};
+
+template<class T>
+struct enable_if<true, T> { typedef T type; };
+
+// is_integral implementation
+
+template<typename> struct is_integral
+{
+	static const bool value = false;
+};
+
+template<> struct is_integral<bool> {static const bool value = true;};
+template<> struct is_integral<char> {static const bool value = true;};
+template<> struct is_integral<char16_t> {static const bool value = true;};
+template<> struct is_integral<char32_t> {static const bool value = true;};
+template<> struct is_integral<wchar_t> {static const bool value = true;};
+template<> struct is_integral<signed char> {static const bool value = true;};
+template<> struct is_integral<short int> {static const bool value = true;};
+template<> struct is_integral<int> {static const bool value = true;};
+template<> struct is_integral<long int> {static const bool value = true;};
+template<> struct is_integral<long long int> {static const bool value = true;};
+template<> struct is_integral<unsigned char> {static const bool value = true;};
+template<> struct is_integral<unsigned short int> {static const bool value = true;};
+template<> struct is_integral<unsigned int> {static const bool value = true;};
+template<> struct is_integral<unsigned long int> {static const bool value = true;};
+template<> struct is_integral<unsigned long long int> {static const bool value = true;};
 
 } //end namespace
 
