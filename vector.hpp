@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/07 14:16:38 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/07 14:32:43 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,8 +281,90 @@ class vector
 				
 		};
 
+		class reverse_iterator : public ft::iterator<std::random_access_iterator_tag, 
+			value_type>
+		{
+			private:
+				value_type	*_p;
+
+			public:
+				reverse_iterator(void) :_p(NULL) {}
+				reverse_iterator(value_type *x) :_p(x) {}
+				~reverse_iterator(void) {}
+
+				reverse_iterator(const reverse_iterator & mit) : _p(mit._p) {}
+
+				reverse_iterator & operator=(const reverse_iterator & right)
+					{this->_p = right._p; return (*this);}
+
+				reverse_iterator&	operator++() {--_p;return *this;}
+				reverse_iterator	operator++(int) 
+					{reverse_iterator tmp(*this); operator--(); return tmp;}
+				reverse_iterator&	operator--() {++_p;return *this;}
+				reverse_iterator	operator--(int) 
+					{reverse_iterator tmp(*this); operator++(); return tmp;}
+				reverse_iterator &	operator+=(const size_type n)
+					{_p = _p - n; return (*this);}
+				reverse_iterator &	operator-=(const size_type n)
+					{_p = _p + n; return (*this);}
+				reverse_iterator 	operator-(const size_type n)
+					{
+						reverse_iterator	tmp(this->_p);
+						
+						tmp._p = this->_p + n;
+					       	return (tmp);
+					}
+				reverse_iterator 	operator+(const size_type n)
+					{
+						reverse_iterator	tmp(this->_p);
+						
+						tmp._p = this->_p - n;
+					       	return (tmp);
+					}
+				difference_type	operator-(const reverse_iterator & right)
+					{return (_p + right._p);}
+				value_type	operator[](const size_type n)
+					{return (*(_p - n));}
+				bool	operator==(const reverse_iterator& rhs) const
+					{return _p == rhs._p;}
+				bool	operator!=(const reverse_iterator& rhs) const
+					{return _p != rhs._p;}
+				bool	operator>(const reverse_iterator& rhs) const
+					{return _p < rhs._p;}
+				bool	operator<(const reverse_iterator& rhs) const
+					{return _p > rhs._p;}
+				bool	operator>=(const reverse_iterator& rhs) const
+					{return _p <= rhs._p;}
+				bool	operator<=(const reverse_iterator& rhs) const
+					{return _p >= rhs._p;}
+				reference	operator*() {return *_p;}
+				reference	operator->() {return *_p;}
+
+				//non member overloads
+				friend	reverse_iterator operator+(const size_type n,
+						const reverse_iterator right)
+				{
+					reverse_iterator	tmp(right);
+
+					tmp._p = right._p - n;
+					return (tmp);
+				}
+				
+				friend	reverse_iterator operator-(const size_type n,
+						const reverse_iterator right)
+				{
+					reverse_iterator	tmp(right);
+
+					tmp._p = right._p + n;
+					return (tmp);
+				}
+		};
+
 		iterator	begin(void) {return (iterator(_start));}
 		iterator	end(void) {return (iterator(_start + _size));}
+
+		reverse_iterator	rbegin(void) {return (reverse_iterator(_start + _size - 1));}
+		reverse_iterator	rend(void) {return (iterator(_start - 1));}
 
 		//Modifiers member functions with iterators
 		iterator	erase(iterator pos)
