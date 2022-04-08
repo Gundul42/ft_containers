@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/08 15:41:28 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/08 17:47:49 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ class map
 		//Iterators
 		begin(void) 
 		{
+		//points to smallest key !
 		}
 
 		end(void)
@@ -106,6 +107,7 @@ class map
 
 		rbegin(void)
 		{
+		//points to largest key !!
 		}
 
 		rend(void)
@@ -143,29 +145,48 @@ class map
 			runner = _tree;
 			while (runner != NULL)
 			{
-				std::cout << runner << " : " << parent << std::endl;
 				parent = runner;
 				if ((val.first) < (runner->data->first))
-				{
 					runner = runner->left_child;
-					std::cout << "true - left" << std::endl;
-				}
 				else
-				{
-					std::cout << "false - right" << std::endl;
 					runner = runner->right_child;
-				}
 			}
 			if ((val.first) < (parent->data->first))
 				parent->left_child = _add_new_child(val, parent);
 			else
 				parent->right_child = _add_new_child(val, parent);
-
-
 		}
 
+		//Iterators
 
+		class iterator : public ft::iterator<std::bidirectional_iterator_tag, value_type>
+		{
+			private:
+				value_type	*_p;
 
+			public:
+				iterator(void) :_p(NULL) {}
+				iterator(value_type *x) :_p(x) {}
+				~iterator(void) {}
+
+				iterator(const iterator & mit) : _p(mit._p) {}
+
+				iterator & operator=(const iterator & right)
+					{this->_p = right._p; return (*this);}
+
+				iterator&	operator++() {++_p;return *this;}
+				iterator	operator++(int) 
+					{iterator tmp(*this); operator++(); return tmp;}
+				iterator&	operator--() {--_p;return *this;}
+				iterator	operator--(int) 
+					{iterator tmp(*this); operator--(); return tmp;}
+				reference	operator*() {return *_p;}
+				reference	operator->() {return *_p;}
+				bool	operator==(const iterator& rhs) const
+					{return _p == rhs._p;}
+				bool	operator!=(const iterator& rhs) const
+					{return _p != rhs._p;}
+		};
 };
 
 } //end namespace
