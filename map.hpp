@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/08 09:19:17 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/08 10:06:35 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 namespace ft
 {
 
-template <class Key, class T, class Compare = std::less<Key>, 
-	 class Alloc = std::allocator<pair<const Key, T > > >
+template <typename Key, typename T, typename Compare = std::less<Key>, 
+	 typename Alloc = std::allocator<pair<const Key, T > > >
 class map
 {
 	private:
@@ -51,8 +51,68 @@ class map
 		mapped_type	data;
 
 	public:
-		map(void): parent(NULL), right_child(NULL), left_child(NULL), key(), data() {}
+		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = 
+				allocator_type()): parent(NULL), right_child(NULL),
+				left_child(NULL), key(), data() {}
+
+		template <class InputIterator>
+		map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
+				const allocator_type& alloc = allocator_type()): parent(NULL),
+				right_child(NULL), left_child(NULL), key(), data()
+		{
+			//declare here
+		}
+
+		map(map const & cpy)
+		{
+			*this = cpy;
+		}
+
+		map & operator=(map const & right)
+		{
+			//implement here
+		}
+
 		~map(void) {}
+
+
+		//Iterators
+		begin(void) 
+		{
+		}
+
+		end(void)
+		{
+		}
+
+		rbegin(void)
+		{
+		}
+
+		rend(void)
+		{
+		}
+
+
+		//Capacity
+		bool	empty(void) const
+		{
+		}
+
+		size_type	size(void) const;
+		{
+		}
+
+		size_type	max_size(void) const;
+		{
+		}
+
+
+		//Element access
+		mapped_type & operator[](const key_type & k)
+		{
+		}
+
 
 };
 
