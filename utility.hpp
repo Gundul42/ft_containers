@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:30:52 by graja             #+#    #+#             */
-/*   Updated: 2022/04/06 13:16:38 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/08 13:28:41 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ class pair
 template <typename T1, typename T2>
 inline pair<T1, T2> make_pair(T1 x, T2 y)
 {
-	std::cout << x << " : " << y << std::endl;
 	return (pair<T1, T2>(x, y));
 }
 

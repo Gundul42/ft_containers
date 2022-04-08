@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/08 11:48:35 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/08 14:24:09 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,29 @@ class map
 		
 		struct	node
 		{
-			value_type	data;
-			pointer		parent;
-			pointer		right_child;
-			pointer		left_child;
+			value_type	*data;
+			node		*parent;
+			node		*right_child;
+			node		*left_child;
 		};
 
-		size_type	_size;
-		node		*_tree;
-		allocator_type	_alloc;
+		node	*_add_new_child(value_type const & chl, node *prt)
+		{
+			node	*tmp = _node_alloc.allocate(1);
+
+			tmp->data = _alloc.allocate(1);
+			_alloc.construct(tmp->data, chl);
+			tmp->right_child = NULL;
+			tmp->left_child = NULL;
+			tmp->parent = prt;
+			_size++;
+			return (tmp);
+		}
+
+		size_type		_size;
+		node			*_tree;
+		allocator_type		_alloc;
+		std::allocator<node>	_node_alloc;
 
 	public:
 		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = 
@@ -113,6 +127,22 @@ class map
 		}
 
 */
+		//Modifiers
+		//pair<iterator,bool> insert (const value_type& val)
+		void	insert (const value_type& val)
+		{
+			node	*runner;
+
+			if (!_tree)
+			{
+				_tree = _add_new_child(val, NULL);
+				return ;
+			}
+			runner = _tree;
+		}
+
+
+
 };
 
 } //end namespace
