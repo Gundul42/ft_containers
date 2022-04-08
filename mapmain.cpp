@@ -6,15 +6,16 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/07 18:28:58 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/08 09:24:34 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.hpp"
 
-int main(void)
+int	main(void)
 {
-	map<int>	test;
+
+	ft::map<int, int>	test;
 
 	return (0);
 }

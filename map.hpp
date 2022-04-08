@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/07 18:42:30 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/08 09:19:17 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,26 @@
 namespace ft
 {
 
-template <typename Key, typename T, typename Compare = std::less<Key>, typename Alloc = allocator<ft::pair<const Key,T> > >
+template <class Key, class T, class Compare = std::less<Key>, 
+	 class Alloc = std::allocator<pair<const Key, T > > >
 class map
 {
 	private:
 		typedef	Key						key_type;
 		typedef	T						mapped_type;
-		typedef	pair<const key_type, mapped_type		value_type;
+		typedef	pair<const key_type, mapped_type>		value_type;
 		typedef	Compare						key_compare;
 	//	typedef 						value_compare;
 		typedef	Alloc						allocator_type;
-		typedef	allocator_type::reference			reference;
-		typedef allocator_type::const_reference			const_reference;
-		typedef	allocator_type::pointer				pointer;
-		typedef allocator_type::const_pointer			const_pointer;
+		typedef	typename allocator_type::reference		reference;
+		typedef typename allocator_type::const_reference	const_reference;
+		typedef	typename allocator_type::pointer		pointer;
+		typedef typename allocator_type::const_pointer		const_pointer;
 	//	typedef							iterator;
 	//	typedef							const_iterator;
 	//	typedef							reverse_iterator;
 	//	typedef							const_reverse_iterator;
-		typedef	iterator_traits<iterator>::difference_type	difference_type;
+		typedef	ptrdiff_t					difference_type;
 		typedef	size_t						size_type;
 
 		pointer		parent;
@@ -54,5 +55,7 @@ class map
 		~map(void) {}
 
 };
+
+} //end namespace
 
 #endif
