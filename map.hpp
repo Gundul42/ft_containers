@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/08 14:24:09 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/08 15:41:28 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,13 +132,36 @@ class map
 		void	insert (const value_type& val)
 		{
 			node	*runner;
+			node	*parent;
 
 			if (!_tree)
 			{
 				_tree = _add_new_child(val, NULL);
 				return ;
 			}
+			parent = NULL;
 			runner = _tree;
+			while (runner != NULL)
+			{
+				std::cout << runner << " : " << parent << std::endl;
+				parent = runner;
+				if ((val.first) < (runner->data->first))
+				{
+					runner = runner->left_child;
+					std::cout << "true - left" << std::endl;
+				}
+				else
+				{
+					std::cout << "false - right" << std::endl;
+					runner = runner->right_child;
+				}
+			}
+			if ((val.first) < (parent->data->first))
+				parent->left_child = _add_new_child(val, parent);
+			else
+				parent->right_child = _add_new_child(val, parent);
+
+
 		}
 
 
