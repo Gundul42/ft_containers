@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/09 16:00:44 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/09 17:34:27 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,29 @@ class	rbtree
 			return (*this);
 		}
 
+		void	_check_parent(node *nd)
+		{
+			node	*sibling;
+			node	*granny;
+
+			granny = nd->parent;
+			if (granny->right_child == nd)
+				sibling = granny->left_child;
+			else
+				sibling = granny->right_child;
+			if (sibling == NULL || sibling->color)
+				std::cout << "rotate and recolor" << std::endl;
+			else
+			{
+				sibling->color = !sibling->color;
+				if (granny->parent != NULL)
+					std::cout << "recolor and recheck" << std::endl;
+				else
+					std::cout << "This is root" << std::endl;
+			}
+		}
+
+
 
 	public:
 		rbtree(const allocator_type& alloc = allocator_type()): _size(0), _tree(NULL) {}
@@ -109,6 +132,10 @@ class	rbtree
 				parent->left_child = _add_new_child(val, parent);
 			else
 				parent->right_child = _add_new_child(val, parent);
+			if (parent->color)
+				return ;
+			else
+				_check_parent(parent);
 		}
 };
 

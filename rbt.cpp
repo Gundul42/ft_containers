@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/09 15:59:57 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/09 17:40:51 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,8 @@ int	main(void)
 
 	ft::rbtree<int, int>	test;
 
-	std::cout << "Is test empty ? : ";
-      	if (test.empty())
-	       std::cout << "true";
-	else
-	       std::cout << "false";
-	std::cout << std::endl;
 	test.insert(ft::make_pair(1,1));
-	std::cout << "Is test empty ? : ";
-      	if (test.empty())
-	       std::cout << "true";
-	else
-	       std::cout << "false";
-	std::cout << std::endl;
+	std::cout << "Size is : " << test.size() << std::endl;
 	test.insert(ft::make_pair(7,1));
 	std::cout << "Size is : " << test.size() << std::endl;
 	test.insert(ft::make_pair(9,1));
