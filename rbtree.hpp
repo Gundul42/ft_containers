@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/10 12:59:36 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/10 13:37:54 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ class	rbtree
 			//check parent's sibling if it is NULL or black
 			//then rotate and recolor
 			if (sibling == NULL || sibling->color)
+			{
 				std::cout << "rotate and recolor" << std::endl;
+				_turn_left(nd);
+			}
 			else
 
 			//if parents's sibling is red, recolor both 
@@ -117,15 +120,17 @@ class	rbtree
 		void	_turn_left(node *med)
 		{
 			node	*root;
+			node	*hlp;
 
 			root = med->parent->parent;
+			hlp = med->left_child;
 			if (root == NULL)
 				_tree = med;
 			else
 				root->right_child = med;
 			med->left_child = med->parent;
 			med->parent = root;
-			med->left_child->right->child = NULL;
+			med->left_child->right_child = hlp;
 			med->color = !med->color;
 			med->left_child->color = !med->left_child->color;
 		}
@@ -133,15 +138,17 @@ class	rbtree
 		void	_turn_right(node *med)
 		{
 			node	*root;
+			node	*hlp;
 
 			root = med->parent->parent;
+			hlp = med->right_child;
 			if (root == NULL)
 				_tree = med;
 			else
 				root->left_child = med;
 			med->right_child = med->parent;
 			med->parent = root;
-			med->right_child->left->child = NULL;
+			med->right_child->left_child = hlp;
 			med->color = !med->color;
 			med->right_child->color = !med->right_child->color;
 		}
