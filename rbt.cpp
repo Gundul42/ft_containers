@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/10 13:24:54 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/10 19:06:38 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ int	main(void)
 	ft::rbtree<int, int>	test;
 
 	test.insert(ft::make_pair(1,1));
+	test.insert(ft::make_pair(2,1));
+	test.insert(ft::make_pair(3,1));
+	test.insert(ft::make_pair(4,1));
+	test.insert(ft::make_pair(5,1));
+	test.insert(ft::make_pair(6,1));
 	test.insert(ft::make_pair(7,1));
-	test.insert(ft::make_pair(9,1));
-	test.insert(ft::make_pair(12,1));
-	test.insert(ft::make_pair(14,1));
 	/*
-	test.insert(ft::make_pair(11,1));
-	test.insert(ft::make_pair(0,1));
 	test.insert(ft::make_pair(-50,1));
 	*/
 	test.print();

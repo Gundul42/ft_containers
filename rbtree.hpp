@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/10 13:37:54 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/10 19:05:19 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,12 @@ class	rbtree
 			//then rotate and recolor
 			if (sibling == NULL || sibling->color)
 			{
-				std::cout << "rotate and recolor" << std::endl;
-				_turn_left(nd);
+				if (sibling)
+					std::cout << sibling->color << " : " << sibling->data->first;
+				std::cout << " rotate and recolor" << std::endl;
+				_find_rotation(nd);
 			}
-			else
+			else if (sibling && !sibling->color)
 
 			//if parents's sibling is red, recolor both 
 			//and check parent of parent
@@ -106,8 +108,8 @@ class	rbtree
 				granny->color = !granny->color;
 				if (granny->parent != NULL)
 				{
-					std::cout << "recolor and recheck" << std::endl;
-					_check_parent(nd->parent);
+					std::cout << "recheck" << std::endl;
+					_check_parent(granny->parent);
 				}
 				else
 				{
@@ -116,23 +118,69 @@ class	rbtree
 				}
 			}
 		}
+		
+		void	_find_rotation(node *nd)
+		{
+			node		*granny = nd->parent;
+			std::string	code = "";
 
-		void	_turn_left(node *med)
+			if (granny->right_child == nd)
+				code += "R";
+			else
+				code += "L";
+			if (nd->right_child == NULL)
+				code += "L";
+			else
+				code += "R";
+			std::cout << "turn code : " << code  << std::endl;
+			if (code == "RR")
+				_turn_left(nd);
+			else if (code == "LL")
+				_turn_right(nd);
+			else if (code == "RL")
+				_turn_left_right(nd);
+			else if (code == "LR")
+				_turn_right_left(nd);
+		}
+
+		void	_turn_right_left(node *nd)
+		{
+			node	*granny = nd->parent;
+
+			granny->right_child = nd->left_child;
+			nd->parent = nd->left_child;
+			nd->left_child = NULL;
+			granny->right_child->parent = granny;
+			_turn_left(granny->right_child);
+		}
+
+		void	_turn_left_right(node *nd)
+		{
+			node	*granny = nd->parent;
+
+			granny->left_child = nd->right_child;
+			nd->parent = nd->right_child;
+			nd->right_child = NULL;
+			granny->left_child->parent = granny;
+			_turn_right(granny->left_child);
+		}
+
+		void	_turn_left(node *nd)
 		{
 			node	*root;
 			node	*hlp;
 
-			root = med->parent->parent;
-			hlp = med->left_child;
+			root = nd->parent->parent;
+			hlp = nd->left_child;
 			if (root == NULL)
-				_tree = med;
+				_tree = nd;
 			else
-				root->right_child = med;
-			med->left_child = med->parent;
-			med->parent = root;
-			med->left_child->right_child = hlp;
-			med->color = !med->color;
-			med->left_child->color = !med->left_child->color;
+				root->right_child = nd;
+			nd->left_child = nd->parent;
+			nd->parent = root;
+			nd->left_child->right_child = hlp;
+			nd->color = !nd->color;
+			nd->left_child->color = !nd->left_child->color;
 		}
 
 		void	_turn_right(node *med)
