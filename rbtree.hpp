@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/09 17:34:27 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/10 12:59:36 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,23 +80,71 @@ class	rbtree
 			node	*sibling;
 			node	*granny;
 
+			//check parent color, if black exit
+			if (nd->color)
+				return ;
 			granny = nd->parent;
 			if (granny->right_child == nd)
 				sibling = granny->left_child;
 			else
 				sibling = granny->right_child;
+
+			//check parent's sibling if it is NULL or black
+			//then rotate and recolor
 			if (sibling == NULL || sibling->color)
 				std::cout << "rotate and recolor" << std::endl;
 			else
+
+			//if parents's sibling is red, recolor both 
+			//and check parent of parent
 			{
 				sibling->color = !sibling->color;
+				nd->color = !nd->color;
+				granny->color = !granny->color;
 				if (granny->parent != NULL)
+				{
 					std::cout << "recolor and recheck" << std::endl;
+					_check_parent(nd->parent);
+				}
 				else
+				{
 					std::cout << "This is root" << std::endl;
+					granny->color = true;
+				}
 			}
 		}
 
+		void	_turn_left(node *med)
+		{
+			node	*root;
+
+			root = med->parent->parent;
+			if (root == NULL)
+				_tree = med;
+			else
+				root->right_child = med;
+			med->left_child = med->parent;
+			med->parent = root;
+			med->left_child->right->child = NULL;
+			med->color = !med->color;
+			med->left_child->color = !med->left_child->color;
+		}
+
+		void	_turn_right(node *med)
+		{
+			node	*root;
+
+			root = med->parent->parent;
+			if (root == NULL)
+				_tree = med;
+			else
+				root->left_child = med;
+			med->right_child = med->parent;
+			med->parent = root;
+			med->right_child->left->child = NULL;
+			med->color = !med->color;
+			med->right_child->color = !med->right_child->color;
+		}
 
 
 	public:
@@ -108,7 +156,38 @@ class	rbtree
 
 		bool		empty(void) const {return (_size == 0);}
 
-		void	insert (const value_type& val)
+		void	print(node *in = NULL) const
+		{
+			if (in == NULL)
+				in = _tree;
+			if (in->color)
+				std::cout << "BLACK :: ";
+			else
+				std::cout << "  RED :: ";
+			std::cout << "Adress: " << in << ", value: " << in->data->first;
+			if (in->right_child == NULL)
+				std::cout << ", right child is NULL" << std::endl;
+			else
+			{
+				std::cout << ", right child is " << in->right_child << std::endl;
+				print(in->right_child);
+			}
+			if (in->color)
+				std::cout << "BLACK :: ";
+			else
+				std::cout << "  RED :: ";
+			std::cout << "Adress: " << in << ", value: " << in->data->first;
+			if (in->left_child == NULL)
+				std::cout << ", left child is NULL" << std::endl;
+			else
+			{
+				std::cout << ", left child is " << in->left_child << std::endl;
+				print(in->left_child);
+			}
+		}
+
+
+		void	insert(const value_type& val)
 		{
 			node	*runner;
 			node	*parent;
@@ -132,10 +211,7 @@ class	rbtree
 				parent->left_child = _add_new_child(val, parent);
 			else
 				parent->right_child = _add_new_child(val, parent);
-			if (parent->color)
-				return ;
-			else
-				_check_parent(parent);
+			_check_parent(parent);
 		}
 };
 
