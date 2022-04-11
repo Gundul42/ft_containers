@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/11 14:15:43 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/11 15:33:56 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ class	rbtree
 				if (granny->parent != NULL)
 				{
 					std::cout << "recheck" << std::endl;
-					_check_parent(granny->parent);
+					_check_parent(granny);
 				}
 				else
 				{
@@ -138,7 +138,7 @@ class	rbtree
 			if (code == "RR")
 				_turn_left(nd);
 			else if (code == "LL")
-				_turn_right(nd);
+				std::cout << "stop" << std::endl;//_turn_right(nd);
 			else if (code == "RL")
 				_turn_right_left(nd);
 			else if (code == "LR")
@@ -171,12 +171,11 @@ class	rbtree
 
 		void	_turn_right(node *nd) //WORKS!!
 		{
-			node	*root;
-			node	*hlp;
-
-			root = nd->parent->parent;
-			hlp = nd->right_child;
-				nd->parent->parent = nd;
+			node	*root = nd->parent->parent;
+			node	*hlp = nd->right_child;
+		
+			std::cout << nd->parent->data->first << " : " << nd->data->first << std::endl;
+			nd->parent->parent = nd;
 			if (root == NULL)
 			{
 			//	nd->parent->parent = nd;
@@ -298,7 +297,10 @@ class	rbtree
 				parent->left_child = _add_new_child(val, parent);
 			else
 				parent->right_child = _add_new_child(val, parent);
+			std::cout << "Inserted " << val.first << std::endl;
 			_check_parent(parent);
+			print();
+			std::cout << std::endl;
 		}
 };
 
