@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/10 19:05:19 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/11 11:15:31 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,9 @@ class	rbtree
 				code += "R";
 			else
 				code += "L";
-			if (nd->right_child == NULL)
+			if (code == "R" && nd->right_child == NULL)
+				code += "L";
+			else if (code == "L" && nd->left_child)
 				code += "L";
 			else
 				code += "R";
@@ -165,7 +167,7 @@ class	rbtree
 			_turn_right(granny->left_child);
 		}
 
-		void	_turn_left(node *nd)
+		void	_turn_left(node *nd) //WORKS!!
 		{
 			node	*root;
 			node	*hlp;
@@ -183,22 +185,22 @@ class	rbtree
 			nd->left_child->color = !nd->left_child->color;
 		}
 
-		void	_turn_right(node *med)
+		void	_turn_right(node *nd) //WORKS!!
 		{
 			node	*root;
 			node	*hlp;
 
-			root = med->parent->parent;
-			hlp = med->right_child;
+			root = nd->parent->parent;
+			hlp = nd->right_child;
 			if (root == NULL)
-				_tree = med;
+				_tree = nd;
 			else
-				root->left_child = med;
-			med->right_child = med->parent;
-			med->parent = root;
-			med->right_child->left_child = hlp;
-			med->color = !med->color;
-			med->right_child->color = !med->right_child->color;
+				root->left_child = nd;
+			nd->right_child = nd->parent;
+			nd->parent = root;
+			nd->right_child->left_child = hlp;
+			nd->color = !nd->color;
+			nd->right_child->color = !nd->right_child->color;
 		}
 
 
