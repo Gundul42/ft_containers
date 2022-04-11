@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/11 12:10:51 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/11 14:15:43 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,24 +169,6 @@ class	rbtree
 			_turn_right(granny->left_child);
 		}
 
-		void	_turn_left(node *nd) //WORKS!!
-		{
-			node	*root;
-			node	*hlp;
-
-			root = nd->parent->parent;
-			hlp = nd->left_child;
-			if (root == NULL)
-				_tree = nd;
-			else
-				root->right_child = nd;
-			nd->left_child = nd->parent;
-			nd->parent = root;
-			nd->left_child->right_child = hlp;
-			nd->color = !nd->color;
-			nd->left_child->color = !nd->left_child->color;
-		}
-
 		void	_turn_right(node *nd) //WORKS!!
 		{
 			node	*root;
@@ -194,10 +176,19 @@ class	rbtree
 
 			root = nd->parent->parent;
 			hlp = nd->right_child;
+				nd->parent->parent = nd;
 			if (root == NULL)
+			{
+			//	nd->parent->parent = nd;
 				_tree = nd;
+			}
 			else
-				root->left_child = nd;
+			{
+				if (root->right_child == nd->parent)
+					root->right_child = nd;
+				else
+					root->left_child = nd;
+			}
 			nd->right_child = nd->parent;
 			nd->parent = root;
 			nd->right_child->left_child = hlp;
@@ -205,6 +196,32 @@ class	rbtree
 			nd->right_child->color = !nd->right_child->color;
 		}
 
+		void	_turn_left(node *nd) //WORKS!!
+		{
+			node	*root;
+			node	*hlp;
+
+			root = nd->parent->parent;
+			hlp = nd->left_child;
+				nd->parent->parent = nd;
+			if (root == NULL)
+			{
+			//	nd->parent->parent = nd;
+				_tree = nd;
+			}
+			else
+			{
+				if (root->right_child == nd->parent)
+					root->right_child = nd;
+				else
+					root->left_child = nd;
+			}
+			nd->left_child = nd->parent;
+			nd->parent = root;
+			nd->left_child->right_child = hlp;
+			nd->color = !nd->color;
+			nd->left_child->color = !nd->left_child->color;
+		}
 
 	public:
 		rbtree(const allocator_type& alloc = allocator_type()): _size(0), _tree(NULL) {}
@@ -220,9 +237,14 @@ class	rbtree
 			if (in == NULL)
 				in = _tree;
 			if (in->color)
-				std::cout << "BLACK :: ";
+				std::cout << "\033[0mBLACK :: ";
 			else
-				std::cout << "  RED :: ";
+				std::cout << "\033[1;31m  RED :: ";
+			std::cout << "Parent: ";
+			if (in->parent)
+				std::cout << in->parent->data->first << " -- ";
+			else
+				std::cout << "NULL -- ";
 			std::cout << "Adress: " << in << ", value: " << in->data->first;
 			if (in->right_child == NULL)
 				std::cout << ", right child is NULL" << std::endl;
@@ -232,9 +254,14 @@ class	rbtree
 				print(in->right_child);
 			}
 			if (in->color)
-				std::cout << "BLACK :: ";
+				std::cout << "\033[0mBLACK :: ";
 			else
-				std::cout << "  RED :: ";
+				std::cout << "\033[1;31m  RED :: ";
+			std::cout << "Parent: ";
+			if (in->parent)
+				std::cout << in->parent->data->first << " -- ";
+			else
+				std::cout << "NULL -- ";
 			std::cout << "Adress: " << in << ", value: " << in->data->first;
 			if (in->left_child == NULL)
 				std::cout << ", left child is NULL" << std::endl;
@@ -243,6 +270,7 @@ class	rbtree
 				std::cout << ", left child is " << in->left_child << std::endl;
 				print(in->left_child);
 			}
+			std::cout << "\033[0m";
 		}
 
 
