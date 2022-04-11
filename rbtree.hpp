@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/11 11:15:31 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/11 12:10:51 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,9 +140,9 @@ class	rbtree
 			else if (code == "LL")
 				_turn_right(nd);
 			else if (code == "RL")
-				_turn_left_right(nd);
-			else if (code == "LR")
 				_turn_right_left(nd);
+			else if (code == "LR")
+				_turn_left_right(nd);
 		}
 
 		void	_turn_right_left(node *nd)
@@ -150,20 +150,22 @@ class	rbtree
 			node	*granny = nd->parent;
 
 			granny->right_child = nd->left_child;
-			nd->parent = nd->left_child;
 			nd->left_child = NULL;
+			nd->parent = granny->right_child;
 			granny->right_child->parent = granny;
+			granny->right_child->right_child = nd;
 			_turn_left(granny->right_child);
 		}
 
-		void	_turn_left_right(node *nd)
+		void	_turn_left_right(node *nd) //WORKS!!
 		{
 			node	*granny = nd->parent;
 
 			granny->left_child = nd->right_child;
-			nd->parent = nd->right_child;
-			nd->right_child = NULL;
 			granny->left_child->parent = granny;
+			granny->left_child->left_child = nd;
+			nd->right_child = NULL;
+			nd->parent = granny->left_child;
 			_turn_right(granny->left_child);
 		}
 
