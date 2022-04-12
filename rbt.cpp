@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/11 15:29:44 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/12 12:46:08 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ int	main(void)
 	test.insert(ft::make_pair(50,1));
 	test.insert(ft::make_pair(25,1));
 	test.insert(ft::make_pair(20,1));
-	//test.insert(ft::make_pair(16,1));
-	//test.insert(ft::make_pair(100,1));
-	//test.insert(ft::make_pair(13,1));
+	test.insert(ft::make_pair(16,1));
+	test.insert(ft::make_pair(100,1));
+	test.insert(ft::make_pair(13,1));
+	
 /* This works
 	test.insert(ft::make_pair(8,1));
 	test.insert(ft::make_pair(7,1));
@@ -50,8 +51,5 @@ int	main(void)
 	test.insert(ft::make_pair(11,1));
 	test.insert(ft::make_pair(12,1));
 */
-
-	test.print();
-
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/11 15:33:56 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/12 12:49:26 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,42 +78,42 @@ class	rbtree
 		void	_check_parent(node *nd)
 		{
 			node	*sibling;
-			node	*granny;
+			node	*parent = nd->parent;
+			node	*granny = parent->parent;
 
 			//check parent color, if black exit
-			if (nd->color)
+			if (parent->color)
 				return ;
-			granny = nd->parent;
-			if (granny->right_child == nd)
+			
+			if (granny->right_child == parent)
 				sibling = granny->left_child;
 			else
 				sibling = granny->right_child;
 
 			//check parent's sibling if it is NULL or black
-			//then rotate and recolor
+			//then rotate aparent recolor
 			if (sibling == NULL || sibling->color)
 			{
-				if (sibling)
-					std::cout << sibling->color << " : " << sibling->data->first;
-				std::cout << " rotate and recolor" << std::endl;
+				std::cout << " No sibling or it is black, rotate and recolor: "
+					<< parent->data->first << std::endl;
 				_find_rotation(nd);
 			}
 			else if (sibling && !sibling->color)
 
 			//if parents's sibling is red, recolor both 
-			//and check parent of parent
+			//aparent check parent of parent
 			{
 				sibling->color = !sibling->color;
-				nd->color = !nd->color;
+				parent->color = !parent->color;
 				granny->color = !granny->color;
 				if (granny->parent != NULL)
 				{
-					std::cout << "recheck" << std::endl;
+					std::cout << " Is root rechecking" << std::endl;
 					_check_parent(granny);
 				}
 				else
 				{
-					std::cout << "This is root" << std::endl;
+					std::cout << "This is root, we are done." << std::endl;
 					granny->color = true;
 				}
 			}
@@ -121,28 +121,26 @@ class	rbtree
 		
 		void	_find_rotation(node *nd)
 		{
-			node		*granny = nd->parent;
 			std::string	code = "";
-
-			if (granny->right_child == nd)
+			node		*parent = nd->parent;
+			node		*granny = parent->parent;
+		
+			if (granny->right_child == parent)
 				code += "R";
-			else
+			else if (granny->left_child == parent)
 				code += "L";
-			if (code == "R" && nd->right_child == NULL)
-				code += "L";
-			else if (code == "L" && nd->left_child)
-				code += "L";
-			else
+			if (parent->right_child == nd)
 				code += "R";
-			std::cout << "turn code : " << code  << std::endl;
-			if (code == "RR")
+			else if (parent->left_child == nd)
+				code += "L";
+			std::cout << "Rotation code: " << code << std::endl;
+			if (code == "RL")
+			{
+				_turn_right(nd);
 				_turn_left(nd);
-			else if (code == "LL")
-				std::cout << "stop" << std::endl;//_turn_right(nd);
-			else if (code == "RL")
-				_turn_right_left(nd);
-			else if (code == "LR")
-				_turn_left_right(nd);
+				nd->color = !nd->color;
+				nd->left_child->color = !nd->left_child->color;
+			}
 		}
 
 		void	_turn_right_left(node *nd)
@@ -174,11 +172,9 @@ class	rbtree
 			node	*root = nd->parent->parent;
 			node	*hlp = nd->right_child;
 		
-			std::cout << nd->parent->data->first << " : " << nd->data->first << std::endl;
 			nd->parent->parent = nd;
 			if (root == NULL)
 			{
-			//	nd->parent->parent = nd;
 				_tree = nd;
 			}
 			else
@@ -191,8 +187,8 @@ class	rbtree
 			nd->right_child = nd->parent;
 			nd->parent = root;
 			nd->right_child->left_child = hlp;
-			nd->color = !nd->color;
-			nd->right_child->color = !nd->right_child->color;
+		//	nd->color = !nd->color;
+		//	nd->right_child->color = !nd->right_child->color;
 		}
 
 		void	_turn_left(node *nd) //WORKS!!
@@ -218,8 +214,6 @@ class	rbtree
 			nd->left_child = nd->parent;
 			nd->parent = root;
 			nd->left_child->right_child = hlp;
-			nd->color = !nd->color;
-			nd->left_child->color = !nd->left_child->color;
 		}
 
 	public:
@@ -293,12 +287,17 @@ class	rbtree
 				else
 					runner = runner->right_child;
 			}
-			if ((val.first) < (parent->data->first))
-				parent->left_child = _add_new_child(val, parent);
-			else
-				parent->right_child = _add_new_child(val, parent);
 			std::cout << "Inserted " << val.first << std::endl;
-			_check_parent(parent);
+			if ((val.first) < (parent->data->first))
+			{
+				parent->left_child = _add_new_child(val, parent);
+				_check_parent(parent->left_child);
+			}
+			else
+			{
+				parent->right_child = _add_new_child(val, parent);
+				_check_parent(parent->right_child);
+			}
 			print();
 			std::cout << std::endl;
 		}
