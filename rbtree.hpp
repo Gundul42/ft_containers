@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/12 13:12:12 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/12 14:41:43 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,15 @@ class	rbtree
 		allocator_type		_alloc;
 		std::allocator<node>	_node_alloc;
 
+		rbtree(rbtree const & cpy) {*this = cpy;}
+
+		rbtree & operator=(rbtree const & right)
+		{
+			_size = right._size;
+			_tree = right->_tree;
+			return (*this);
+		}
+
 		node	*_add_new_child(value_type const & chl, node *prt)
 		{
 			node	*tmp = _node_alloc.allocate(1);
@@ -65,14 +74,6 @@ class	rbtree
 				tmp->color = false;
 			_size++;
 			return (tmp);
-		}
-
-		rbtree(rbtree const & cpy) {*this = cpy;}
-		rbtree & operator=(rbtree const & right)
-		{
-			_size = right._size;
-			_tree = right->_tree;
-			return (*this);
 		}
 
 		void	_check_parent(node *nd)
@@ -108,7 +109,7 @@ class	rbtree
 				granny->color = !granny->color;
 				if (granny->parent != NULL)
 				{
-					std::cout << " Is root rechecking" << std::endl;
+					std::cout << "Is root, rechecking" << std::endl;
 					_check_parent(granny);
 				}
 				else
@@ -162,33 +163,7 @@ class	rbtree
 			}
 		}
 
-		/*
-		void	_turn_right_left(node *nd)
-		{
-			node	*granny = nd->parent;
-
-			granny->right_child = nd->left_child;
-			nd->left_child = NULL;
-			nd->parent = granny->right_child;
-			granny->right_child->parent = granny;
-			granny->right_child->right_child = nd;
-			_turn_left(granny->right_child);
-		}
-
-		void	_turn_left_right(node *nd) //WORKS!!
-		{
-			node	*granny = nd->parent;
-
-			granny->left_child = nd->right_child;
-			granny->left_child->parent = granny;
-			granny->left_child->left_child = nd;
-			nd->right_child = NULL;
-			nd->parent = granny->left_child;
-			_turn_right(granny->left_child);
-		}
-		*/
-
-		void	_turn_right(node *nd) //WORKS!!
+		void	_turn_right(node *nd)
 		{
 			node	*root = nd->parent->parent;
 			node	*hlp = nd->right_child;
@@ -208,11 +183,9 @@ class	rbtree
 			nd->right_child = nd->parent;
 			nd->parent = root;
 			nd->right_child->left_child = hlp;
-		//	nd->color = !nd->color;
-		//	nd->right_child->color = !nd->right_child->color;
 		}
 
-		void	_turn_left(node *nd) //WORKS!!
+		void	_turn_left(node *nd)
 		{
 			node	*root;
 			node	*hlp;
@@ -222,7 +195,6 @@ class	rbtree
 				nd->parent->parent = nd;
 			if (root == NULL)
 			{
-			//	nd->parent->parent = nd;
 				_tree = nd;
 			}
 			else
@@ -240,11 +212,38 @@ class	rbtree
 	public:
 		rbtree(const allocator_type& alloc = allocator_type()): _size(0), _tree(NULL) {}
 
-		~rbtree(void) {}
+		~rbtree(void) {clear();}
 
 		size_type	size(void) const {return (_size);}
 
 		bool		empty(void) const {return (_size == 0);}
+
+		void		clear(node *in = NULL)
+		{
+			if (_tree == NULL)
+				return ;
+			if (in == NULL)
+				in = _tree;
+			if (in->right_child)
+				clear(in->right_child);
+			if (in->left_child)
+				clear(in->left_child);
+			if (in->right_child == NULL && in->left_child == NULL)
+			{
+				std::cout << "Leaf found, deleting :" << in << std::endl;
+				_alloc.destroy(in->data);
+				_alloc.deallocate(in->data, 1);
+				_node_alloc.deallocate(in, 1);
+			}
+			std::cout << in << " :: " << _tree << std::endl;
+			if (in == _tree)
+			{
+				_alloc.destroy(in->data);
+				_alloc.deallocate(in->data, 1);
+				_node_alloc.deallocate(in, 1);
+				_tree = NULL;
+			}
+		}
 
 		void	print(node *in = NULL) const
 		{
