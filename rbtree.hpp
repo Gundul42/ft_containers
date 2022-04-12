@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/12 12:49:26 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/12 13:12:12 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,28 @@ class	rbtree
 				nd->color = !nd->color;
 				nd->left_child->color = !nd->left_child->color;
 			}
+			if (code == "LR")
+			{
+				_turn_left(nd);
+				_turn_right(nd);
+				nd->color = !nd->color;
+				nd->right_child->color = !nd->right_child->color;
+			}
+			if (code == "RR")
+			{
+				_turn_left(parent);
+				parent->color = !parent->color;
+				parent->left_child->color = !parent->left_child->color;
+			}
+			if (code == "LL")
+			{
+				_turn_right(parent);
+				parent->color = !parent->color;
+				parent->right_child->color = !parent->right_child->color;
+			}
 		}
 
+		/*
 		void	_turn_right_left(node *nd)
 		{
 			node	*granny = nd->parent;
@@ -166,6 +186,7 @@ class	rbtree
 			nd->parent = granny->left_child;
 			_turn_right(granny->left_child);
 		}
+		*/
 
 		void	_turn_right(node *nd) //WORKS!!
 		{
