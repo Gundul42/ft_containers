@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/12 15:56:29 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/12 18:46:18 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 # include <iostream>
 # include <memory>
 # include "utility.hpp"
+
+# ifndef RBT_DEBUG
+#  define RBT_DEBUG 1
+# endif
 
 namespace ft
 {
@@ -44,14 +48,17 @@ class	rbtree
 			node		*right_child;
 			node		*left_child;
 		};
-
+		
+		//private members
 		size_type		_size;
 		node			*_tree;
 		allocator_type		_alloc;
 		std::allocator<node>	_node_alloc;
 
+		//copy constructor
 		rbtree(rbtree const & cpy) {*this = cpy;}
 
+		//assignment overload
 		rbtree & operator=(rbtree const & right)
 		{
 			_size = right._size;
@@ -59,6 +66,7 @@ class	rbtree
 			return (*this);
 		}
 
+		//add new node
 		node	*_add_new_child(value_type const & chl, node *prt)
 		{
 			node	*tmp = _node_alloc.allocate(1);
@@ -76,6 +84,7 @@ class	rbtree
 			return (tmp);
 		}
 
+		//check and balance tree
 		void	_check_parent(node *nd)
 		{
 			node	*sibling;
@@ -92,34 +101,25 @@ class	rbtree
 				sibling = granny->right_child;
 
 			//check parent's sibling if it is NULL or black
-			//then rotate aparent recolor
+			//then rotate and recolor
 			if (sibling == NULL || sibling->color)
-			{
-				std::cout << " No sibling or it is black, rotate and recolor: "
-					<< parent->data->first << std::endl;
 				_find_rotation(nd);
-			}
 			else if (sibling && !sibling->color)
-
-			//if parents's sibling is red, recolor both 
-			//aparent check parent of parent
 			{
+				//if parents's sibling is red, recolor both 
+				//aparent check parent of parent
 				sibling->color = !sibling->color;
 				parent->color = !parent->color;
 				granny->color = !granny->color;
 				if (granny->parent != NULL)
-				{
-					std::cout << "Is root, rechecking" << std::endl;
 					_check_parent(granny);
-				}
 				else
-				{
-					std::cout << "This is root, we are done." << std::endl;
 					granny->color = true;
-				}
 			}
 		}
-		
+	
+		//check which nodes must rotate
+		//in which directions, from top to bottom
 		void	_find_rotation(node *nd)
 		{
 			std::string	code = "";
@@ -134,7 +134,6 @@ class	rbtree
 				code += "R";
 			else if (parent->left_child == nd)
 				code += "L";
-			std::cout << "Rotation code: " << code << std::endl;
 			if (code == "RL")
 			{
 				_turn_right(nd);
@@ -225,7 +224,8 @@ class	rbtree
 				_clear(in->left_child);
 			if (in->right_child == NULL && in->left_child == NULL)
 			{
-				std::cout << "Leaf found, deleting :" << in << std::endl;
+				if (RBT_DEBUG)
+					std::cout << "Leaf found, deleting :" << in << std::endl;
 				if (in->parent && in->parent->right_child == in)
 					in->parent->right_child = NULL;
 				else if (in->parent && in->parent->left_child == in)
@@ -234,10 +234,11 @@ class	rbtree
 				_alloc.deallocate(in->data, 1);
 				_node_alloc.deallocate(in, 1);
 			}
-			else
+			else if (RBT_DEBUG)
 				std::cout << in << ">> " << in->left_child << " -- " 
 					<< in->right_child << std::endl << std::endl;
-			std::cout << in << " :: " << _tree << std::endl;
+			if (RBT_DEBUG)
+				std::cout << in << " :: " << _tree << std::endl;
 			if (in == _tree)
 				_tree = NULL;
 		}
@@ -251,6 +252,7 @@ class	rbtree
 
 		bool		empty(void) const {return (_size == 0);}
 
+		void		clear(void) const {_clear();}
 
 		void	print(node *in = NULL) const
 		{
@@ -294,7 +296,11 @@ class	rbtree
 			}
 			std::cout << "\033[0m";
 		}
-
+	
+		void	insert(const key_type key, mapped_type data)
+			{
+				insert(ft::make_pair(key,data));
+			}
 
 		void	insert(const value_type& val)
 		{
@@ -304,6 +310,8 @@ class	rbtree
 			if (!_tree)
 			{
 				_tree = _add_new_child(val, NULL);
+				if (RBT_DEBUG)
+					std::cout << "Inserted " << val.first << std::endl;
 				return ;
 			}
 			parent = NULL;
@@ -313,10 +321,11 @@ class	rbtree
 				parent = runner;
 				if ((val.first) < (runner->data->first))
 					runner = runner->left_child;
-				else
+				else 
 					runner = runner->right_child;
 			}
-			std::cout << "Inserted " << val.first << std::endl;
+			if (RBT_DEBUG)
+				std::cout << "Inserted " << val.first << std::endl;
 			if ((val.first) < (parent->data->first))
 			{
 				parent->left_child = _add_new_child(val, parent);
@@ -327,8 +336,8 @@ class	rbtree
 				parent->right_child = _add_new_child(val, parent);
 				_check_parent(parent->right_child);
 			}
-			print();
-			std::cout << std::endl;
+			if (RBT_DEBUG)
+				print();
 		}
 };
 
