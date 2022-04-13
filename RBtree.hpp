@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rbtree.hpp                                         :+:      :+:    :+:   */
+/*   RBtree.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/13 12:37:50 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/13 15:29:14 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,61 @@ class	RBtree
 			_tree = right->_tree;
 			return (*this);
 		}
+		
+		bool	_hasChilds(node *nd) const
+		{
+			if (nd->right_child == NULL && nd->left_child == NULL)
+				return (false);
+			return (true);
+		}
+
+		void	_swap(node *nda, node *ndb)
+		{
+			pointer	tmp;
+
+			tmp = nda->data;
+			nda->data = ndb->data;
+			ndb->data = tmp;
+		}
+
+		void	_delete(node *nd)
+		{
+			node	*help;
+
+			if (nd == NULL)
+				return ;
+			if (RBT_DEBUG)
+				std::cout << "Adress " << nd << " is to delete" << std::endl;
+			if (!_hasChilds(nd) && !nd->color)
+			{
+				_clear(nd);
+				return ;
+			}
+			else if (_hasChilds(nd))
+			{
+				if (nd->right_child)
+				       help = _getSuccessor(nd->right_child);
+				else if (nd->left_child)
+				       help = _getPredecessor(nd->left_child);
+				_swap(help, nd);
+				_delete(help);
+				return ;
+			}
+		}
+
+		node	*_getSuccessor(node *nd)
+		{
+			while (nd->left_child)
+				nd = nd->left_child;
+			return (nd);
+		}
+
+		node	*_getPredecessor(node *nd)
+		{
+			while (nd->right_child)
+				nd = nd->right_child;
+			return (nd);
+		}
 
 		//add new node
 		node	*_add_new_child(value_type const & chl, node *prt)
@@ -107,7 +162,7 @@ class	RBtree
 			else if (sibling && !sibling->color)
 			{
 				//if parents's sibling is red, recolor both 
-				//aparent check parent of parent
+				//and check parent of parent
 				sibling->color = !sibling->color;
 				parent->color = !parent->color;
 				granny->color = !granny->color;
@@ -214,7 +269,7 @@ class	RBtree
 
 		//deletes all nodes starting from *in
 		//no argument given -> delete from root
-		void		_clear(node *in = NULL)
+		void	_clear(node *in = NULL)
 		{
 			if (_tree == NULL)
 				return ;
@@ -224,7 +279,7 @@ class	RBtree
 				_clear(in->right_child);
 			if (in->left_child)
 				_clear(in->left_child);
-			if (in->right_child == NULL && in->left_child == NULL)
+			if (!_hasChilds(in))
 			{
 				if (RBT_DEBUG)
 					std::cout << "Leaf found, deleting :" << in << std::endl;
@@ -243,6 +298,7 @@ class	RBtree
 				std::cout << in << " :: " << _tree << std::endl;
 			if (in == _tree)
 				_tree = NULL;
+			_size--;
 		}
 		
 		node	*_findKey(key_type const & key, node *nd) const
@@ -255,7 +311,7 @@ class	RBtree
 				nd = _tree;
 			if (nd->data->first == key)
 				return (nd);
-			if (nd->left_child == NULL && nd->right_child == NULL)
+			if (!_hasChilds(nd))
 				return (NULL);
 			if (nd->data->first > key && nd->left_child == NULL)
 				return (NULL);
@@ -377,6 +433,20 @@ class	RBtree
 		{
 			return _findKey(key, NULL);
 		}
+
+		void	erase(key_type const & key) 
+		{
+			node	*fnd = find(key);
+
+			if (!fnd)
+			{
+				if (RBT_DEBUG)
+					std::cout << "Error: key not found" << std::endl;
+				return ;
+			}
+			_delete(fnd);
+		}
+
 };
 
 } //end namespace

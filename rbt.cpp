@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/13 12:38:20 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/13 15:31:23 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,15 @@ int	main(void)
 	test.insert(4,1);
 	test.insert(21,1);
 	test.insert(19,1);
+	std::cout << "Size is " << test.size() << std::endl;
 
 	test.insert(40,1);
+	std::cout << "Size is " << test.size() << std::endl;
+
+	test.erase(16);
+	std::cout << "Size is " << test.size() << std::endl;
+	test.insert(18, 1);
+	std::cout << "Size is " << test.size() << std::endl;
 
 	if (test.find(key))
 	{
@@ -46,5 +53,6 @@ int	main(void)
 	}
 	else
 		std::cout << std::endl << ">>> Was NOT found" << std::endl << std::endl;
+	test.print();
 	return (0);
 }
