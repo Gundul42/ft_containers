@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/12 18:46:18 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/13 11:56:38 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,9 +242,32 @@ class	rbtree
 			if (in == _tree)
 				_tree = NULL;
 		}
+		
+		node	*_findKey(key_type const & key, node *nd) const
+		{
+			node	*bck = NULL;
+
+			if (_tree == NULL)
+				return (NULL);
+			if (nd == NULL)
+				nd = _tree;
+			if (nd->data->first == key)
+				return (nd);
+			if (nd->left_child == NULL && nd->right_child == NULL)
+				return (NULL);
+			if (nd->data->first > key && nd->left_child == NULL)
+				return (NULL);
+			else if (nd->data->first > key && nd->left_child)
+				bck = _findKey(key, nd->left_child);
+			if (nd->data->first < key && nd->right_child == NULL)
+				return (NULL);
+			else if (nd->data->first < key && nd->right_child)
+				bck = _findKey(key, nd->right_child);
+			return (bck);
+		}
 
 	public:
-		rbtree(const allocator_type& alloc = allocator_type()): _size(0), _tree(NULL) {}
+		rbtree(void): _size(0), _tree(NULL) {}
 
 		~rbtree(void) {_clear();}
 
@@ -311,7 +334,8 @@ class	rbtree
 			{
 				_tree = _add_new_child(val, NULL);
 				if (RBT_DEBUG)
-					std::cout << "Inserted " << val.first << std::endl;
+					std::cout << std::endl << "Inserted " << val.first 
+						<< std::endl;
 				return ;
 			}
 			parent = NULL;
@@ -325,7 +349,7 @@ class	rbtree
 					runner = runner->right_child;
 			}
 			if (RBT_DEBUG)
-				std::cout << "Inserted " << val.first << std::endl;
+				std::cout << std::endl << "Inserted " << val.first << std::endl;
 			if ((val.first) < (parent->data->first))
 			{
 				parent->left_child = _add_new_child(val, parent);
@@ -338,6 +362,11 @@ class	rbtree
 			}
 			if (RBT_DEBUG)
 				print();
+		}
+
+		node	*find(key_type const & key) const
+		{
+			return _findKey(key, NULL);
 		}
 };
 
