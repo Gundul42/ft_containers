@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/13 15:29:14 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/13 18:26:26 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ class	RBtree
 		{
 			pointer	tmp;
 
+			if (RBT_DEBUG)
+				std::cout << nda->data->first << " swapped with " <<
+					ndb->data->first << std::endl;	
 			tmp = nda->data;
 			nda->data = ndb->data;
 			ndb->data = tmp;
@@ -88,10 +91,11 @@ class	RBtree
 
 			if (nd == NULL)
 				return ;
-			if (RBT_DEBUG)
-				std::cout << "Adress " << nd << " is to delete" << std::endl;
 			if (!_hasChilds(nd) && !nd->color)
 			{
+				if (RBT_DEBUG)
+					std::cout << "Adress " << nd << ", key " <<
+					nd->data->first << " was deleted" << std::endl;
 				_clear(nd);
 				return ;
 			}
