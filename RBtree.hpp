@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/13 11:56:38 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/13 12:37:50 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 # include "utility.hpp"
 
 # ifndef RBT_DEBUG
-#  define RBT_DEBUG 1
+#  define RBT_DEBUG 1		//setting to 0 turns debug off
 # endif
 
 namespace ft
 {
 
 template <typename Key, typename T, typename Alloc = std::allocator<pair<const Key, T > > >
-class	rbtree 
+class	RBtree 
 {
 	private:
 		typedef	Key						key_type;
@@ -56,10 +56,10 @@ class	rbtree
 		std::allocator<node>	_node_alloc;
 
 		//copy constructor
-		rbtree(rbtree const & cpy) {*this = cpy;}
+		RBtree(RBtree const & cpy) {*this = cpy;}
 
 		//assignment overload
-		rbtree & operator=(rbtree const & right)
+		RBtree & operator=(RBtree const & right)
 		{
 			_size = right._size;
 			_tree = right->_tree;
@@ -212,6 +212,8 @@ class	rbtree
 				hlp->parent = nd->left_child;
 		}
 
+		//deletes all nodes starting from *in
+		//no argument given -> delete from root
 		void		_clear(node *in = NULL)
 		{
 			if (_tree == NULL)
@@ -267,9 +269,9 @@ class	rbtree
 		}
 
 	public:
-		rbtree(void): _size(0), _tree(NULL) {}
+		RBtree(void): _size(0), _tree(NULL) {}
 
-		~rbtree(void) {_clear();}
+		~RBtree(void) {_clear();}
 
 		size_type	size(void) const {return (_size);}
 
@@ -329,12 +331,19 @@ class	rbtree
 		{
 			node	*runner;
 			node	*parent;
-
+			
 			if (!_tree)
 			{
 				_tree = _add_new_child(val, NULL);
 				if (RBT_DEBUG)
 					std::cout << std::endl << "Inserted " << val.first 
+						<< std::endl;
+				return ;
+			}
+			if (find(val.first))
+			{
+				if (RBT_DEBUG)
+					std::cout << "Error: Key is already in the tree !" 
 						<< std::endl;
 				return ;
 			}
