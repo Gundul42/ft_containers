@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/14 17:40:23 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/14 19:26:03 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,34 @@ class	RBtree
 			ndb->data = tmp;
 		}
 
+		void	_resolveDB1(node *nd, node *sibling)
+			{
+				std::cout << "DB1) I am red !" << std::endl;
+				if (nd->parent->color)
+					nd->parent->db = true;
+				else
+					nd->parent->color = true;
+				sibling->color = false;
+			}
+
+		void	_resolveDB2(node *nd, node *parent, node *sibling)
+			{
+				bool	hlp;
+
+				std::cout << "DB2) I am red !" << std::endl;
+				hlp = parent->color;
+				parent->color = sibling->color;
+				sibling->color = hlp;
+				if (parent->right_child == nd)
+					_turn_right(parent);
+				else
+					_turn_left(parent);
+				_checkDoubleBlack(nd);
+			}
+
+		void	_resolveDB3(node *nd,node *parent, node *sibling)
+		{}
+
 		void	_checkDoubleBlack(node *nd)
 		{
 			node	*parent = nd->parent;
@@ -131,30 +159,32 @@ class	RBtree
 			//has a sibling and sibling and it's children
 			//are all black
 			if (sibling && _allBlack(sibling))
-			{
-				if (nd->parent->color)
-					nd->parent->db = true;
-				else
-					nd->parent->color = true;
-				sibling->color = false;
-			}
+				_resolveDB1(nd, sibling);
 
 			//has a sibling but it is red color
 			else if (sibling && !sibling->color)
-			{
-				std::cout << "Sry, I am red !" << std::endl;
-				hlp = parent->color;
-				parent->color = sibling->color;
-				sibling->color = hlp;
-				if (parent->right_child == nd)
-					_turn_right(parent);
-				else
-					_turn_left(parent);
-				_checkDoubleBlack(nd);
-			}
+				_resolveDB2(nd, parent, sibling);
+
+			//check color of sibling's children and
+			//resolve accordingly to it's distance from DB
 			else if (sibling && sibling->color && !_allBlack(sibling))
 			{
 				std::cout << "my babies are not all black" << std::endl;
+				if (parent->right_child == sibling && sibling->right_child->color)
+				{
+					hlp = sibling->color;
+					sibling->color = sibling->left_child->color;
+					sibling->left_child->color = hlp;
+					_turn_right(sibling);
+				}
+				if (parent->left_child == sibling && sibling->left_child->color)
+				{
+					hlp = sibling->color;
+					sibling->color = sibling->right_child->color;
+					sibling->right_child->color = hlp;
+					_turn_left(sibling);
+				}
+				_resolveDB3(nd, nd->parent, _getSibling(nd));
 			}
 		}
 
