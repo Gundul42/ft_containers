@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/13 18:26:26 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/14 17:40:23 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ class	RBtree
 		{
 			pointer		data;
 			bool		color;
+			bool		db;
 			node		*parent;
 			node		*right_child;
 			node		*left_child;
@@ -65,7 +66,8 @@ class	RBtree
 			_tree = right->_tree;
 			return (*this);
 		}
-		
+	
+		// false if leaf node	
 		bool	_hasChilds(node *nd) const
 		{
 			if (nd->right_child == NULL && nd->left_child == NULL)
@@ -73,16 +75,87 @@ class	RBtree
 			return (true);
 		}
 
+		// return true if all children are black
+		// or if it is a leaf node
+		bool	_allBlack(node *nd) const
+		{
+			if (nd == NULL)
+				return (true);
+			if (!_hasChilds(nd))
+				return (true);
+			if (nd->right_child && nd->right_child->color && nd->left_child &&
+				nd->left_child->color)
+				return (true);
+			return false;
+		}
+
+		//get brother of nd
+		node*	_getSibling(node *nd)
+		{
+			node	*parent = nd->parent;
+
+			if (parent == NULL)
+				return (NULL);
+			if (parent->right_child && parent->right_child == nd)
+				return (parent->left_child);
+			return (parent->right_child);
+		}
+
+		//instead of replacing we swap nodes so
+		//_clear can be used on the last remaining
+		//sub_tree
 		void	_swap(node *nda, node *ndb)
 		{
 			pointer	tmp;
 
 			if (RBT_DEBUG)
-				std::cout << nda->data->first << " swapped with " <<
-					ndb->data->first << std::endl;	
+				std::cout << ndb->data->first << " swapped with " <<
+					nda->data->first << std::endl;	
 			tmp = nda->data;
 			nda->data = ndb->data;
 			ndb->data = tmp;
+		}
+
+		void	_checkDoubleBlack(node *nd)
+		{
+			node	*parent = nd->parent;
+			node	*sibling;
+			bool	hlp;
+
+			if (parent == NULL)
+			{
+				nd->db = false;
+				return;
+			}
+			sibling = _getSibling(nd);
+			//has a sibling and sibling and it's children
+			//are all black
+			if (sibling && _allBlack(sibling))
+			{
+				if (nd->parent->color)
+					nd->parent->db = true;
+				else
+					nd->parent->color = true;
+				sibling->color = false;
+			}
+
+			//has a sibling but it is red color
+			else if (sibling && !sibling->color)
+			{
+				std::cout << "Sry, I am red !" << std::endl;
+				hlp = parent->color;
+				parent->color = sibling->color;
+				sibling->color = hlp;
+				if (parent->right_child == nd)
+					_turn_right(parent);
+				else
+					_turn_left(parent);
+				_checkDoubleBlack(nd);
+			}
+			else if (sibling && sibling->color && !_allBlack(sibling))
+			{
+				std::cout << "my babies are not all black" << std::endl;
+			}
 		}
 
 		void	_delete(node *nd)
@@ -98,6 +171,13 @@ class	RBtree
 					nd->data->first << " was deleted" << std::endl;
 				_clear(nd);
 				return ;
+			}
+			else if (!_hasChilds(nd) && nd->color)
+			{
+				nd->db = true;
+				std::cout << nd->data->first << " is double Black!" << std::endl;
+				_checkDoubleBlack(nd);
+				_clear(nd);
 			}
 			else if (_hasChilds(nd))
 			{
@@ -135,6 +215,7 @@ class	RBtree
 			tmp->right_child = NULL;
 			tmp->left_child = NULL;
 			tmp->parent = prt;
+			tmp->db = false;
 			if (prt == NULL)
 				tmp->color = true;
 			else
@@ -345,6 +426,10 @@ class	RBtree
 				in = _tree;
 			if (in == NULL)
 				return;
+			if (in->db)
+				std::cout << "DB <<<";
+			else
+				std::cout << "   <<<";
 			if (in->color)
 				std::cout << "\033[0mBLACK :: ";
 			else
@@ -362,6 +447,11 @@ class	RBtree
 				std::cout << ", right child is " << in->right_child << std::endl;
 				print(in->right_child);
 			}
+			//left subtree
+			if (in->db)
+				std::cout << "DB <<<";
+			else
+				std::cout << "   <<<";
 			if (in->color)
 				std::cout << "\033[0mBLACK :: ";
 			else

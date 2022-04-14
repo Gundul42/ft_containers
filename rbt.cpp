@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/13 18:29:12 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/14 18:18:54 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,22 @@ int	main(void)
 
 	ft::RBtree<int, int>	test;
 	int			key = 31;
-	
+
+	test.insert(50,1);
+	test.insert(20,1);
+	test.insert(65,1);
+	test.insert(15,1);
+	test.insert(25,1);
+	test.insert(55,1);
+	test.insert(70,1);
+	test.insert(14,1);
+	test.erase(14);
+	test.insert(80,1);
+	test.insert(68,1);
+	test.insert(90,1);
+
+//	test.print();
+/*	
 	test.insert(10,1);
 	test.insert(18,1);
 	test.insert(7,1);
@@ -54,5 +69,6 @@ int	main(void)
 	else
 		std::cout << std::endl << ">>> Was NOT found" << std::endl << std::endl;
 	test.print();
+	*/
 	return (0);
 }
