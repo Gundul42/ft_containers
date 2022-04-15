@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/14 19:26:03 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/15 12:58:53 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,11 @@ class	RBtree
 		{
 			if (nd == NULL)
 				return (true);
+			if (!nd->color)
+				return (false);
 			if (!_hasChilds(nd))
 				return (true);
-			if (nd->right_child && nd->right_child->color && nd->left_child &&
-				nd->left_child->color)
+			if (_getColorRight(nd) && _getColorLeft(nd))
 				return (true);
 			return false;
 		}
@@ -116,6 +117,20 @@ class	RBtree
 			ndb->data = tmp;
 		}
 
+		bool	_getColorRight(node *nd) const
+		{
+			if (nd->right_child)
+				return (nd->right_child->color);
+			return (true);
+		}
+		
+		bool	_getColorLeft(node *nd) const
+		{
+			if (nd->right_child)
+				return (nd->right_child->color);
+			return (true);
+		}
+
 		void	_resolveDB1(node *nd, node *sibling)
 			{
 				std::cout << "DB1) I am red !" << std::endl;
@@ -135,14 +150,36 @@ class	RBtree
 				parent->color = sibling->color;
 				sibling->color = hlp;
 				if (parent->right_child == nd)
-					_turn_right(parent);
+					_turn_right(sibling);
 				else
-					_turn_left(parent);
+					_turn_left(sibling);
 				_checkDoubleBlack(nd);
 			}
 
 		void	_resolveDB3(node *nd,node *parent, node *sibling)
-		{}
+		{
+			bool	hlp;
+
+			//far child is red
+			if (parent->right_child == sibling && !_getColorRight(sibling))
+			{
+				hlp = parent->color;
+				parent->color = sibling->color;
+				sibling->color = hlp;
+				sibling->right_child->color = true;
+				_turn_left(parent);
+				//_clear(nd);
+			}
+			if (parent->left_child == sibling && !_getColorLeft(sibling))
+			{
+				hlp = parent->color;
+				parent->color = sibling->color;
+				sibling->color = hlp;
+				sibling->left_child->color = true;
+				_turn_right(parent);
+				//_clear(nd);
+			}
+		}
 
 		void	_checkDoubleBlack(node *nd)
 		{
@@ -150,12 +187,18 @@ class	RBtree
 			node	*sibling;
 			bool	hlp;
 
+			std::cout << "Dobleblack is " << nd->data->first << ", ";
 			if (parent == NULL)
 			{
 				nd->db = false;
 				return;
 			}
 			sibling = _getSibling(nd);
+			std::cout << "Sibling is " << sibling->data->first << ", ";
+			if (!sibling->color)
+				std::cout << "RED" << std::endl;
+			else
+				std::cout << "BLACK" << std::endl;
 			//has a sibling and sibling and it's children
 			//are all black
 			if (sibling && _allBlack(sibling))
@@ -170,20 +213,25 @@ class	RBtree
 			else if (sibling && sibling->color && !_allBlack(sibling))
 			{
 				std::cout << "my babies are not all black" << std::endl;
-				if (parent->right_child == sibling && sibling->right_child->color)
+				//far child is black
+				if (parent->right_child == sibling && _getColorRight(sibling))
 				{
 					hlp = sibling->color;
-					sibling->color = sibling->left_child->color;
-					sibling->left_child->color = hlp;
+					sibling->color = _getColorLeft(sibling);
+					if (sibling->left_child)
+						sibling->left_child->color = hlp;
 					_turn_right(sibling);
 				}
-				if (parent->left_child == sibling && sibling->left_child->color)
+				if (parent->left_child == sibling && _getColorLeft(sibling))
 				{
 					hlp = sibling->color;
-					sibling->color = sibling->right_child->color;
-					sibling->right_child->color = hlp;
+					sibling->color = _getColorRight(sibling);
+					if (sibling->right_child)
+						sibling->right_child->color = hlp;
 					_turn_left(sibling);
 				}
+
+				//mandatory or if far child is red
 				_resolveDB3(nd, nd->parent, _getSibling(nd));
 			}
 		}
