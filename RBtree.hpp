@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/15 14:42:44 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/15 15:43:41 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "utility.hpp"
 
 # ifndef RBT_DEBUG
-#  define RBT_DEBUG 1		//setting to 0 turns debug off
+#  define RBT_DEBUG 0		//setting to 0 turns debug off
 # endif
 
 namespace ft
@@ -133,7 +133,8 @@ class	RBtree
 
 		void	_resolveDB1(node *nd, node *sibling)
 			{
-				std::cout << "DB1) We are all black !" << std::endl;
+				if (RBT_DEBUG)
+					std::cout << "DB1) We are all black !" << std::endl;
 				nd->db = false;
 				if (nd->parent->color)
 					nd->parent->db = true;
@@ -147,7 +148,8 @@ class	RBtree
 			{
 				bool	hlp;
 
-				std::cout << "DB2) I am red !" << std::endl;
+				if (RBT_DEBUG)
+					std::cout << "DB2) I am red !" << std::endl;
 				hlp = parent->color;
 				parent->color = sibling->color;
 				sibling->color = hlp;
@@ -163,12 +165,16 @@ class	RBtree
 			bool	hlp;
 
 			//far child is red
-			std::cout << "node: " << nd->data->first << std::endl;
-			std::cout << "parent: " << parent->data->first << std::endl;
-			std::cout << "sibling: " << sibling->data->first << std::endl;
+			if (RBT_DEBUG)
+			{
+				std::cout << "node: " << nd->data->first << std::endl;
+				std::cout << "parent: " << parent->data->first << std::endl;
+				std::cout << "sibling: " << sibling->data->first << std::endl;
+			}
 			if (parent->right_child == sibling && !_getColorRight(sibling))
 			{
-				std::cout << "Sibling on the right" << std::endl;
+				if (RBT_DEBUG)
+					std::cout << "Sibling on the right" << std::endl;
 				hlp = parent->color;
 				parent->color = sibling->color;
 				sibling->color = hlp;
@@ -177,7 +183,8 @@ class	RBtree
 			}
 			if (parent->left_child == sibling && !_getColorLeft(sibling))
 			{
-				std::cout << "Sibling on the left" << std::endl;
+				if (RBT_DEBUG)
+					std::cout << "Sibling on the left" << std::endl;
 				hlp = parent->color;
 				parent->color = sibling->color;
 				sibling->color = hlp;
@@ -194,18 +201,21 @@ class	RBtree
 
 			if (!nd->db)
 				return ;
-			std::cout << "Dobleblack is " << nd->data->first << ", ";
 			if (parent == NULL)
 			{
 				nd->db = false;
 				return;
 			}
 			sibling = _getSibling(nd);
-			std::cout << "Sibling is " << sibling->data->first << ", ";
-			if (!sibling->color)
-				std::cout << "RED" << std::endl;
-			else
-				std::cout << "BLACK" << std::endl;
+			if (RBT_DEBUG)
+			{
+				std::cout << "Doubleblack is " << nd->data->first << ", ";
+				std::cout << "Sibling is " << sibling->data->first << ", ";
+				if (!sibling->color)
+					std::cout << "RED" << std::endl;
+				else
+					std::cout << "BLACK" << std::endl;
+			}
 			//has a sibling and sibling and it's children
 			//are all black
 			if (sibling && _allBlack(sibling))
@@ -219,13 +229,9 @@ class	RBtree
 			//resolve accordingly to it's distance from DB
 			else if (sibling && sibling->color && !_allBlack(sibling))
 			{
-				std::cout << "my babies are not all black" << std::endl;
 				//far child is black
 				if (parent->right_child == sibling && _getColorRight(sibling))
 				{
-					std::cout << "Far is BLACK" << std::endl;
-					std::cout << "Turn right " << sibling->left_child->data->first
-						<< std::endl;
 					hlp = sibling->color;
 					sibling->color = _getColorLeft(sibling);
 					if (sibling->left_child)
@@ -234,9 +240,6 @@ class	RBtree
 				}
 				if (parent->left_child == sibling && _getColorLeft(sibling))
 				{
-					std::cout << "Far is BLACK" << std::endl;
-					std::cout << "Turn left " << sibling->right_child->data->first
-						<< std::endl;
 					hlp = sibling->color;
 					sibling->color = _getColorRight(sibling);
 					if (sibling->right_child)
@@ -244,7 +247,6 @@ class	RBtree
 					_turn_left(sibling->right_child);
 				}
 				//mandatory or if far child is red
-				std::cout << "Far is RED" << std::endl;
 				_resolveDB3(nd, nd->parent, _getSibling(nd));
 			}
 		}
@@ -266,7 +268,6 @@ class	RBtree
 			else if (!_hasChilds(nd) && nd->color)
 			{
 				nd->db = true;
-				std::cout << nd->data->first << " is double Black!" << std::endl;
 				_checkDoubleBlack(nd);
 				_clear(nd);
 			}

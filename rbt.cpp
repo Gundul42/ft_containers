@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/15 14:54:33 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/15 15:45:51 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,33 @@ int	main(void)
 	test.insert(68,1);
 	test.insert(90,1);
 
+	std::cout << "Size is " << test.size() << std::endl << std::endl;
 	test.erase(55);
 	test.print();
+	std::cout << "Size is " << test.size() << std::endl << std::endl;
 	test.erase(20);
 	test.print();
+	std::cout << "Size is " << test.size() << std::endl << std::endl;
 	test.erase(90);
 	test.print();
+	std::cout << "Size is " << test.size() << std::endl << std::endl;
 	test.erase(80);
 	test.print();
+	std::cout << "Size is " << test.size() << std::endl << std::endl;
 	test.erase(50);
 	test.print();
+	std::cout << "Size is " << test.size() << std::endl << std::endl;
 	test.erase(25);
 	test.print();
+	std::cout << "Size is " << test.size() << std::endl << std::endl;
 	test.erase(15);
 	test.print();
+	std::cout << "Size is " << test.size() << std::endl << std::endl;
 	test.erase(65);
 	test.print();
+	std::cout << "Size is " << test.size() << std::endl << std::endl;
 	test.erase(68);
 	test.print();
+	std::cout << "Size is " << test.size() << std::endl << std::endl;
 	return (0);
 }
