@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/15 13:49:03 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/15 14:54:33 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,16 @@ int	main(void)
 	test.erase(90);
 	test.print();
 	test.erase(80);
+	test.print();
+	test.erase(50);
+	test.print();
+	test.erase(25);
+	test.print();
+	test.erase(15);
+	test.print();
+	test.erase(65);
+	test.print();
+	test.erase(68);
 	test.print();
 	return (0);
 }
