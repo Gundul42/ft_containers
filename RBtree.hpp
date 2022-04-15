@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/15 13:31:18 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/15 14:42:44 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,8 @@ class	RBtree
 		
 		bool	_getColorLeft(node *nd) const
 		{
-			if (nd->right_child)
-				return (nd->right_child->color);
+			if (nd->left_child)
+				return (nd->left_child->color);
 			return (true);
 		}
 
@@ -163,23 +163,26 @@ class	RBtree
 			bool	hlp;
 
 			//far child is red
+			std::cout << "node: " << nd->data->first << std::endl;
+			std::cout << "parent: " << parent->data->first << std::endl;
+			std::cout << "sibling: " << sibling->data->first << std::endl;
 			if (parent->right_child == sibling && !_getColorRight(sibling))
 			{
+				std::cout << "Sibling on the right" << std::endl;
 				hlp = parent->color;
 				parent->color = sibling->color;
 				sibling->color = hlp;
 				sibling->right_child->color = true;
-				_turn_left(parent);
-				//_clear(nd);
+				_turn_left(sibling);
 			}
 			if (parent->left_child == sibling && !_getColorLeft(sibling))
 			{
+				std::cout << "Sibling on the left" << std::endl;
 				hlp = parent->color;
 				parent->color = sibling->color;
 				sibling->color = hlp;
 				sibling->left_child->color = true;
-				_turn_right(parent);
-				//_clear(nd);
+				_turn_right(sibling);
 			}
 		}
 
@@ -220,22 +223,28 @@ class	RBtree
 				//far child is black
 				if (parent->right_child == sibling && _getColorRight(sibling))
 				{
+					std::cout << "Far is BLACK" << std::endl;
+					std::cout << "Turn right " << sibling->left_child->data->first
+						<< std::endl;
 					hlp = sibling->color;
 					sibling->color = _getColorLeft(sibling);
 					if (sibling->left_child)
 						sibling->left_child->color = hlp;
-					_turn_right(sibling);
+					_turn_right(sibling->left_child);
 				}
 				if (parent->left_child == sibling && _getColorLeft(sibling))
 				{
+					std::cout << "Far is BLACK" << std::endl;
+					std::cout << "Turn left " << sibling->right_child->data->first
+						<< std::endl;
 					hlp = sibling->color;
 					sibling->color = _getColorRight(sibling);
 					if (sibling->right_child)
 						sibling->right_child->color = hlp;
-					_turn_left(sibling);
+					_turn_left(sibling->right_child);
 				}
-
 				//mandatory or if far child is red
+				std::cout << "Far is RED" << std::endl;
 				_resolveDB3(nd, nd->parent, _getSibling(nd));
 			}
 		}
