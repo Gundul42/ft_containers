@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/15 12:58:53 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/15 13:31:18 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,12 +133,14 @@ class	RBtree
 
 		void	_resolveDB1(node *nd, node *sibling)
 			{
-				std::cout << "DB1) I am red !" << std::endl;
+				std::cout << "DB1) We are all black !" << std::endl;
+				nd->db = false;
 				if (nd->parent->color)
 					nd->parent->db = true;
 				else
 					nd->parent->color = true;
 				sibling->color = false;
+				_checkDoubleBlack(nd->parent);
 			}
 
 		void	_resolveDB2(node *nd, node *parent, node *sibling)
@@ -187,6 +189,8 @@ class	RBtree
 			node	*sibling;
 			bool	hlp;
 
+			if (!nd->db)
+				return ;
 			std::cout << "Dobleblack is " << nd->data->first << ", ";
 			if (parent == NULL)
 			{
