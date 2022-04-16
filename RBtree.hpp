@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/16 14:44:33 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/16 15:23:11 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -577,7 +577,7 @@ class	RBtree
 			return (nd->data);
 		}
 
-		void	setValue(key_type const & key, mapped_type const & data) const
+		void	setValue(key_type const & key, mapped_type const & data)
 		{
 			node	*nd = _findKey(key, NULL);
 
