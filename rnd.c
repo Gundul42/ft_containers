@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/06 17:12:42 by graja             #+#    #+#             */
-/*   Updated: 2022/04/15 18:45:27 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/16 14:21:57 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc,char **argv)
 	int			flag;
 	std::vector<long>	delme;
 	ft::RBtree<long, int>	test;
+	ft::RBtree<long, int>::valPtr	dataptr;
 
 	i = 0;
 	srandom(time(NULL));
@@ -58,7 +59,7 @@ int	main(int argc,char **argv)
 		if ((nbr < 0 && !chk[nbr * -1]) || (nbr >= 0 && !chk[max + nbr]))
 		{
 			//printf("%ld ", nbr);
-			test.insert(nbr, 1);
+			test.insert(nbr, random()%100);
 			delme.push_back(nbr);
 			i++;
 			if (nbr < 0)
@@ -67,11 +68,22 @@ int	main(int argc,char **argv)
 				chk[max + nbr] = 1;
 		}
 	}
+	dataptr = test.getValue(delme[(n / 2)]);
+	if (dataptr)
+		std::cout << ">>> FOUND: " << dataptr->second << " value of key_nr: " << 
+			dataptr->first << std::endl;
+	test.setValue(delme[(n / 2)], 666);
+	dataptr = test.getValue(delme[(n / 2)]);
+	if (dataptr)
+		std::cout << ">>> FOUND: " << dataptr->second << " value of key_nr: " << 
+			dataptr->first << std::endl;
+	test.erase(dataptr);
 	i = 0;
 	while (i < n)
 	{
 		nbr = random() % delme.size();
-		std::cout << "Delete nbr " << nbr << " with key value of " << delme[nbr] << std::endl;
+		std::cout << i << ") Delete nbr " << nbr << " with key value of " << delme[nbr] << 
+			std::endl;
 		test.erase(delme[nbr]);
 		delme.erase(delme.begin() + nbr);
 		i++; 

@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/15 18:49:04 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/16 14:44:33 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -501,16 +501,113 @@ class	RBtree
 			return (bck);
 		}
 
+		void	_insert(value_type const & val)
+		{
+			node	*runner;
+			node	*parent;
+			
+			if (!_tree)
+			{
+				_tree = _add_new_child(val, NULL);
+				if (RBT_DEBUG)
+					std::cout << std::endl << "Inserted " << val.first 
+						<< std::endl;
+				return ;
+			}
+			if (find(val.first))
+			{
+				if (RBT_DEBUG)
+					std::cout << "Error: Key is already in the tree !" 
+						<< std::endl;
+				return ;
+			}
+			parent = NULL;
+			runner = _tree;
+			while (runner != NULL)
+			{
+				parent = runner;
+				if ((val.first) < (runner->data->first))
+					runner = runner->left_child;
+				else 
+					runner = runner->right_child;
+			}
+			if (RBT_DEBUG)
+				std::cout << std::endl << "Inserted " << val.first << std::endl;
+			if ((val.first) < (parent->data->first))
+			{
+				parent->left_child = _add_new_child(val, parent);
+				_check_parent(parent->left_child);
+			}
+			else
+			{
+				parent->right_child = _add_new_child(val, parent);
+				_check_parent(parent->right_child);
+			}
+			if (RBT_DEBUG)
+				print();
+		}
+
 	public:
+		typedef value_type *	valPtr;
+
 		RBtree(void): _size(0), _tree(NULL) {}
 
 		~RBtree(void) {_clear();}
 
 		size_type	size(void) const {return (_size);}
 
-		bool		empty(void) const {return (_size == 0);}
+		bool	empty(void) const {return (_size == 0);}
 
-		void		clear(void) const {_clear();}
+		void	clear(void) const {_clear();}
+
+		bool	find(key_type const & key) const
+		{
+			if (_findKey(key, NULL))
+				return (true);
+			return (false);
+
+		}
+
+		valPtr	getValue(key_type const & key) const
+		{
+			node	*nd = _findKey(key, NULL);
+
+			if (!nd)
+				return (NULL);
+			return (nd->data);
+		}
+
+		void	setValue(key_type const & key, mapped_type const & data) const
+		{
+			node	*nd = _findKey(key, NULL);
+
+			if (!nd)
+				insert(key, data);
+			nd->data->second = data;
+		}
+
+		void	erase(key_type const & key) 
+		{
+			node	*fnd = _findKey(key, NULL);
+
+			if (!fnd)
+			{
+				if (RBT_DEBUG)
+					std::cout << "Error: key not found" << std::endl;
+				return ;
+			}
+			_delete(fnd);
+		}
+	
+		void	erase(valPtr const & val)
+		{
+			erase(val->first);
+		}
+
+		void	insert(key_type const & key, mapped_type data)
+			{
+				_insert(ft::make_pair(key,data));
+			}
 
 		void	print(node *in = NULL) const
 		{
@@ -563,76 +660,6 @@ class	RBtree
 			}
 			std::cout << "\033[0m";
 		}
-	
-		void	insert(const key_type key, mapped_type data)
-			{
-				insert(ft::make_pair(key,data));
-			}
-
-		void	insert(const value_type& val)
-		{
-			node	*runner;
-			node	*parent;
-			
-			if (!_tree)
-			{
-				_tree = _add_new_child(val, NULL);
-				if (RBT_DEBUG)
-					std::cout << std::endl << "Inserted " << val.first 
-						<< std::endl;
-				return ;
-			}
-			if (find(val.first))
-			{
-				if (RBT_DEBUG)
-					std::cout << "Error: Key is already in the tree !" 
-						<< std::endl;
-				return ;
-			}
-			parent = NULL;
-			runner = _tree;
-			while (runner != NULL)
-			{
-				parent = runner;
-				if ((val.first) < (runner->data->first))
-					runner = runner->left_child;
-				else 
-					runner = runner->right_child;
-			}
-			if (RBT_DEBUG)
-				std::cout << std::endl << "Inserted " << val.first << std::endl;
-			if ((val.first) < (parent->data->first))
-			{
-				parent->left_child = _add_new_child(val, parent);
-				_check_parent(parent->left_child);
-			}
-			else
-			{
-				parent->right_child = _add_new_child(val, parent);
-				_check_parent(parent->right_child);
-			}
-			if (RBT_DEBUG)
-				print();
-		}
-
-		node	*find(key_type const & key) const
-		{
-			return _findKey(key, NULL);
-		}
-
-		void	erase(key_type const & key) 
-		{
-			node	*fnd = find(key);
-
-			if (!fnd)
-			{
-				if (RBT_DEBUG)
-					std::cout << "Error: key not found" << std::endl;
-				return ;
-			}
-			_delete(fnd);
-		}
-
 };
 
 } //end namespace
