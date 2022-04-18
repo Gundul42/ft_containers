@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/08 17:47:49 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/18 13:59:02 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <memory>
 # include "iterator.hpp"
 # include "utility.hpp"
+# include "RBtree.hpp"
 
 namespace ft
 {
@@ -44,40 +45,18 @@ class map
 		typedef	ptrdiff_t					difference_type;
 		typedef	size_t						size_type;
 		
-		struct	node
-		{
-			value_type	*data;
-			node		*parent;
-			node		*right_child;
-			node		*left_child;
-		};
 
-		node	*_add_new_child(value_type const & chl, node *prt)
-		{
-			node	*tmp = _node_alloc.allocate(1);
-
-			tmp->data = _alloc.allocate(1);
-			_alloc.construct(tmp->data, chl);
-			tmp->right_child = NULL;
-			tmp->left_child = NULL;
-			tmp->parent = prt;
-			_size++;
-			return (tmp);
-		}
-
-		size_type		_size;
-		node			*_tree;
-		allocator_type		_alloc;
-		std::allocator<node>	_node_alloc;
+		//private members
+		RBtree<key_type, mapped_type>	_tree;
+		allocator_type			_alloc;
 
 	public:
 		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = 
-				allocator_type()): _size(0), _tree(NULL) {}
+				allocator_type()): _tree() {}
 
 		template <class InputIterator>
 		map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type()): _size(0),
-				_tree(NULL)
+				const allocator_type& alloc = allocator_type()): _tree()
 		{
 			//declare here
 		}
@@ -116,9 +95,9 @@ class map
 */
 
 		//Capacity
-		bool	empty(void) const {return (_size == 0);}
+		bool	empty(void) const {return (_tree.empty());}
 
-		size_type	size(void) const {return (_size);}
+		size_type	size(void) const {return (_tree.size());}
 
 		size_type	max_size(void) const {return (_alloc.max_size());}
 
@@ -130,31 +109,26 @@ class map
 
 */
 		//Modifiers
-		//pair<iterator,bool> insert (const value_type& val)
-		void	insert (const value_type& val)
+		void	insert (value_type const & val)
 		{
-			node	*runner;
-			node	*parent;
+			_tree.insert(val.first, val.second);
+		}
 
-			if (!_tree)
-			{
-				_tree = _add_new_child(val, NULL);
-				return ;
-			}
-			parent = NULL;
-			runner = _tree;
-			while (runner != NULL)
-			{
-				parent = runner;
-				if ((val.first) < (runner->data->first))
-					runner = runner->left_child;
-				else
-					runner = runner->right_child;
-			}
-			if ((val.first) < (parent->data->first))
-				parent->left_child = _add_new_child(val, parent);
-			else
-				parent->right_child = _add_new_child(val, parent);
+		size_type	erase(key_type const & k)
+		{
+			return (_tree.erase(k));
+		}
+
+		void		clear(void)
+		{
+			_tree.clear();
+		}
+
+		size_type	count(key_type const & k)
+		{
+			if (_tree.find(k))
+				return (1);
+			return (0);
 		}
 
 		//Iterators

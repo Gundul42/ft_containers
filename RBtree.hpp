@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/16 15:23:11 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/18 13:42:16 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -586,7 +586,7 @@ class	RBtree
 			nd->data->second = data;
 		}
 
-		void	erase(key_type const & key) 
+		size_type	erase(key_type const & key) 
 		{
 			node	*fnd = _findKey(key, NULL);
 
@@ -594,14 +594,15 @@ class	RBtree
 			{
 				if (RBT_DEBUG)
 					std::cout << "Error: key not found" << std::endl;
-				return ;
+				return (0);
 			}
 			_delete(fnd);
+			return (1);
 		}
 	
-		void	erase(valPtr const & val)
+		size_type	erase(valPtr const & val)
 		{
-			erase(val->first);
+			return (erase(val->first));
 		}
 
 		void	insert(key_type const & key, mapped_type data)
