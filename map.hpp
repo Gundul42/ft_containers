@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/18 13:59:02 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/19 18:58:50 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,26 +73,6 @@ class map
 
 		~map(void) {}
 
-/*
-		//Iterators
-		begin(void) 
-		{
-		//points to smallest key !
-		}
-
-		end(void)
-		{
-		}
-
-		rbegin(void)
-		{
-		//points to largest key !!
-		}
-
-		rend(void)
-		{
-		}
-*/
 
 		//Capacity
 		bool	empty(void) const {return (_tree.empty());}
@@ -136,11 +116,12 @@ class map
 		class iterator : public ft::iterator<std::bidirectional_iterator_tag, value_type>
 		{
 			private:
-				value_type	*_p;
+				typename RBtree<key_type, mapped_type>::iter	_p;
 
 			public:
 				iterator(void) :_p(NULL) {}
-				iterator(value_type *x) :_p(x) {}
+
+				iterator(typename RBtree<key_type, mapped_type>::iter in) :_p(in) {}
 				~iterator(void) {}
 
 				iterator(const iterator & mit) : _p(mit._p) {}
@@ -148,19 +129,94 @@ class map
 				iterator & operator=(const iterator & right)
 					{this->_p = right._p; return (*this);}
 
-				iterator&	operator++() {++_p;return *this;}
+				iterator&	operator++() 
+				{
+					typename RBtree<key_type, mapped_type>::iter	tmp;
+                
+					if (!_p->right_child)
+					{
+						tmp = _p->parent;
+						while (tmp && tmp->data->first < _p->data->first)
+							tmp = tmp->parent;
+						_p = tmp;
+					}
+					else if (!_p->right_child->left_child)
+						_p = (_p->right_child);
+					else if (_p->right_child->left_child)
+					{
+						tmp = _p->right_child->left_child;
+						while (tmp->left_child)
+							tmp = tmp->left_child;
+						_p = tmp;
+					}
+				}
+
 				iterator	operator++(int) 
 					{iterator tmp(*this); operator++(); return tmp;}
-				iterator&	operator--() {--_p;return *this;}
+
+				iterator&	operator--()
+				{
+					typename RBtree<key_type, mapped_type>::iter	tmp;
+                
+					if (!_p->left_child)
+					{
+						tmp = _p->parent;
+						while (tmp && tmp->data->first > _p->data->first)
+							tmp = tmp->parent;
+						_p = tmp;
+					}
+					else if (!_p->left_child->right_child)
+						_p = (_p->left_child);
+					else if (_p->left_child->right_child)
+					{
+						tmp = _p->left_child->right_child;
+						while (tmp->right_child)
+							tmp = tmp->right_child;
+						_p = tmp;
+					}
+				}
 				iterator	operator--(int) 
 					{iterator tmp(*this); operator--(); return tmp;}
-				reference	operator*() {return *_p;}
-				reference	operator->() {return *_p;}
+
+				value_type &	operator*() 
+				{
+					return (*(_p->data));
+				}
+				
+				value_type &	operator->() 
+				{
+					return (*(_p->data));
+				}
+
 				bool	operator==(const iterator& rhs) const
 					{return _p == rhs._p;}
 				bool	operator!=(const iterator& rhs) const
 					{return _p != rhs._p;}
 		};
+		
+		//Iterators
+		
+		//points to smallest key !
+		iterator begin(void) 
+		{
+		return (iterator(_tree.begin()));
+		}
+
+		iterator end(void)
+		{
+			return (iterator());
+		}
+
+		//points to largest key !!
+		iterator rbegin(void) 
+		{
+		return (iterator(_tree.rbegin()));
+		}
+
+		iterator rend(void)
+		{
+			return (iterator());
+		}
 };
 
 } //end namespace

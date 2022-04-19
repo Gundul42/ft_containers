@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/18 13:42:16 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/19 18:04:56 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -549,6 +549,7 @@ class	RBtree
 
 	public:
 		typedef value_type *	valPtr;
+		typedef	node *		iter;
 
 		RBtree(void): _size(0), _tree(NULL) {}
 
@@ -660,6 +661,25 @@ class	RBtree
 				print(in->left_child);
 			}
 			std::cout << "\033[0m";
+		}
+		
+		//useful for iterators
+		iter	begin(void) const
+		{
+			iter	tmp = _tree;
+
+			while (tmp && tmp->left_child)
+				tmp = tmp->left_child;
+			return (tmp);
+		}
+		
+		iter	rbegin(void) const
+		{
+			iter	tmp = _tree;
+
+			while (tmp && tmp->right_child)
+				tmp = tmp->right_child;
+			return (tmp);
 		}
 };
 
