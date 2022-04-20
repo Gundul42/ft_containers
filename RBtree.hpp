@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/20 12:02:43 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/20 13:31:47 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -501,7 +501,7 @@ class	RBtree
 			return (bck);
 		}
 
-		void	_insert(value_type const & val)
+		node *	_insert(value_type const & val)
 		{
 			node	*runner;
 			node	*parent;
@@ -512,14 +512,15 @@ class	RBtree
 				if (RBT_DEBUG)
 					std::cout << std::endl << "Inserted " << val.first 
 						<< std::endl;
-				return ;
+				return (_tree);
 			}
-			if (find(val.first))
+			runner = _findKey(val.first, NULL);
+			if (runner)
 			{
 				if (RBT_DEBUG)
 					std::cout << "Error: Key is already in the tree !" 
 						<< std::endl;
-				return ;
+				return (runner);
 			}
 			parent = NULL;
 			runner = _tree;
@@ -533,18 +534,20 @@ class	RBtree
 			}
 			if (RBT_DEBUG)
 				std::cout << std::endl << "Inserted " << val.first << std::endl;
+			runner = _add_new_child(val, parent);
 			if ((val.first) < (parent->data->first))
 			{
-				parent->left_child = _add_new_child(val, parent);
+				parent->left_child = runner; 
 				_check_parent(parent->left_child);
 			}
 			else
 			{
-				parent->right_child = _add_new_child(val, parent);
+				parent->right_child = runner;
 				_check_parent(parent->right_child);
 			}
 			if (RBT_DEBUG)
 				print();
+			return (runner);
 		}
 
 	public:
@@ -561,12 +564,9 @@ class	RBtree
 
 		void	clear(void) {_clear();}
 
-		bool	find(key_type const & key) const
+		iter	find(key_type const & key) const
 		{
-			if (_findKey(key, NULL))
-				return (true);
-			return (false);
-
+			return (_findKey(key, NULL));
 		}
 
 		valPtr	getValue(key_type const & key) const
@@ -606,14 +606,14 @@ class	RBtree
 			return (erase(val->first));
 		}
 
-		void	insert(key_type const & key, mapped_type data)
+		iter	insert(key_type const & key, mapped_type data)
 			{
-				_insert(ft::make_pair(key,data));
+				return (_insert(ft::make_pair(key,data)));
 			}
 		
-		void	insert(value_type const & val)
+		iter	insert(value_type const & val)
 		{
-			_insert(val);
+			return (_insert(val));
 		}
 
 		void	print(node *in = NULL) const

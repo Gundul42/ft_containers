@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/20 12:06:15 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/20 13:26:15 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 int	main(void)
 {
 
-	ft::map<int, int>		test;
-	ft::map<int, int>::iterator	it;
-	int				j = 0;
+	ft::map<int, int>			test;
+	ft::map<int, int>::iterator		it;
+	ft::map<int, int>::reverse_iterator	itr;
+	int					j = 0;
 
 	std::cout << "Is test empty ? : ";
       	if (test.empty())
@@ -42,7 +43,7 @@ int	main(void)
 	test.insert(ft::make_pair(55,6));
 	test.insert(ft::make_pair(70,7));
 	test.insert(ft::make_pair(14,0));
-	//test.erase(14);
+	test.erase(14);
 	test.insert(ft::make_pair(80,8));
 	test.insert(ft::make_pair(68,9));
 	test.insert(ft::make_pair(90,10));
@@ -54,13 +55,14 @@ int	main(void)
 		it++;
 	}
 	j = test.size();
-	it = test.rbegin();
-	while (it != test.rend())
+	itr = test.rbegin();
+	while (itr != test.rend())
 	{
-		std::cout << j-- << ") Value in iterator is : " << (*it).second << std::endl;
-		it--;
+		std::cout << j-- << ") Value in iterator is : " << (*itr).second << std::endl;
+		itr++;
 	}
-	ft::map<int, int>		cpyme(test);
+	ft::map<int, int>		cpyme;
+	cpyme = test;
 	std::cout << "The copied container is of size : " << cpyme.size() << std::endl;
 	it = cpyme.begin();
 	while (it != cpyme.end())
