@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/19 18:58:50 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/20 11:38:18 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,87 @@ class map
 					{return _p != rhs._p;}
 		};
 		
+		class reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag,
+			value_type>
+		{
+			private:
+				typename RBtree<key_type, mapped_type>::iter	_p;
+
+			public:
+				reverse_iterator(void) :_p(NULL) {}
+
+				reverse_iterator(typename RBtree<key_type, mapped_type>::iter in) :_p(in) {}
+				~reverse_iterator(void) {}
+
+				reverse_iterator(const reverse_iterator & mit) : _p(mit._p) {}
+
+				reverse_iterator & operator=(const reverse_iterator & right)
+					{this->_p = right._p; return (*this);}
+
+				reverse_iterator&	operator--() 
+				{
+					typename RBtree<key_type, mapped_type>::iter	tmp;
+                
+					if (!_p->right_child)
+					{
+						tmp = _p->parent;
+						while (tmp && tmp->data->first < _p->data->first)
+							tmp = tmp->parent;
+						_p = tmp;
+					}
+					else if (!_p->right_child->left_child)
+						_p = (_p->right_child);
+					else if (_p->right_child->left_child)
+					{
+						tmp = _p->right_child->left_child;
+						while (tmp->left_child)
+							tmp = tmp->left_child;
+						_p = tmp;
+					}
+				}
+
+				reverse_iterator	operator--(int) 
+					{reverse_iterator tmp(*this); operator++(); return tmp;}
+
+				reverse_iterator&	operator++()
+				{
+					typename RBtree<key_type, mapped_type>::iter	tmp;
+                
+					if (!_p->left_child)
+					{
+						tmp = _p->parent;
+						while (tmp && tmp->data->first > _p->data->first)
+							tmp = tmp->parent;
+						_p = tmp;
+					}
+					else if (!_p->left_child->right_child)
+						_p = (_p->left_child);
+					else if (_p->left_child->right_child)
+					{
+						tmp = _p->left_child->right_child;
+						while (tmp->right_child)
+							tmp = tmp->right_child;
+						_p = tmp;
+					}
+				}
+				reverse_iterator	operator++(int) 
+					{reverse_iterator tmp(*this); operator--(); return tmp;}
+
+				value_type &	operator*() 
+				{
+					return (*(_p->data));
+				}
+				
+				value_type &	operator->() 
+				{
+					return (*(_p->data));
+				}
+
+				bool	operator==(const reverse_iterator& rhs) const
+					{return _p == rhs._p;}
+				bool	operator!=(const reverse_iterator& rhs) const
+					{return _p != rhs._p;}
+		};
 		//Iterators
 		
 		//points to smallest key !
