@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/19 18:04:56 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/20 12:02:43 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -559,7 +559,7 @@ class	RBtree
 
 		bool	empty(void) const {return (_size == 0);}
 
-		void	clear(void) const {_clear();}
+		void	clear(void) {_clear();}
 
 		bool	find(key_type const & key) const
 		{
@@ -610,6 +610,11 @@ class	RBtree
 			{
 				_insert(ft::make_pair(key,data));
 			}
+		
+		void	insert(value_type const & val)
+		{
+			_insert(val);
+		}
 
 		void	print(node *in = NULL) const
 		{

@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/19 18:35:14 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/20 12:06:15 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,14 @@ int	main(void)
 		std::cout << j-- << ") Value in iterator is : " << (*it).second << std::endl;
 		it--;
 	}
+	ft::map<int, int>		cpyme(test);
+	std::cout << "The copied container is of size : " << cpyme.size() << std::endl;
+	it = cpyme.begin();
+	while (it != cpyme.end())
+	{
+		std::cout << "Key : " << (*it).first << ", Value: " << (*it).second << std::endl;
+		it++;
+	}
+
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/20 11:38:18 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/20 12:01:57 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,23 @@ class map
 		map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
 				const allocator_type& alloc = allocator_type()): _tree()
 		{
-			//declare here
+			while (first != last)
+			{
+				_tree.insert(*first);
+				first++;
+			}
 		}
 
 		map(map const & cpy)
 		{
-			*this = cpy;
+			iterator	in = cpy.begin();
+			
+			_tree.clear();
+			while (in != cpy.end())
+			{
+				_tree.insert(*in);
+				in++;
+			}
 		}
 
 		map & operator=(map const & right)
@@ -75,19 +86,12 @@ class map
 
 
 		//Capacity
-		bool	empty(void) const {return (_tree.empty());}
+		bool		empty(void) const {return (_tree.empty());}
 
 		size_type	size(void) const {return (_tree.size());}
 
 		size_type	max_size(void) const {return (_alloc.max_size());}
 
-/*
-		//Element access
-		mapped_type & operator[](const key_type & k)
-		{
-		}
-
-*/
 		//Modifiers
 		void	insert (value_type const & val)
 		{
@@ -99,7 +103,7 @@ class map
 			return (_tree.erase(k));
 		}
 
-		void		clear(void)
+		void		clear(void) 
 		{
 			_tree.clear();
 		}
@@ -278,23 +282,23 @@ class map
 		//Iterators
 		
 		//points to smallest key !
-		iterator begin(void) 
+		iterator begin(void) const
 		{
 		return (iterator(_tree.begin()));
 		}
 
-		iterator end(void)
+		iterator end(void) const
 		{
 			return (iterator());
 		}
 
 		//points to largest key !!
-		iterator rbegin(void) 
+		iterator rbegin(void) const
 		{
 		return (iterator(_tree.rbegin()));
 		}
 
-		iterator rend(void)
+		iterator rend(void) const
 		{
 			return (iterator());
 		}
