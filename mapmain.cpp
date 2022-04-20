@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/20 13:26:15 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/20 14:43:28 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,14 @@ int	main(void)
 		std::cout << "Key : " << (*it).first << ", Value: " << (*it).second << std::endl;
 		it++;
 	}
-
+	cpyme.swap(test);
+	cpyme[90] = 666;
+	cpyme[112];
+	it = cpyme.begin();
+	while (it != cpyme.end())
+	{
+		std::cout << "Key : " << (*it).first << ", Value: " << (*it).second << std::endl;
+		it++;
+	}
 	return (0);
 }

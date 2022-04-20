@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/20 13:45:49 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/20 14:39:32 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,33 +91,6 @@ class map
 		}
 
 		~map(void) {}
-
-
-		//Capacity
-		bool		empty(void) const {return (_tree.empty());}
-
-		size_type	size(void) const {return (_tree.size());}
-
-		size_type	max_size(void) const {return (_alloc.max_size());}
-
-		//Modifiers
-		size_type	erase(key_type const & k)
-		{
-			return (_tree.erase(k));
-		}
-
-		void		clear(void) 
-		{
-			_tree.clear();
-		}
-
-		//operations
-		size_type	count(key_type const & k)
-		{
-			if (_tree.find(k))
-				return (1);
-			return (0);
-		}
 
 		//Iterators
 
@@ -311,17 +284,17 @@ class map
 		
 		iterator	find(key_type const & key)
 		{
-			return (_tree.find(key));
+			return (iterator(_tree.find(key)));
 		}
 		
-		pair<iterator, bool>	insert (value_type const & val)
+		//Modifiers
+		pair<iterator, bool>	insert(value_type const & val)
 		{
-			iterator	in;
+			iterator	in(find(val.first));
 			
-			in = find(val.first);
 			if (in != iterator())
 				return (make_pair(in, false));
-			in = _tree.insert(val);
+			in = iterator(_tree.insert(val));
 			return (make_pair(in, true));
 		}
 
@@ -340,6 +313,63 @@ class map
 				_tree.insert(*first);
 				first++;
 			}
+		}
+
+		size_type	erase(key_type const & k)
+		{
+			return (_tree.erase(k));
+		}
+
+		void		erase(iterator pos)
+		{
+			_tree.erase((*pos).first);
+		}
+
+		void		erase(iterator first, iterator last)
+		{
+			while (first != last)
+			{
+				_tree.erase((*first).first);
+				first++;
+			}
+		}
+
+		void swap(map & scd)
+		{
+			map<key_type, mapped_type, key_compare, allocator_type>	tmp(scd);
+
+			scd = *this;
+			*this = tmp;
+		}
+
+		void		clear(void) 
+		{
+			_tree.clear();
+		}
+
+		//Capacity
+		bool		empty(void) const {return (_tree.empty());}
+
+		size_type	size(void) const {return (_tree.size());}
+
+		size_type	max_size(void) const {return (_alloc.max_size());}
+
+		//Element Access
+		mapped_type & operator[](const key_type & k)
+		{
+			iterator	it = find(k);
+
+			if (it != end())
+				return ((*it).second);
+			insert(make_pair(k, mapped_type()));	
+		}
+
+		//operations
+		size_type	count(key_type const & k)
+		{
+			if (_tree.find(k))
+				return (1);
+			return (0);
 		}
 };
 
