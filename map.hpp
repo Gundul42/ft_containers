@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/20 14:39:32 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/20 15:51:45 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,6 +258,26 @@ class map
 				bool	operator!=(const reverse_iterator& rhs) const
 					{return _p != rhs._p;}
 		};
+		
+		class value_compare
+		{
+			friend class map;
+
+			protected:
+				Compare comp;
+				value_compare (Compare c) : comp(c) {}
+
+			public:
+				typedef bool result_type;
+				typedef value_type first_argument_type;
+				typedef value_type second_argument_type;
+
+				bool operator() (const value_type& x, const value_type& y) const
+				{
+					return comp(x.first, y.first);
+				}
+		};
+
 		//Iterators
 		
 		//points to smallest key !
@@ -280,11 +300,6 @@ class map
 		reverse_iterator rend(void) const
 		{
 			return (reverse_iterator());
-		}
-		
-		iterator	find(key_type const & key)
-		{
-			return (iterator(_tree.find(key)));
 		}
 		
 		//Modifiers
@@ -364,12 +379,28 @@ class map
 			insert(make_pair(k, mapped_type()));	
 		}
 
+		//Observers
+		key_compare	key_comp() const {}
+
+		value_compare	value_comp() const {}
+
 		//operations
+		iterator	find(key_type const & key)
+		{
+			return (iterator(_tree.find(key)));
+		}
+		
 		size_type	count(key_type const & k)
 		{
 			if (_tree.find(k))
 				return (1);
 			return (0);
+		}
+
+		iterator	lower_bound(key_type const & key)
+		{
+			//to be finished !!
+			_tree.key_comp();
 		}
 };
 
