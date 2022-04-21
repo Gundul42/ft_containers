@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/20 14:43:28 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/21 17:37:21 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,9 @@ int	main(void)
 		std::cout << "Key : " << (*it).first << ", Value: " << (*it).second << std::endl;
 		it++;
 	}
+	it = cpyme.lower_bound(55);
+	std::cout << "lower bound is: " << (*it).first << std::endl;
+	it = cpyme.upper_bound(55);
+	std::cout << "upper bound is: " << (*it).first << std::endl;
 	return (0);
 }

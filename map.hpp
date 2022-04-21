@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/20 15:51:45 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/21 17:44:38 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,24 @@ template <typename Key, typename T, typename Compare = std::less<Key>,
 class map
 {
 	private:
-		typedef	Key						key_type;
-		typedef	T						mapped_type;
-		typedef	pair<const key_type, mapped_type>		value_type;
-		typedef	Compare						key_compare;
-	//	typedef 						value_compare;
-		typedef	Alloc						allocator_type;
-		typedef	typename allocator_type::reference		reference;
+		typedef	Key											key_type;
+		typedef	T											mapped_type;
+		typedef	pair<const key_type, mapped_type>			value_type;
+		typedef	Compare										key_compare;
+	//	typedef 											value_compare;
+		typedef	Alloc										allocator_type;
+		typedef	typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
-		typedef	typename allocator_type::pointer		pointer;
+		typedef	typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
-	//	typedef typename map<key_type, mapped_type>::iterator	iterator;
-	//	typedef							const_iterator;
-	//	typedef							reverse_iterator;
-	//	typedef							const_reverse_iterator;
-		typedef	ptrdiff_t					difference_type;
-		typedef	size_t						size_type;
+		typedef	ptrdiff_t									difference_type;
+		typedef	size_t										size_type;
 		
 
 		//private members
 		RBtree<key_type, mapped_type>	_tree;
-		allocator_type			_alloc;
+		allocator_type					_alloc;
+		key_compare						_comp;
 
 	public:
 
@@ -399,9 +396,27 @@ class map
 
 		iterator	lower_bound(key_type const & key)
 		{
-			//to be finished !!
-			_tree.key_comp();
+			iterator	it = begin();
+
+			while (it != end() && _comp((*it).first, key))
+				it++;
+			return (it);
 		}
+
+		iterator	upper_bound(key_type const & key)
+		{
+			iterator	it = begin();
+
+			while (it != end() && !_comp(key, (*it).first))
+				it++;
+			return (it);
+		}
+
+		pair<iterator, iterator>	equal_range(key_type const & key)
+		{
+				return (make_pair(lower_bound(key), upper_bound(key)));
+		}
+
 };
 
 } //end namespace
