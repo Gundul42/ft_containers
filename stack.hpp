@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 12:39:48 by graja             #+#    #+#             */
-/*   Updated: 2022/04/22 14:16:04 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/22 14:37:24 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ class stack
 			typedef Container			container_type;
 			typedef size_t				size_type;
 
-	private:
-			container_type		_data;
+	protected:
+			container_type		c;
 
 	public:
 	
@@ -38,7 +38,7 @@ class stack
 					in = cpy.begin();
 					while (in != cpy.end())
 					{
-							_data.push_back(*in);
+							c.push_back(*in);
 							in++;
 					}
 			}
@@ -47,11 +47,11 @@ class stack
 			{
 					typename container_type::iterator	in;
 
-					this->_data.clear();
+					this->c.clear();
 					in = right.begin();
 					while (in != right.end())
 					{
-							this->_data.push_back(*in);
+							this->c.push_back(*in);
 							in++;
 					}
 					return (*this);
@@ -59,64 +59,64 @@ class stack
 
 			~stack(void)
 			{
-					_data.clear();
+					c.clear();
 			}
 
-			explicit stack(const container_type & ctr = container_type()): _data(ctr) {}
+			explicit stack(const container_type & ctr = container_type()): c(ctr) {}
 
 			bool	empty(void) const
 			{
-					return (_data.empty());
+					return (c.empty());
 			}
 
 			size_type	size(void) const
 			{
-					return (_data.size());
+					return (c.size());
 			}
 
 			value_type &	top(void)
 			{
-					return (_data.back());
+					return (c.back());
 			}
 			
 			const value_type &	top(void) const
 			{
-					return (_data.back());
+					return (c.back());
 			}
 
 			void	push(value_type const & val)
 			{
-					_data.push_back(val);
+					c.push_back(val);
 			}
 
 			friend bool operator== (const stack & lhs, const stack & rhs)
 			{
-					return (lhs._data == rhs._data);
+					return (lhs.c == rhs.c);
 			}
 
 			friend bool operator!= (const stack & lhs, const stack & rhs)
 			{
-					return (lhs._data != rhs._data);
+					return (lhs.c != rhs.c);
 			}
 
 			friend bool operator<  (const stack & lhs, const stack & rhs)
 			{
-					return (lhs._data < rhs._data);
+					return (lhs.c < rhs.c);
 			}
 
 			friend bool operator<= (const stack & lhs, const stack & rhs)
 			{
-					return (lhs._data <= rhs._data);
+					return (lhs.c <= rhs.c);
 			}
 
 			friend bool operator>  (const stack & lhs, const stack & rhs)
 			{
-					return (lhs._data > rhs._data);
+					return (lhs.c > rhs.c);
 			}
 
 			friend bool operator>= (const stack & lhs, const stack & rhs)
 			{
-					return (lhs._data >= rhs._data);
+					return (lhs.c >= rhs.c);
 			}
 };
 
