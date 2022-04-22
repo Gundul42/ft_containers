@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/21 17:44:38 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/22 11:26:49 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ class map
 		typedef	T											mapped_type;
 		typedef	pair<const key_type, mapped_type>			value_type;
 		typedef	Compare										key_compare;
-	//	typedef 											value_compare;
 		typedef	Alloc										allocator_type;
 		typedef	typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
@@ -415,6 +414,11 @@ class map
 		pair<iterator, iterator>	equal_range(key_type const & key)
 		{
 				return (make_pair(lower_bound(key), upper_bound(key)));
+		}
+
+		allocator_type get_allocator() const
+		{
+				return (_alloc);
 		}
 
 };

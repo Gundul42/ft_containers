@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/07 14:32:43 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/22 11:15:38 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ template <typename T, typename Alloc = std::allocator<T> >
 class vector
 {
 	private:
-		typedef	T					value_type;
-		typedef	std::size_t				size_type;
-		typedef std::ptrdiff_t				difference_type;
-		typedef Alloc					allocator_type;
-		typedef	value_type&				reference;
-		typedef	const value_type&			const_reference;
+		typedef	T								value_type;
+		typedef	std::size_t						size_type;
+		typedef std::ptrdiff_t					difference_type;
+		typedef Alloc							allocator_type;
+		typedef	value_type&						reference;
+		typedef	const value_type&				const_reference;
 		typedef typename Alloc::pointer			pointer;
-		typedef typename Alloc::const_pointer		const_pointer;
+		typedef typename Alloc::const_pointer	const_pointer;
 
 		pointer		_start;
 		size_type	_size;
