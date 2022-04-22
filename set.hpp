@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/21 18:25:49 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/22 12:35:55 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,14 @@ namespace ft
 {
 
 template <typename T, typename Compare = std::less<T>, 
-	 typename Alloc = std::allocator<pair<const T, T > > >
+	 typename Alloc = std::allocator<pair<const T, bool > > >
 class set 
 {
 	private:
 		typedef	T											key_type;
-		typedef	T											mapped_type;
+		typedef	bool										mapped_type;
 		typedef	pair<const key_type, mapped_type>			value_type;
 		typedef	Compare										key_compare;
-	//	typedef 											value_compare;
 		typedef	Alloc										allocator_type;
 		typedef	typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
@@ -417,6 +416,10 @@ class set
 				return (make_pair(lower_bound(key), upper_bound(key)));
 		}
 
+		allocator_type	get_allocator(void) const
+		{
+				return (_alloc);
+		}
 };
 
 } //end namespace
