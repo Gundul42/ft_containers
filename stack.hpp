@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 12:39:48 by graja             #+#    #+#             */
-/*   Updated: 2022/04/22 13:25:58 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/22 14:16:04 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,48 @@ namespace ft
 template <typename T, typename Container = vector<T> >
 class stack
 {
-	private:
+	public:
 			typedef T					value_type;
 			typedef Container			container_type;
 			typedef size_t				size_type;
 
+	private:
 			container_type		_data;
 
 	public:
-			
-			//stack(void): _data() {}
+	
+			stack(stack const & cpy)
+			{
+					typename container_type::iterator	in;
+				
+					in = cpy.begin();
+					while (in != cpy.end())
+					{
+							_data.push_back(*in);
+							in++;
+					}
+			}
+
+			stack & operator=(stack const & right)
+			{
+					typename container_type::iterator	in;
+
+					this->_data.clear();
+					in = right.begin();
+					while (in != right.end())
+					{
+							this->_data.push_back(*in);
+							in++;
+					}
+					return (*this);
+			}
 
 			~stack(void)
 			{
 					_data.clear();
 			}
 
-			explicit stack(const container_type & ctnr = container_type()): _data(ctnr) {}
+			explicit stack(const container_type & ctr = container_type()): _data(ctr) {}
 
 			bool	empty(void) const
 			{
@@ -61,41 +86,35 @@ class stack
 
 			void	push(value_type const & val)
 			{
-					_data.push(val);
+					_data.push_back(val);
 			}
 
-			template <class U, class Conti>
-			friend bool operator== (const stack<U,Conti>& lhs, const stack<U,Conti>& rhs)
+			friend bool operator== (const stack & lhs, const stack & rhs)
 			{
 					return (lhs._data == rhs._data);
 			}
 
-			template <class U, class Conti>
-			friend bool operator!= (const stack<U,Conti>& lhs, const stack<U,Conti>& rhs)
+			friend bool operator!= (const stack & lhs, const stack & rhs)
 			{
 					return (lhs._data != rhs._data);
 			}
 
-			template <class U, class Conti>
-			friend bool operator<  (const stack<U,Conti>& lhs, const stack<U,Conti>& rhs)
+			friend bool operator<  (const stack & lhs, const stack & rhs)
 			{
 					return (lhs._data < rhs._data);
 			}
 
-			template <class U, class Conti>
-			friend bool operator<= (const stack<U,Conti>& lhs, const stack<U,Conti>& rhs)
+			friend bool operator<= (const stack & lhs, const stack & rhs)
 			{
 					return (lhs._data <= rhs._data);
 			}
 
-			template <class U, class Conti>
-			friend bool operator>  (const stack<U,Conti>& lhs, const stack<U,Conti>& rhs)
+			friend bool operator>  (const stack & lhs, const stack & rhs)
 			{
 					return (lhs._data > rhs._data);
 			}
 
-			template <class U, class Conti>
-			friend bool operator>= (const stack<U,Conti>& lhs, const stack<U,Conti>& rhs)
+			friend bool operator>= (const stack & lhs, const stack & rhs)
 			{
 					return (lhs._data >= rhs._data);
 			}
