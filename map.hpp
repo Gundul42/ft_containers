@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/22 11:26:49 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/22 19:53:34 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,19 @@ class map
 	public:
 
 		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = 
-				allocator_type()): _tree() {}
+				allocator_type()): _tree()
+		{
+				_alloc = alloc;
+				_comp = comp;
+		}
 
 		template <class InputIterator>
 		map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
 				const allocator_type& alloc = allocator_type()): _tree()
 		{
+			_alloc = alloc;
+			_comp = comp;
+
 			while (first != last)
 			{
 				_tree.insert(*first);

@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/22 11:15:38 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/23 14:32:16 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,24 @@ class vector
 
 	public:
 
-		explicit vector(const allocator_type& alloc = allocator_type()): 
-			_start(_alloc.allocate(0)), _size(0), _end_of_storage(0) {}
+		explicit vector(const allocator_type& alloc = allocator_type())
+		{
+			_alloc = alloc;
+			_start = _alloc.allocate(0);
+			_size = 0;
+			_end_of_storage = 0;
+		}
 
 		explicit vector(size_type n, const value_type & val = value_type(),
-				const allocator_type & alloc = allocator_type()):
-				_start(_alloc.allocate(n)), _size(n),
-				_end_of_storage(n) 
+				const allocator_type & alloc = allocator_type())
 		{
+			_alloc = alloc;
+			_start = _alloc.allocate(n);
+			_size = n;
+			_end_of_storage = n;
+
 			size_type	i = 0;
+			std::cout << "FILLER" << std::endl;
 
 			while (i < n)
 			{
@@ -78,24 +87,46 @@ class vector
 			}
 		}
 
-		vector(vector const & cpy): _start(_alloc.allocate(cpy.capacity())),
-			       	_size(cpy.size()),
-				_end_of_storage(cpy.capacity()) {*this = cpy;}
+		template <class InputIterator>
+         vector (InputIterator first, InputIterator last,
+                 const allocator_type& alloc = allocator_type())
+		 {
+			 _alloc = alloc;
+			_start = _alloc.allocate(0);
+			_size = 0;
+			_end_of_storage = 0;
+
+			this->insert(begin(), first, last);
+		 }
+
+		vector(vector const & cpy)
+		{
+				_alloc = cpy._alloc;
+				_start = _alloc.allocate(cpy.size());
+				_size = 0;
+				_end_of_storage = 0;
+				size_type	i = 0;
+				
+				reserve(cpy.size());
+				while (i < cpy.size())
+				{
+						push_back(cpy[i]);
+						i++;
+				}
+		}
+
+		//destructor
 		~vector(void) 
 		{
 			clear();
 			_alloc.deallocate(_start, capacity());
 		}
 
-		vector<T> & operator=(vector<T> const & right)
+		vector & operator=(vector const & right)
 		{
 			size_type	i = 0;
 			
-			if (this->size() < right.size())
-			{
-				_realloc(right.size(), right.capacity());
-			}
-			std::cout << std::endl;
+			_realloc(right.size(), right.capacity());
 			_size = right.size();
 			while (i < right.size())
 			{
@@ -114,7 +145,7 @@ class vector
 
 			if (n < size())
 			{
-				_realloc(n, n);
+				_realloc(n, capacity());
 				return ;
 			}
 			else if (n > capacity())
@@ -181,9 +212,14 @@ class vector
 
 		void		push_back(const value_type & data)
 		{
+			size_type		newsize = size();
 
+			if (newsize == 0)
+					newsize = 1;
+			else
+					newsize *= 2;
 			if (this->capacity() == this->size())
-				_realloc(this->size(), 1 + this->size() * 2);
+				_realloc(this->size(), newsize);
 			_alloc.construct(_start + _size,  data);
 			_size++;
 		}
@@ -195,7 +231,8 @@ class vector
 			*this = swp;
 			swp = tmp;
 		}
-		void		clear(void) {_realloc(0,0);}
+
+		void		clear(void) {_realloc(0, capacity());}
 
 
 		//Allocator member function
@@ -417,7 +454,7 @@ class vector
 			size_type	i = 0;
 
 			if (this->capacity() < this->size() + n)
-				_realloc(this->size(), n + this->size() * 2);
+				_realloc(size(), n + 1 );
 			last = this->end();
 			while (last != (begin() + stp))
 			{
@@ -432,19 +469,25 @@ class vector
 				i++;
 			}
 			_size += n;
+			_end_of_storage--;	
 		}
 
 		template <typename InputIterator>
-		void insert (iterator pos, InputIterator ifirst, InputIterator ilast,
+		void insert (iterator pos, InputIterator ifirst, InputIterator ilast, 
 			typename ft::enable_if<!ft::is_integral<InputIterator>::value >::type* = 0)
 		{
 			size_type	n = ilast - ifirst;
 			iterator	last;
 			size_type	stp = pos - begin();
 			size_type	i = 0;
-			
-			if (this->capacity() < this->size() + n)
-				_realloc(this->size(), n + this->size() * 2);
+			size_type	newsize = this->size();
+
+			if (newsize == 0)
+					newsize = n;
+			else
+					newsize += n;
+			if (this->capacity() < stp + n)
+				_realloc(this->size(), newsize);
 			last = this->end();
 			while (last != (begin() + stp))
 			{

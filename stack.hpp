@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 12:39:48 by graja             #+#    #+#             */
-/*   Updated: 2022/04/22 14:37:24 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/22 19:48:27 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,7 @@ class stack
 	
 			stack(stack const & cpy)
 			{
-					typename container_type::iterator	in;
-				
-					in = cpy.begin();
-					while (in != cpy.end())
-					{
-							c.push_back(*in);
-							in++;
-					}
+				*this = cpy;
 			}
 
 			stack & operator=(stack const & right)
@@ -72,6 +65,11 @@ class stack
 			size_type	size(void) const
 			{
 					return (c.size());
+			}
+			
+			void	pop(void)
+			{
+					c.pop_back();
 			}
 
 			value_type &	top(void)
