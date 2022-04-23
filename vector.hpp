@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/23 16:23:02 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/23 17:01:15 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ class vector
 		}
 
 	public:
+
 
 		explicit vector(const allocator_type& alloc = allocator_type())
 		{

@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/22 19:53:34 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/23 17:43:56 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ class map
 				iterator & operator=(const iterator & right)
 					{this->_p = right._p; return (*this);}
 
-				iterator&	operator++() 
+				iterator &	operator++() 
 				{
 					typename RBtree<key_type, mapped_type>::iter	tmp;
                 
@@ -133,6 +133,7 @@ class map
 							tmp = tmp->left_child;
 						_p = tmp;
 					}
+					return (*this);
 				}
 
 				iterator	operator++(int) 
@@ -377,9 +378,12 @@ class map
 		{
 			iterator	it = find(k);
 
-			if (it != end())
-				return ((*it).second);
-			insert(make_pair(k, mapped_type()));	
+			if (it == end())
+			{
+				insert(make_pair(k, mapped_type()));
+				it = find(k);
+			}
+			return ((*it).second);
 		}
 
 		//Observers
