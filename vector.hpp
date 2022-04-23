@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/23 14:32:16 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/23 15:23:37 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,12 @@ class vector
 				return ;
 			}
 			else if (n > capacity())
-				_realloc(size(), n);
+			{
+					if (n > size() * 2)
+						_realloc(n, n);
+					else
+						_realloc(n, size() * 2);
+			}
 			_size = n;
 			while (i < n)
 			{
