@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/23 15:23:37 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/23 16:15:11 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ class vector
 		{
 			size_type	i = 0;
 			
-			_realloc(right.size(), right.capacity());
+			_realloc(right.size(), right.size());
 			_size = right.size();
 			while (i < right.size())
 			{
