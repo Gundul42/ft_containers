@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/23 16:15:11 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/23 16:23:02 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -556,7 +556,10 @@ class vector
 	
 		friend bool	operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
-			return (!(lhs >= rhs));
+			vector<T>	lcpy(lhs);
+			vector<T>	rcpy(rhs);
+
+			return (lexicographical_compare(lcpy.begin(), lcpy.end(), rcpy.begin(), rcpy.end()));
 		}
 
 		friend bool	operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
@@ -565,14 +568,8 @@ class vector
 		}
 		
 		friend bool	operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-                {
-			vector<T>	lcpy(lhs);
-			vector<T>	rcpy(rhs);
-
-			if (equal(lcpy.begin(), lcpy.end(), rcpy.begin()))
-				return (true);
-			return (!(lexicographical_compare(lcpy.begin(), lcpy.end(),
-						rcpy.begin(), rcpy.end())));
+		{
+				return (rhs < lhs);
 		}
 		
 		friend bool 	operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
