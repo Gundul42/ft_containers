@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/23 17:43:56 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/23 18:19:57 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ class map
 				
 				value_type &	operator->() 
 				{
-					return (*(_p->data));
+					return ((_p->data));
 				}
 
 				bool	operator==(const iterator& rhs) const
