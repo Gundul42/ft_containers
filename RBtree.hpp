@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/22 12:20:26 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/24 11:19:56 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,7 @@ class	RBtree
 
 		void	_delete(node *nd)
 		{
-			node	*help;
+			node	*help = NULL;
 
 			if (nd == NULL)
 				return ;

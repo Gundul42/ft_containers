@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/24 07:14:35 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/24 11:21:13 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,9 +170,9 @@ class map
 					return (*(_p->data));
 				}
 				
-				value_type &	operator->() 
+				value_type *	operator->() 
 				{
-					return (&(_p->data));
+					return ((_p->data));
 				}
 
 				bool	operator==(const iterator& rhs) const
@@ -360,8 +360,10 @@ class map
 		void swap(map & scd)
 		{
 			map<key_type, mapped_type, key_compare, allocator_type>	tmp(scd);
-
+		
+			scd.clear();
 			scd = *this;
+			this->clear();
 			*this = tmp;
 		}
 

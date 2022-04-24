@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/21 17:37:21 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/24 11:06:26 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,15 @@ int	main(void)
 {
 
 	ft::map<int, int>			test;
+	ft::map<int, int>			test2;
 	ft::map<int, int>::iterator		it;
-	ft::map<int, int>::reverse_iterator	itr;
-	int					j = 0;
-
-	std::cout << "Is test empty ? : ";
-      	if (test.empty())
-	       std::cout << "true";
-	else
-	       std::cout << "false";
-	std::cout << std::endl;
-	std::cout << "Max_size = " << test.max_size() << std::endl;
-	//test.insert(ft::make_pair(1,11));
-	std::cout << "Is test empty ? : ";
-      	if (test.empty())
-	       std::cout << "true";
-	else
-	       std::cout << "false";
-	std::cout << std::endl;
 	test.insert(ft::make_pair(50,1));
 	test.insert(ft::make_pair(20,2));
-	test.insert(ft::make_pair(65,3));
-	test.insert(ft::make_pair(15,4));
-	test.insert(ft::make_pair(25,5));
+	
+	test2.insert(ft::make_pair(65,3));
+	test2.insert(ft::make_pair(15,4));
+	test2.insert(ft::make_pair(25,5));
+	/*
 	test.insert(ft::make_pair(55,6));
 	test.insert(ft::make_pair(70,7));
 	test.insert(ft::make_pair(14,0));
@@ -47,41 +33,41 @@ int	main(void)
 	test.insert(ft::make_pair(80,8));
 	test.insert(ft::make_pair(68,9));
 	test.insert(ft::make_pair(90,10));
-	std::cout << test.size() << std::endl;
+	*/
+	
+	std::cout << "----- Original -----" << std::endl;
+	
 	it = test.begin();
 	while (it != test.end())
 	{
-		std::cout << ++j << ") Value in iterator is : " << (*it).second << std::endl;
-		it++;
+			std::cout << (*it).first << ", " << (*it).second << std::endl;
+			it++;
 	}
-	j = test.size();
-	itr = test.rbegin();
-	while (itr != test.rend())
+
+	std::cout << "-----" << std::endl;
+	it = test2.begin();
+	while (it != test2.end())
 	{
-		std::cout << j-- << ") Value in iterator is : " << (*itr).second << std::endl;
-		itr++;
+			std::cout << (*it).first << ", " << (*it).second << std::endl;
+			it++;
 	}
-	ft::map<int, int>		cpyme;
-	cpyme = test;
-	std::cout << "The copied container is of size : " << cpyme.size() << std::endl;
-	it = cpyme.begin();
-	while (it != cpyme.end())
+
+	test.swap(test2);
+	std::cout << "----- Swapped -----" << std::endl;
+	
+	it = test.begin();
+	while (it != test.end())
 	{
-		std::cout << "Key : " << (*it).first << ", Value: " << (*it).second << std::endl;
-		it++;
+			std::cout << (*it).first << ", " << (*it).second << std::endl;
+			it++;
 	}
-	cpyme.swap(test);
-	cpyme[90] = 666;
-	cpyme[112];
-	it = cpyme.begin();
-	while (it != cpyme.end())
+
+	std::cout << "-----" << std::endl;
+	it = test2.begin();
+	while (it != test2.end())
 	{
-		std::cout << "Key : " << (*it).first << ", Value: " << (*it).second << std::endl;
-		it++;
+			std::cout << (*it).first << ", " << (*it).second << std::endl;
+			it++;
 	}
-	it = cpyme.lower_bound(55);
-	std::cout << "lower bound is: " << (*it).first << std::endl;
-	it = cpyme.upper_bound(55);
-	std::cout << "upper bound is: " << (*it).first << std::endl;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/06 17:12:42 by graja             #+#    #+#             */
-/*   Updated: 2022/04/16 14:21:57 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/24 09:50:57 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(int argc,char **argv)
 	int			i;
 	char			*chk;
 	int			flag;
+	time_t	start, end;
 	std::vector<long>	delme;
 	ft::RBtree<long, int>	test;
 	ft::RBtree<long, int>::valPtr	dataptr;
@@ -49,6 +50,9 @@ int	main(int argc,char **argv)
 	chk = (char *)calloc(max * 2 + 1, sizeof(char));
 	if (!chk)
 		return (0);
+
+	// init time
+	time(&start);
 	while (n > 0 && i < n)
 	{
 		nbr = random() % max;
@@ -82,14 +86,18 @@ int	main(int argc,char **argv)
 	while (i < n)
 	{
 		nbr = random() % delme.size();
-		std::cout << i << ") Delete nbr " << nbr << " with key value of " << delme[nbr] << 
-			std::endl;
+		//std::cout << i << ") Delete nbr " << nbr << " with key value of " << delme[nbr] << 
+	//		std::endl;
 		test.erase(delme[nbr]);
 		delme.erase(delme.begin() + nbr);
 		i++; 
-		std::cout << std::endl;
+	//	std::cout << std::endl;
 	}
 	free(chk);
 	std::cout << test.size() << std::endl;
+	time(&end);
+	double diff = difftime(end, start);
+	int	tme = static_cast<int> (diff);
+	std::cout << "Executed in " << tme << " seconds" << std::endl;
 	return (0);
 }
