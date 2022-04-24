@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/24 11:21:13 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/24 11:57:02 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,15 +272,15 @@ class map
 			friend class map;
 
 			protected:
-				Compare comp;
-				value_compare (Compare c) : comp(c) {}
+				key_compare	comp;
+				value_compare(Compare c) : comp(c) {}
 
 			public:
-				typedef bool result_type;
-				typedef value_type first_argument_type;
-				typedef value_type second_argument_type;
+				typedef bool 		result_type;
+				typedef value_type	first_argument_type;
+				typedef value_type	second_argument_type;
 
-				bool operator() (const value_type& x, const value_type& y) const
+				bool operator()(const value_type & x, const value_type & y) const
 				{
 					return comp(x.first, y.first);
 				}
@@ -393,9 +393,9 @@ class map
 		}
 
 		//Observers
-		key_compare	key_comp() const {}
+		key_compare	key_comp() const { return _comp;}
 
-		value_compare	value_comp() const {}
+		value_compare	value_comp() const {return value_compare(_comp);}
 
 		//operations
 		iterator	find(key_type const & key)
