@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/23 18:19:57 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/24 07:14:35 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ template <typename Key, typename T, typename Compare = std::less<Key>,
 	 typename Alloc = std::allocator<pair<const Key, T > > >
 class map
 {
-	private:
+	public:
 		typedef	Key											key_type;
 		typedef	T											mapped_type;
 		typedef	pair<const key_type, mapped_type>			value_type;
@@ -40,6 +40,7 @@ class map
 		typedef	ptrdiff_t									difference_type;
 		typedef	size_t										size_type;
 		
+	private:
 
 		//private members
 		RBtree<key_type, mapped_type>	_tree;
@@ -159,6 +160,7 @@ class map
 							tmp = tmp->right_child;
 						_p = tmp;
 					}
+					return (*this);
 				}
 				iterator	operator--(int) 
 					{iterator tmp(*this); operator--(); return tmp;}
@@ -170,7 +172,7 @@ class map
 				
 				value_type &	operator->() 
 				{
-					return ((_p->data));
+					return (&(_p->data));
 				}
 
 				bool	operator==(const iterator& rhs) const
@@ -217,6 +219,7 @@ class map
 							tmp = tmp->left_child;
 						_p = tmp;
 					}
+					return (*this);
 				}
 
 				reverse_iterator	operator--(int) 
@@ -242,6 +245,7 @@ class map
 							tmp = tmp->right_child;
 						_p = tmp;
 					}
+					return (*this);
 				}
 
 				reverse_iterator	operator++(int) 

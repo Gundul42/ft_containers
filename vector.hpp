@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/23 17:01:15 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/24 06:46:24 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ namespace ft
 template <typename T, typename Alloc = std::allocator<T> >
 class vector
 {
-	private:
+	public:
 		typedef	T								value_type;
 		typedef	std::size_t						size_type;
 		typedef std::ptrdiff_t					difference_type;
@@ -34,6 +34,8 @@ class vector
 		typedef	const value_type&				const_reference;
 		typedef typename Alloc::pointer			pointer;
 		typedef typename Alloc::const_pointer	const_pointer;
+
+	private:
 
 		pointer		_start;
 		size_type	_size;
@@ -407,7 +409,7 @@ class vector
 		iterator	end(void) {return (iterator(_start + _size));}
 
 		reverse_iterator	rbegin(void) {return (reverse_iterator(_start + _size - 1));}
-		reverse_iterator	rend(void) {return (iterator(_start - 1));}
+		reverse_iterator	rend(void) {return (reverse_iterator(_start - 1));}
 
 		//Modifiers member functions with iterators
 		iterator	erase(iterator pos)
