@@ -6,12 +6,14 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 15:36:39 by graja             #+#    #+#             */
-/*   Updated: 2022/04/06 13:55:42 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/25 08:49:08 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_H
 # define ITERATOR_H
+
+# include <cstddef>
 
 namespace ft
 {

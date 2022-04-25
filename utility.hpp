@@ -6,12 +6,14 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:30:52 by graja             #+#    #+#             */
-/*   Updated: 2022/04/08 13:28:41 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/25 08:50:26 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILITY_H
 # define UTILITY_H
+
+# include <cstddef>
 
 namespace ft
 {
@@ -140,8 +142,8 @@ template<typename> struct is_integral
 
 template<> struct is_integral<bool> {static const bool value = true;};
 template<> struct is_integral<char> {static const bool value = true;};
-template<> struct is_integral<char16_t> {static const bool value = true;};
-template<> struct is_integral<char32_t> {static const bool value = true;};
+//template<> struct is_integral<char16_t> {static const bool value = true;};
+//template<> struct is_integral<char32_t> {static const bool value = true;};
 template<> struct is_integral<wchar_t> {static const bool value = true;};
 template<> struct is_integral<signed char> {static const bool value = true;};
 template<> struct is_integral<short int> {static const bool value = true;};
