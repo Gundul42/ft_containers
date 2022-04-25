@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 13:25:31 by graja             #+#    #+#             */
-/*   Updated: 2022/04/25 13:45:07 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/25 18:42:40 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,33 @@
 # define VEC_ITERATOR_H
 
 # include "iterator.hpp"
-		
-//Iterators
 
-template <typename T>
+namespace ft
+{
+
+template <bool flag, class IsTrue, class IsFalse>
+struct choose;
+
+template <class IsTrue, class IsFalse>
+struct choose<true, IsTrue, IsFalse> {
+   typedef IsTrue type;
+};
+
+template <class IsTrue, class IsFalse>
+struct choose<false, IsTrue, IsFalse> {
+   typedef IsFalse type;
+};
+
+template <typename T, bool is_const>
 class V_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 {
 	public:
-		typedef	T								value_type;
-		typedef	std::size_t						size_type;
-		typedef std::ptrdiff_t					difference_type;
-		typedef	value_type &					reference;
-		typedef	const value_type &				const_reference;
-		typedef value_type *					pointer;
+		typedef	T												value_type;
+		typedef	std::size_t										size_type;
+		typedef std::ptrdiff_t									difference_type;
+		typedef	const value_type &								const_reference;
+		typedef typename choose<is_const, const T &, T &>::type	reference;
+		typedef typename choose<is_const, const T *, T *>::type	pointer;
 
 	private:
 		pointer	_p;
@@ -38,8 +52,12 @@ class V_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 
 		V_iterator(const V_iterator & mit) : _p(mit._p) {}
 
+		//V_iterator(const V_iterator<T, false> & copy) : _p(&(*copy._p)) {} 
+
 		V_iterator & operator=(const V_iterator & right)
 			{this->_p = right._p; return (*this);}
+
+		pointer	getPtr(void) const {return _p;}
 
 		V_iterator&	operator++() {++_p;return *this;}
 		V_iterator	operator++(int) 
@@ -103,16 +121,17 @@ class V_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 		
 };
 
-template <typename T>
+template <typename T, bool is_const>
 class V_reverse_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 {
 	public:
-		typedef	T								value_type;
-		typedef	std::size_t						size_type;
-		typedef std::ptrdiff_t					difference_type;
-		typedef	value_type &					reference;
-		typedef	const value_type &				const_reference;
-		typedef value_type *					pointer;
+		typedef	T												value_type;
+		typedef	std::size_t										size_type;
+		typedef std::ptrdiff_t									difference_type;
+		typedef	const value_type &								const_reference;
+		typedef typename choose<is_const, const T &, T &>::type	reference;
+		typedef typename choose<is_const, const T *, T *>::type	pointer;
+
 
 	private:
 		pointer	_p;
@@ -190,4 +209,5 @@ class V_reverse_iterator : public ft::iterator<std::random_access_iterator_tag, 
 		}
 };
 
+} //end namespace
 #endif

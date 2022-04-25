@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/25 13:44:33 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/25 18:47:03 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,18 @@ template <typename T, typename Alloc = std::allocator<T> >
 class vector
 {
 	public:
-		typedef	T								value_type;
-		typedef	std::size_t						size_type;
-		typedef std::ptrdiff_t					difference_type;
-		typedef Alloc							allocator_type;
-		typedef	value_type&						reference;
-		typedef	const value_type&				const_reference;
-		typedef typename Alloc::pointer			pointer;
-		typedef typename Alloc::const_pointer	const_pointer;
-		typedef V_iterator<value_type>			iterator;
-		typedef V_reverse_iterator<value_type>	reverse_iterator;
+		typedef	T										value_type;
+		typedef	std::size_t								size_type;
+		typedef std::ptrdiff_t							difference_type;
+		typedef Alloc									allocator_type;
+		typedef	value_type&								reference;
+		typedef	const value_type&						const_reference;
+		typedef typename Alloc::pointer					pointer;
+		typedef typename Alloc::const_pointer			const_pointer;
+		typedef V_iterator<value_type, false>			iterator;
+		typedef V_iterator<value_type, true>			const_iterator;
+		typedef V_reverse_iterator<value_type, false>	reverse_iterator;
+		typedef V_reverse_iterator<value_type, true>	const_reverse_iterator;
 
 	private:
 
@@ -249,8 +251,11 @@ class vector
 		allocator_type	get_allocator() const {return (_alloc);}
 
 
-		iterator	begin(void) {return (iterator(_start));}
-		iterator	end(void) {return (iterator(_start + _size));}
+		iterator		begin(void) {return (iterator(_start));}
+		const_iterator	begin(void) const {return (const_iterator(_start));}
+
+		iterator			end(void) {return (iterator(_start + _size));}
+		const_iterator		end(void) const {return (const_iterator(_start + _size));}
 
 		reverse_iterator	rbegin(void) {return (reverse_iterator(_start + _size - 1));}
 		reverse_iterator	rend(void) {return (reverse_iterator(_start - 1));}
