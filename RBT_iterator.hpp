@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
-/*   Updated: 2022/04/26 15:16:04 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/26 17:09:42 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,12 @@ class RBT_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 		RBT_iterator(typename RBtree<key_type, mapped_type>::iter in) :_p(in) {}
 		~RBT_iterator(void) {}
 
-		RBT_iterator(const RBT_iterator & mit) : _p(mit._p) {}
+		template<typename fst, typename U, bool cval>
+		RBT_iterator(const RBT_iterator<fst, U, cval> & r) : _p(r.getPtr()) {}
+
+		typename RBtree<key_type, T>::iter	getPtr(void) const {return _p;}
+
+		RBT_iterator(const RBT_iterator & cpy) : _p(cpy._p) {}
 
 		RBT_iterator & operator=(const RBT_iterator & right)
 			{this->_p = right._p; return (*this);}
@@ -128,11 +133,14 @@ class RBT_reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag
 	public:
 		RBT_reverse_iterator(void) :_p(NULL) {}
 
-		RBT_reverse_iterator(typename RBtree<key_type, mapped_type>::iter in) :
-			_p(in) {}
-		~RBT_reverse_iterator(void) {}
+		RBT_reverse_iterator(typename RBtree<key_type, mapped_type>::iter in) : _p(in) {}
 
-		RBT_reverse_iterator(const RBT_reverse_iterator & mit) : _p(mit._p) {}
+		~RBT_reverse_iterator(void) {}
+		
+		template<typename fst, typename U, bool cval>
+		RBT_reverse_iterator(const RBT_reverse_iterator<fst, U, cval> & r) : _p(r.getPtr()) {}
+
+		typename RBtree<key_type, mapped_type>::iter	getPtr(void) const {return _p;}
 
 		RBT_reverse_iterator & operator=(const RBT_reverse_iterator & right)
 			{this->_p = right._p; return (*this);}
