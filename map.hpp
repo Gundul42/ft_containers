@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/24 11:57:02 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/26 08:27:08 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "iterator.hpp"
 # include "utility.hpp"
 # include "RBtree.hpp"
+# include "RBT_iterator.hpp"
 
 namespace ft
 {
@@ -39,6 +40,10 @@ class map
 		typedef typename allocator_type::const_pointer		const_pointer;
 		typedef	ptrdiff_t									difference_type;
 		typedef	size_t										size_type;
+		typedef RBT_iterator<Key, T, false>					iterator;
+		typedef RBT_iterator<Key, T, true>					const_iterator;
+		typedef RBT_reverse_iterator<Key, T, false>			reverse_iterator;
+		typedef RBT_reverse_iterator<Key, T, true>			const_reverse_iterator;
 		
 	private:
 
@@ -96,176 +101,6 @@ class map
 
 		~map(void) {}
 
-		//Iterators
-
-		class iterator : public ft::iterator<std::bidirectional_iterator_tag, value_type>
-		{
-			private:
-				typename RBtree<key_type, mapped_type>::iter	_p;
-
-			public:
-				iterator(void) :_p(NULL) {}
-
-				iterator(typename RBtree<key_type, mapped_type>::iter in) :_p(in) {}
-				~iterator(void) {}
-
-				iterator(const iterator & mit) : _p(mit._p) {}
-
-				iterator & operator=(const iterator & right)
-					{this->_p = right._p; return (*this);}
-
-				iterator &	operator++() 
-				{
-					typename RBtree<key_type, mapped_type>::iter	tmp;
-                
-					if (!_p->right_child)
-					{
-						tmp = _p->parent;
-						while (tmp && tmp->data->first < _p->data->first)
-							tmp = tmp->parent;
-						_p = tmp;
-					}
-					else if (!_p->right_child->left_child)
-						_p = (_p->right_child);
-					else if (_p->right_child->left_child)
-					{
-						tmp = _p->right_child->left_child;
-						while (tmp->left_child)
-							tmp = tmp->left_child;
-						_p = tmp;
-					}
-					return (*this);
-				}
-
-				iterator	operator++(int) 
-					{iterator tmp(*this); operator++(); return tmp;}
-
-				iterator&	operator--()
-				{
-					typename RBtree<key_type, mapped_type>::iter	tmp;
-                
-					if (!_p->left_child)
-					{
-						tmp = _p->parent;
-						while (tmp && tmp->data->first > _p->data->first)
-							tmp = tmp->parent;
-						_p = tmp;
-					}
-					else if (!_p->left_child->right_child)
-						_p = (_p->left_child);
-					else if (_p->left_child->right_child)
-					{
-						tmp = _p->left_child->right_child;
-						while (tmp->right_child)
-							tmp = tmp->right_child;
-						_p = tmp;
-					}
-					return (*this);
-				}
-				iterator	operator--(int) 
-					{iterator tmp(*this); operator--(); return tmp;}
-
-				value_type &	operator*() 
-				{
-					return (*(_p->data));
-				}
-				
-				value_type *	operator->() 
-				{
-					return ((_p->data));
-				}
-
-				bool	operator==(const iterator& rhs) const
-					{return _p == rhs._p;}
-				bool	operator!=(const iterator& rhs) const
-					{return _p != rhs._p;}
-		};
-		
-		class reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag,
-			value_type>
-		{
-			private:
-				typename RBtree<key_type, mapped_type>::iter	_p;
-
-			public:
-				reverse_iterator(void) :_p(NULL) {}
-
-				reverse_iterator(typename RBtree<key_type, mapped_type>::iter in) :
-					_p(in) {}
-				~reverse_iterator(void) {}
-
-				reverse_iterator(const reverse_iterator & mit) : _p(mit._p) {}
-
-				reverse_iterator & operator=(const reverse_iterator & right)
-					{this->_p = right._p; return (*this);}
-
-				reverse_iterator&	operator--() 
-				{
-					typename RBtree<key_type, mapped_type>::iter	tmp;
-                
-					if (!_p->right_child)
-					{
-						tmp = _p->parent;
-						while (tmp && tmp->data->first < _p->data->first)
-							tmp = tmp->parent;
-						_p = tmp;
-					}
-					else if (!_p->right_child->left_child)
-						_p = (_p->right_child);
-					else if (_p->right_child->left_child)
-					{
-						tmp = _p->right_child->left_child;
-						while (tmp->left_child)
-							tmp = tmp->left_child;
-						_p = tmp;
-					}
-					return (*this);
-				}
-
-				reverse_iterator	operator--(int) 
-					{reverse_iterator tmp(*this); operator--(); return tmp;}
-
-				reverse_iterator&	operator++()
-				{
-					typename RBtree<key_type, mapped_type>::iter	tmp;
-                
-					if (!_p->left_child)
-					{
-						tmp = _p->parent;
-						while (tmp && tmp->data->first > _p->data->first)
-							tmp = tmp->parent;
-						_p = tmp;
-					}
-					else if (!_p->left_child->right_child)
-						_p = (_p->left_child);
-					else if (_p->left_child->right_child)
-					{
-						tmp = _p->left_child->right_child;
-						while (tmp->right_child)
-							tmp = tmp->right_child;
-						_p = tmp;
-					}
-					return (*this);
-				}
-
-				reverse_iterator	operator++(int) 
-					{reverse_iterator tmp(*this); operator++(); return tmp;}
-
-				value_type &	operator*() 
-				{
-					return (*(_p->data));
-				}
-				
-				value_type &	operator->() 
-				{
-					return (*(_p->data));
-				}
-
-				bool	operator==(const reverse_iterator& rhs) const
-					{return _p == rhs._p;}
-				bool	operator!=(const reverse_iterator& rhs) const
-					{return _p != rhs._p;}
-		};
 		
 		class value_compare
 		{

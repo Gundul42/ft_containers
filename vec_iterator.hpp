@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 13:25:31 by graja             #+#    #+#             */
-/*   Updated: 2022/04/26 07:55:17 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/26 08:00:35 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,10 @@
 # define VEC_ITERATOR_H
 
 # include "iterator.hpp"
+# include "utility.hpp"
 
 namespace ft
 {
-
-template <bool flag, class IsTrue, class IsFalse>
-struct choose;
-
-template <class IsTrue, class IsFalse>
-struct choose<true, IsTrue, IsFalse> {
-   typedef IsTrue type;
-};
-
-template <class IsTrue, class IsFalse>
-struct choose<false, IsTrue, IsFalse> {
-   typedef IsFalse type;
-};
-
 template <typename T, bool is_const>
 class V_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 {
