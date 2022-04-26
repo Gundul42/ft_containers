@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 13:25:31 by graja             #+#    #+#             */
-/*   Updated: 2022/04/26 10:24:28 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/26 13:35:16 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,18 @@ class V_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 		V_iterator(pointer x) :_p(x) {}
 		~V_iterator(void) {}
 
-		V_iterator(const V_iterator & mit) : _p(mit.getPtr()) {}
-
 		template<typename U, bool cval>
 		V_iterator(const V_iterator<U, cval> & mit) : _p(mit.getPtr()) {}
 
-		V_iterator & operator=(const V_iterator & right)
-		{this->_p = right._p; return *this;}
+		V_iterator & operator=(const V_iterator & right) {this->_p = right._p; return *this;}
 
 		pointer	getPtr(void) const {return _p;}
 		V_iterator&	operator++() {++_p;return *this;}
-		V_iterator	operator++(int) 
-			{V_iterator tmp(*this); operator++(); return tmp;}
+		V_iterator	operator++(int) {V_iterator tmp(*this); operator++(); return tmp;}
 		V_iterator&	operator--() {--_p;return *this;}
-		V_iterator	operator--(int) 
-			{V_iterator tmp(*this); operator--(); return tmp;}
-		V_iterator &	operator+=(const size_type n)
-			{_p = _p + n; return (*this);}
-		V_iterator &	operator-=(const size_type n)
-			{_p = _p - n; return (*this);}
+		V_iterator	operator--(int) {V_iterator tmp(*this); operator--(); return tmp;}
+		V_iterator &	operator+=(const size_type n) {_p = _p + n; return (*this);}
+		V_iterator &	operator-=(const size_type n) {_p = _p - n; return (*this);}
 		V_iterator 	operator-(const size_type n)
 			{
 				V_iterator	tmp(this->_p);
@@ -64,6 +57,7 @@ class V_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 				tmp._p = this->_p - n;
 			       	return (tmp);
 			}
+
 		V_iterator 	operator+(const size_type n)
 			{
 				V_iterator	tmp(this->_p);
@@ -71,24 +65,40 @@ class V_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 				tmp._p = this->_p + n;
 			       	return (tmp);
 			}
-		difference_type	operator-(const V_iterator & right)
-			{return (_p - right._p);}
-		value_type	operator[](const size_type n)
-			{return (*(_p + n));}
-		bool	operator==(const V_iterator& rhs) const
-			{return _p == rhs._p;}
-		bool	operator!=(const V_iterator & rhs) const
-			{return _p != rhs._p;}
-		bool	operator>(const V_iterator& rhs) const
-			{return _p > rhs._p;}
-		bool	operator<(const V_iterator& rhs) const
-			{return _p < rhs._p;}
-		bool	operator>=(const V_iterator& rhs) const
-			{return _p >= rhs._p;}
-		bool	operator<=(const V_iterator& rhs) const
-			{return _p <= rhs._p;}
+		
+		template<typename U, bool cval>
+		difference_type	operator-(const V_iterator<U, cval> & rhs) const
+			{return _p - rhs.getPtr();}
+		
+		template<typename U, bool cval>
+		bool	operator==(const V_iterator<U, cval> & rhs) const
+			{return _p == rhs.getPtr();}
+		
+		template<typename U, bool cval>
+		bool	operator!=(const V_iterator<U, cval> & rhs) const
+			{return _p != rhs.getPtr();}
+		
+		template<typename U, bool cval>
+		bool	operator>(const V_iterator<U, cval> & rhs) const
+			{return _p > rhs.getPtr();}
+		
+		template<typename U, bool cval>
+		bool	operator<(const V_iterator<U, cval> & rhs) const
+			{return _p < rhs.getPtr();}
+
+		template<typename U, bool cval>
+		bool	operator>=(const V_iterator<U, cval> & rhs) const
+			{return _p >= rhs.getPtr();}
+		
+		template<typename U, bool cval>
+		bool	operator<=(const V_iterator<U, cval> & rhs) const
+			{return _p <= rhs.getPtr();}
+
 		reference	operator*() {return *_p;}
+
 		reference	operator->() {return *_p;}
+		
+		value_type	operator[](const size_type n) {return (*(_p + n));}
 
 		//non member overloads
 		friend	V_iterator operator+(const size_type n, const V_iterator right)
@@ -129,21 +139,19 @@ class V_reverse_iterator : public ft::iterator<std::random_access_iterator_tag, 
 		V_reverse_iterator(pointer x) :_p(x) {}
 		~V_reverse_iterator(void) {}
 
-		V_reverse_iterator(const V_reverse_iterator & mit) : _p(mit._p) {}
+		template<typename U, bool cval>
+		V_reverse_iterator(const V_reverse_iterator<U, cval> & mit) : _p(mit.getPtr()) {}
 
 		V_reverse_iterator & operator=(const V_reverse_iterator & right)
-			{this->_p = right._p; return (*this);}
+			{this->_p = right.getPtr(); return (*this);}
 
-		V_reverse_iterator&	operator++() {--_p;return *this;}
-		V_reverse_iterator	operator++(int) 
-			{V_reverse_iterator tmp(*this); operator--(); return tmp;}
 		V_reverse_iterator&	operator--() {++_p;return *this;}
-		V_reverse_iterator	operator--(int) 
-			{V_reverse_iterator tmp(*this); operator++(); return tmp;}
-		V_reverse_iterator &	operator+=(const size_type n)
-			{_p = _p - n; return (*this);}
-		V_reverse_iterator &	operator-=(const size_type n)
-			{_p = _p + n; return (*this);}
+		V_reverse_iterator&	operator++() {--_p;return *this;}
+		V_reverse_iterator	operator++(int) {V_reverse_iterator tmp(*this); operator++(); return tmp;}
+		V_reverse_iterator	operator--(int) {V_reverse_iterator tmp(*this); operator--(); return tmp;}
+		V_reverse_iterator &	operator+=(const size_type n) {_p = _p - n; return (*this);}
+		V_reverse_iterator &	operator-=(const size_type n) {_p = _p + n; return (*this);}
+
 		V_reverse_iterator 	operator-(const size_type n)
 			{
 				V_reverse_iterator	tmp(this->_p);
@@ -151,6 +159,7 @@ class V_reverse_iterator : public ft::iterator<std::random_access_iterator_tag, 
 				tmp._p = this->_p + n;
 			       	return (tmp);
 			}
+
 		V_reverse_iterator 	operator+(const size_type n)
 			{
 				V_reverse_iterator	tmp(this->_p);
@@ -158,24 +167,38 @@ class V_reverse_iterator : public ft::iterator<std::random_access_iterator_tag, 
 				tmp._p = this->_p - n;
 			       	return (tmp);
 			}
-		difference_type	operator-(const V_reverse_iterator & right)
-			{return (_p + right._p);}
-		value_type	operator[](const size_type n)
-			{return (*(_p - n));}
-		bool	operator==(const V_reverse_iterator& rhs) const
-			{return _p == rhs._p;}
-		bool	operator!=(const V_reverse_iterator& rhs) const
-			{return _p != rhs._p;}
-		bool	operator>(const V_reverse_iterator& rhs) const
-			{return _p < rhs._p;}
-		bool	operator<(const V_reverse_iterator& rhs) const
-			{return _p > rhs._p;}
-		bool	operator>=(const V_reverse_iterator& rhs) const
-			{return _p <= rhs._p;}
-		bool	operator<=(const V_reverse_iterator& rhs) const
-			{return _p >= rhs._p;}
+
+		template<typename U, bool cval>
+		difference_type	operator-(const V_reverse_iterator<U, cval> & rhs) const
+			{return _p - rhs.getPtr();}
+
+		template<typename U, bool cval>
+		bool	operator==(const V_reverse_iterator<U, cval> & rhs) const
+			{return _p == rhs.getPtr();}
+
+		template<typename U, bool cval>
+		bool	operator!=(const V_reverse_iterator<U, cval> & rhs) const
+			{return _p != rhs.getPtr();}
+
+		template<typename U, bool cval>
+		bool	operator>(const V_reverse_iterator<U, cval> & rhs) const
+			{return _p > rhs.getPtr();}
+
+		template<typename U, bool cval>
+		bool	operator<(const V_reverse_iterator<U, cval> & rhs) const
+			{return _p < rhs.getPtr();}
+
+		template<typename U, bool cval>
+		bool	operator>=(const V_reverse_iterator<U, cval> & rhs) const
+			{return _p >= rhs.getPtr();}
+
+		template<typename U, bool cval>
+		bool	operator<=(const V_reverse_iterator<U, cval> & rhs) const
+			{return _p <= rhs.getPtr();}
+		value_type	operator[](const size_type n) {return (*(_p - n));}
 		reference	operator*() {return *_p;}
 		reference	operator->() {return *_p;}
+		pointer		getPtr(void) const {return _p;}
 
 		//non member overloads
 		friend	V_reverse_iterator operator+(const size_type n,

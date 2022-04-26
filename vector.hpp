@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/25 18:47:03 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/26 12:56:13 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,7 +258,11 @@ class vector
 		const_iterator		end(void) const {return (const_iterator(_start + _size));}
 
 		reverse_iterator	rbegin(void) {return (reverse_iterator(_start + _size - 1));}
+		const_reverse_iterator	rbegin(void) const 
+			{return (const_reverse_iterator(_start + _size - 1));}
+		
 		reverse_iterator	rend(void) {return (reverse_iterator(_start - 1));}
+		const_reverse_iterator	rend(void) const {return (const_reverse_iterator(_start - 1));}
 
 		//Modifiers member functions with iterators
 		iterator	erase(iterator pos)
