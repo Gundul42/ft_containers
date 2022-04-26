@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
-/*   Updated: 2022/04/26 08:21:52 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/26 15:16:04 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,9 +194,9 @@ class RBT_reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag
 			return (*(_p->data));
 		}
 		
-		value_type &	operator->() 
+		value_type *	operator->() 
 		{
-			return (*(_p->data));
+			return ((_p->data));
 		}
 
 		bool	operator==(const RBT_reverse_iterator& rhs) const
