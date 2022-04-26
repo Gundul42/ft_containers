@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 13:25:31 by graja             #+#    #+#             */
-/*   Updated: 2022/04/26 08:00:35 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/26 10:24:28 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,21 @@ class V_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 	private:
 		pointer	_p;
 
+
 	public:
 		V_iterator(void) :_p(NULL) {}
 		V_iterator(pointer x) :_p(x) {}
 		~V_iterator(void) {}
 
-		V_iterator(const V_iterator & mit) : _p(mit._p) {}
+		V_iterator(const V_iterator & mit) : _p(mit.getPtr()) {}
+
+		template<typename U, bool cval>
+		V_iterator(const V_iterator<U, cval> & mit) : _p(mit.getPtr()) {}
 
 		V_iterator & operator=(const V_iterator & right)
 		{this->_p = right._p; return *this;}
 
+		pointer	getPtr(void) const {return _p;}
 		V_iterator&	operator++() {++_p;return *this;}
 		V_iterator	operator++(int) 
 			{V_iterator tmp(*this); operator++(); return tmp;}
