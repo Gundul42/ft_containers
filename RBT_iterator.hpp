@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
-/*   Updated: 2022/04/27 11:47:02 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/27 13:11:07 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,15 @@ class RBT_reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag
 {
 	public:
 		typedef	Key												key_type;
-		typedef typename choose<is_const, const T , T >::type	mapped_type;
+		//typedef typename choose<is_const, const T , T >::type	mapped_type;
+		typedef T												mapped_type;
 		typedef	pair<const key_type, mapped_type>				value_type;
 		typedef	std::size_t										size_type;
 		typedef std::ptrdiff_t									difference_type;
 		typedef	const value_type &								const_reference;
 		typedef typename RBtree<key_type, mapped_type>::iter	RBnode;
-		typedef typename choose<is_const, const RBnode , RBnode >::type	RB_type;
+		typedef typename RBtree<key_type, mapped_type>::const_iter	cRBnode;
+		typedef typename choose<is_const, cRBnode , RBnode >::type	RB_type;
 
 	private:
 		RB_type	_p;
@@ -139,19 +141,20 @@ class RBT_reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag
 	public:
 		RBT_reverse_iterator(void) :_p(NULL) {}
 
-		RBT_reverse_iterator(RB_type in) : _p(in) {}
-
+		RBT_reverse_iterator(RB_type in) :_p(in) {}
 		~RBT_reverse_iterator(void) {}
-		
+
 		template<typename fst, typename U, bool cval>
 		RBT_reverse_iterator(const RBT_reverse_iterator<fst, U, cval> & r) : _p(r.getPtr()) {}
 
 		RB_type	getPtr(void) const {return _p;}
 
+		RBT_reverse_iterator(const RBT_reverse_iterator & cpy) : _p(cpy._p) {}
+
 		RBT_reverse_iterator & operator=(const RBT_reverse_iterator & right)
 			{this->_p = right._p; return (*this);}
 
-		RBT_reverse_iterator&	operator--() 
+		RBT_reverse_iterator &	operator++() 
 		{
 			RB_type	tmp;
         
@@ -174,10 +177,10 @@ class RBT_reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag
 			return (*this);
 		}
 
-		RBT_reverse_iterator	operator--(int) 
+		RBT_reverse_iterator	operator++(int) 
 			{RBT_reverse_iterator tmp(*this); operator--(); return tmp;}
 
-		RBT_reverse_iterator&	operator++()
+		RBT_reverse_iterator&	operator--()
 		{
 			RB_type	tmp;
         
@@ -199,8 +202,7 @@ class RBT_reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag
 			}
 			return (*this);
 		}
-
-		RBT_reverse_iterator	operator++(int) 
+		RBT_reverse_iterator	operator--(int) 
 			{RBT_reverse_iterator tmp(*this); operator++(); return tmp;}
 
 		value_type &	operator*() 
@@ -218,6 +220,7 @@ class RBT_reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag
 		bool	operator!=(const RBT_reverse_iterator& rhs) const
 			{return _p != rhs._p;}
 };
+
 
 } //end namespace
 
