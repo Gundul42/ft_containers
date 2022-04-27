@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/22 12:35:55 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/27 15:21:41 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,34 @@
 # include "iterator.hpp"
 # include "utility.hpp"
 # include "RBtree.hpp"
+# include "RBT_set_iterator.hpp"
 
 namespace ft
 {
 
-template <typename T, typename Compare = std::less<T>, 
-	 typename Alloc = std::allocator<pair<const T, bool > > >
-class set 
+template <typename Key, typename Compare = std::less<Key>, 
+	 typename Alloc = std::allocator<pair<const Key, bool > > >
+class set
 {
-	private:
-		typedef	T											key_type;
-		typedef	bool										mapped_type;
-		typedef	pair<const key_type, mapped_type>			value_type;
-		typedef	Compare										key_compare;
-		typedef	Alloc										allocator_type;
-		typedef	typename allocator_type::reference			reference;
-		typedef typename allocator_type::const_reference	const_reference;
-		typedef	typename allocator_type::pointer			pointer;
-		typedef typename allocator_type::const_pointer		const_pointer;
-		typedef	ptrdiff_t									difference_type;
-		typedef	size_t										size_type;
+	public:
+		typedef	Key												key_type;
+		typedef	bool											mapped_type;
+		typedef	pair<const key_type, mapped_type>				value_type;
+		typedef	Compare											key_compare;
+		typedef	Alloc											allocator_type;
+		typedef	typename allocator_type::reference				reference;
+		typedef typename allocator_type::const_reference		const_reference;
+		typedef	typename allocator_type::pointer				pointer;
+		typedef typename allocator_type::const_pointer			const_pointer;
+		typedef	ptrdiff_t										difference_type;
+		typedef	size_t											size_type;
+		typedef RBT_set_iterator<Key, false>					iterator;
+		typedef RBT_set_iterator<Key, true>						const_iterator;
+		typedef RBT_reverse_set_iterator<Key, false>			reverse_iterator;
+		typedef RBT_reverse_set_iterator<Key, true>				const_reverse_iterator;
 		
+	private:
 
-		//private members
 		RBtree<key_type, mapped_type>	_tree;
 		allocator_type					_alloc;
 		key_compare						_comp;
@@ -49,12 +54,19 @@ class set
 	public:
 
 		explicit set(const key_compare& comp = key_compare(), const allocator_type& alloc = 
-				allocator_type()): _tree() {}
+				allocator_type()): _tree()
+		{
+				_alloc = alloc;
+				_comp = comp;
+		}
 
 		template <class InputIterator>
 		set(InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
 				const allocator_type& alloc = allocator_type()): _tree()
 		{
+			_alloc = alloc;
+			_comp = comp;
+
 			while (first != last)
 			{
 				_tree.insert(*first);
@@ -88,187 +100,21 @@ class set
 
 		~set(void) {}
 
-		//Iterators
-
-		class iterator : public ft::iterator<std::bidirectional_iterator_tag, value_type>
-		{
-			private:
-				typename RBtree<key_type, mapped_type>::iter	_p;
-
-			public:
-				iterator(void) :_p(NULL) {}
-
-				iterator(typename RBtree<key_type, mapped_type>::iter in) :_p(in) {}
-				~iterator(void) {}
-
-				iterator(const iterator & mit) : _p(mit._p) {}
-
-				iterator & operator=(const iterator & right)
-					{this->_p = right._p; return (*this);}
-
-				iterator&	operator++() 
-				{
-					typename RBtree<key_type, mapped_type>::iter	tmp;
-                
-					if (!_p->right_child)
-					{
-						tmp = _p->parent;
-						while (tmp && tmp->data->first < _p->data->first)
-							tmp = tmp->parent;
-						_p = tmp;
-					}
-					else if (!_p->right_child->left_child)
-						_p = (_p->right_child);
-					else if (_p->right_child->left_child)
-					{
-						tmp = _p->right_child->left_child;
-						while (tmp->left_child)
-							tmp = tmp->left_child;
-						_p = tmp;
-					}
-				}
-
-				iterator	operator++(int) 
-					{iterator tmp(*this); operator++(); return tmp;}
-
-				iterator&	operator--()
-				{
-					typename RBtree<key_type, mapped_type>::iter	tmp;
-                
-					if (!_p->left_child)
-					{
-						tmp = _p->parent;
-						while (tmp && tmp->data->first > _p->data->first)
-							tmp = tmp->parent;
-						_p = tmp;
-					}
-					else if (!_p->left_child->right_child)
-						_p = (_p->left_child);
-					else if (_p->left_child->right_child)
-					{
-						tmp = _p->left_child->right_child;
-						while (tmp->right_child)
-							tmp = tmp->right_child;
-						_p = tmp;
-					}
-				}
-				iterator	operator--(int) 
-					{iterator tmp(*this); operator--(); return tmp;}
-
-				value_type &	operator*() 
-				{
-					return (*(_p->data));
-				}
-				
-				value_type &	operator->() 
-				{
-					return (*(_p->data));
-				}
-
-				bool	operator==(const iterator& rhs) const
-					{return _p == rhs._p;}
-				bool	operator!=(const iterator& rhs) const
-					{return _p != rhs._p;}
-		};
-		
-		class reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag,
-			value_type>
-		{
-			private:
-				typename RBtree<key_type, mapped_type>::iter	_p;
-
-			public:
-				reverse_iterator(void) :_p(NULL) {}
-
-				reverse_iterator(typename RBtree<key_type, mapped_type>::iter in) :
-					_p(in) {}
-				~reverse_iterator(void) {}
-
-				reverse_iterator(const reverse_iterator & mit) : _p(mit._p) {}
-
-				reverse_iterator & operator=(const reverse_iterator & right)
-					{this->_p = right._p; return (*this);}
-
-				reverse_iterator&	operator--() 
-				{
-					typename RBtree<key_type, mapped_type>::iter	tmp;
-                
-					if (!_p->right_child)
-					{
-						tmp = _p->parent;
-						while (tmp && tmp->data->first < _p->data->first)
-							tmp = tmp->parent;
-						_p = tmp;
-					}
-					else if (!_p->right_child->left_child)
-						_p = (_p->right_child);
-					else if (_p->right_child->left_child)
-					{
-						tmp = _p->right_child->left_child;
-						while (tmp->left_child)
-							tmp = tmp->left_child;
-						_p = tmp;
-					}
-				}
-
-				reverse_iterator	operator--(int) 
-					{reverse_iterator tmp(*this); operator--(); return tmp;}
-
-				reverse_iterator&	operator++()
-				{
-					typename RBtree<key_type, mapped_type>::iter	tmp;
-                
-					if (!_p->left_child)
-					{
-						tmp = _p->parent;
-						while (tmp && tmp->data->first > _p->data->first)
-							tmp = tmp->parent;
-						_p = tmp;
-					}
-					else if (!_p->left_child->right_child)
-						_p = (_p->left_child);
-					else if (_p->left_child->right_child)
-					{
-						tmp = _p->left_child->right_child;
-						while (tmp->right_child)
-							tmp = tmp->right_child;
-						_p = tmp;
-					}
-				}
-
-				reverse_iterator	operator++(int) 
-					{reverse_iterator tmp(*this); operator++(); return tmp;}
-
-				value_type &	operator*() 
-				{
-					return (*(_p->data));
-				}
-				
-				value_type &	operator->() 
-				{
-					return (*(_p->data));
-				}
-
-				bool	operator==(const reverse_iterator& rhs) const
-					{return _p == rhs._p;}
-				bool	operator!=(const reverse_iterator& rhs) const
-					{return _p != rhs._p;}
-		};
 		
 		class value_compare
 		{
-			friend class map;
+			friend class set;
 
 			protected:
-				Compare comp;
-				value_compare (Compare c) : comp(c) {}
+				key_compare	comp;
+				value_compare(Compare c) : comp(c) {}
 
 			public:
-				typedef bool result_type;
-				typedef value_type first_argument_type;
-				typedef value_type second_argument_type;
+				typedef bool 		result_type;
+				typedef value_type	first_argument_type;
+				typedef value_type	second_argument_type;
 
-				bool operator() (const value_type& x, const value_type& y) const
+				bool operator()(const value_type & x, const value_type & y) const
 				{
 					return comp(x.first, y.first);
 				}
@@ -277,30 +123,23 @@ class set
 		//Iterators
 		
 		//points to smallest key !
-		iterator begin(void) const
-		{
-		return (iterator(_tree.begin()));
-		}
-
-		iterator end(void) const
-		{
-			return (iterator());
-		}
+		iterator 		begin(void) {return (iterator(_tree.begin()));}
+		const_iterator	begin(void) const{return (const_iterator(_tree.begin()));}
+		
+		iterator 		end(void){return (iterator());}
+		const_iterator	end(void) const {return (const_iterator());}
 
 		//points to largest key !!
-		reverse_iterator rbegin(void) const
-		{
-			return (reverse_iterator(_tree.rbegin()));
-		}
-
-		reverse_iterator rend(void) const
-		{
-			return (reverse_iterator());
-		}
+		reverse_iterator		rbegin(void) {return (reverse_iterator(_tree.rbegin()));}
+		const_reverse_iterator	rbegin(void) const {return (const_reverse_iterator(_tree.rbegin()));}
+		
+		reverse_iterator 		rend(void) {return (reverse_iterator());}
+		const_reverse_iterator	rend(void) const {return (const_reverse_iterator());}
 		
 		//Modifiers
-		pair<iterator, bool>	insert(value_type const & val)
+		pair<iterator, bool>	insert(key_type const & key)
 		{
+			value_type	val = make_pair(key, true);
 			iterator	in(find(val.first));
 			
 			if (in != iterator())
@@ -309,10 +148,10 @@ class set
 			return (make_pair(in, true));
 		}
 
-		iterator insert(iterator pos, const value_type& val)
+		iterator insert(iterator pos, const key_type& val)
 		{
 			if (pos != iterator())
-				return (_tree.insert(val));
+				return (_tree.insert(make_pair(val, true)));
 			return (iterator());
 		}
 		
@@ -347,9 +186,11 @@ class set
 
 		void swap(set & scd)
 		{
-			set<mapped_type, key_compare, allocator_type>	tmp(scd);
-
+			set<key_type, key_compare, allocator_type>	tmp(scd);
+		
+			scd.clear();
 			scd = *this;
+			this->clear();
 			*this = tmp;
 		}
 
@@ -370,15 +211,18 @@ class set
 		{
 			iterator	it = find(k);
 
-			if (it != end())
-				return ((*it).second);
-			insert(make_pair(k, mapped_type()));	
+			if (it == end())
+			{
+				insert(make_pair(k, mapped_type()));
+				it = find(k);
+			}
+			return ((*it).second);
 		}
 
 		//Observers
-		key_compare	key_comp() const {}
+		key_compare	key_comp() const { return _comp;}
 
-		value_compare	value_comp() const {}
+		value_compare	value_comp() const {return value_compare(_comp);}
 
 		//operations
 		iterator	find(key_type const & key)
@@ -416,10 +260,11 @@ class set
 				return (make_pair(lower_bound(key), upper_bound(key)));
 		}
 
-		allocator_type	get_allocator(void) const
+		allocator_type get_allocator() const
 		{
 				return (_alloc);
 		}
+
 };
 
 } //end namespace
