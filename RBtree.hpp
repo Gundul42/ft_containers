@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/04/26 16:53:19 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/27 11:46:08 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -552,7 +552,8 @@ class	RBtree
 
 	public:
 		typedef value_type *	valPtr;
-		typedef	node *		iter;
+		typedef	node *			iter;
+		typedef	const node *	const_iter;
 
 		RBtree(void): _size(0), _tree(NULL) {}
 

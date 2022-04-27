@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/24 11:06:26 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/27 11:15:19 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(void)
 
 	ft::map<int, int>			test;
 	ft::map<int, int>			test2;
-	ft::map<int, int>::iterator		it;
+	ft::map<int, int>::const_iterator		it;
 	test.insert(ft::make_pair(50,1));
 	test.insert(ft::make_pair(20,2));
 	

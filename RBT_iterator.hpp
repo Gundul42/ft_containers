@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
-/*   Updated: 2022/04/26 17:09:42 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/27 11:47:02 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,29 @@ class RBT_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 {
 	public:
 		typedef	Key												key_type;
-		typedef typename choose<is_const, const T , T >::type	mapped_type;
+		//typedef typename choose<is_const, const T , T >::type	mapped_type;
+		typedef T												mapped_type;
 		typedef	pair<const key_type, mapped_type>				value_type;
 		typedef	std::size_t										size_type;
 		typedef std::ptrdiff_t									difference_type;
 		typedef	const value_type &								const_reference;
+		typedef typename RBtree<key_type, mapped_type>::iter	RBnode;
+		typedef typename RBtree<key_type, mapped_type>::const_iter	cRBnode;
+		typedef typename choose<is_const, cRBnode , RBnode >::type	RB_type;
 
 	private:
-		typename RBtree<key_type, mapped_type>::iter	_p;
+		RB_type	_p;
 
 	public:
 		RBT_iterator(void) :_p(NULL) {}
 
-		RBT_iterator(typename RBtree<key_type, mapped_type>::iter in) :_p(in) {}
+		RBT_iterator(RB_type in) :_p(in) {}
 		~RBT_iterator(void) {}
 
 		template<typename fst, typename U, bool cval>
 		RBT_iterator(const RBT_iterator<fst, U, cval> & r) : _p(r.getPtr()) {}
 
-		typename RBtree<key_type, T>::iter	getPtr(void) const {return _p;}
+		RB_type	getPtr(void) const {return _p;}
 
 		RBT_iterator(const RBT_iterator & cpy) : _p(cpy._p) {}
 
@@ -51,7 +55,7 @@ class RBT_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 
 		RBT_iterator &	operator++() 
 		{
-			typename RBtree<key_type, mapped_type>::iter	tmp;
+			RB_type	tmp;
         
 			if (!_p->right_child)
 			{
@@ -77,7 +81,7 @@ class RBT_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 
 		RBT_iterator&	operator--()
 		{
-			typename RBtree<key_type, mapped_type>::iter	tmp;
+			RB_type	tmp;
         
 			if (!_p->left_child)
 			{
@@ -126,28 +130,30 @@ class RBT_reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag
 		typedef	std::size_t										size_type;
 		typedef std::ptrdiff_t									difference_type;
 		typedef	const value_type &								const_reference;
+		typedef typename RBtree<key_type, mapped_type>::iter	RBnode;
+		typedef typename choose<is_const, const RBnode , RBnode >::type	RB_type;
 
 	private:
-		typename RBtree<key_type, mapped_type>::iter	_p;
+		RB_type	_p;
 
 	public:
 		RBT_reverse_iterator(void) :_p(NULL) {}
 
-		RBT_reverse_iterator(typename RBtree<key_type, mapped_type>::iter in) : _p(in) {}
+		RBT_reverse_iterator(RB_type in) : _p(in) {}
 
 		~RBT_reverse_iterator(void) {}
 		
 		template<typename fst, typename U, bool cval>
 		RBT_reverse_iterator(const RBT_reverse_iterator<fst, U, cval> & r) : _p(r.getPtr()) {}
 
-		typename RBtree<key_type, mapped_type>::iter	getPtr(void) const {return _p;}
+		RB_type	getPtr(void) const {return _p;}
 
 		RBT_reverse_iterator & operator=(const RBT_reverse_iterator & right)
 			{this->_p = right._p; return (*this);}
 
 		RBT_reverse_iterator&	operator--() 
 		{
-			typename RBtree<key_type, mapped_type>::iter	tmp;
+			RB_type	tmp;
         
 			if (!_p->right_child)
 			{
@@ -173,7 +179,7 @@ class RBT_reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag
 
 		RBT_reverse_iterator&	operator++()
 		{
-			typename RBtree<key_type, mapped_type>::iter	tmp;
+			RB_type	tmp;
         
 			if (!_p->left_child)
 			{
