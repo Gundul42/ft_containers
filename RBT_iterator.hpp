@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
-/*   Updated: 2022/04/27 13:11:07 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/28 13:23:55 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ class RBT_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 		typedef	std::size_t										size_type;
 		typedef std::ptrdiff_t									difference_type;
 		typedef	const value_type &								const_reference;
-		typedef typename RBtree<key_type, mapped_type>::iter	RBnode;
-		typedef typename RBtree<key_type, mapped_type>::const_iter	cRBnode;
-		typedef typename choose<is_const, cRBnode , RBnode >::type	RB_type;
 
 	private:
+		typedef typename RBtree<key_type, mapped_type>::iter		RBnode;
+		typedef typename RBtree<key_type, mapped_type>::const_iter	cRBnode;
+		typedef typename choose<is_const, cRBnode , RBnode >::type	RB_type;
+		
 		RB_type	_p;
 
 	public:
