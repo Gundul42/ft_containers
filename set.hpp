@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/27 15:21:41 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/28 16:17:36 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ class set
 
 		size_type	size(void) const {return (_tree.size());}
 
-		size_type	max_size(void) const {return (_alloc.max_size());}
+		size_type	max_size(void) const {return (_tree.max_size());}
 
 		//Element Access
 		mapped_type & operator[](const key_type & k)

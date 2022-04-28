@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/26 17:27:17 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/28 16:21:33 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ class map
 
 		size_type	size(void) const {return (_tree.size());}
 
-		size_type	max_size(void) const {return (_alloc.max_size());}
+		size_type	max_size(void) const {return (_tree.max_size());}
 
 		//Element Access
 		mapped_type & operator[](const key_type & k)
