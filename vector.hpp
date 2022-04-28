@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/26 12:56:13 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/28 13:53:43 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,7 +267,7 @@ class vector
 		//Modifiers member functions with iterators
 		iterator	erase(iterator pos)
 		{
-			iterator	tmp = pos + 1;
+			iterator	tmp(pos);
 
 			_alloc.destroy(&(*pos));
 			while ((pos + 1) != end())
