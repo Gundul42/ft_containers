@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:30:52 by graja             #+#    #+#             */
-/*   Updated: 2022/04/26 08:00:16 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/29 18:58:23 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool	equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
 {
 	while (first1 != last1)
 	{
-		if (!(*first1 == *first2))
+		if ((*first1 != *first2))
 			return false;
 		++first1;
 		++first2;
@@ -126,6 +126,46 @@ class pair
 		return (*this);
 	}
 };
+
+//these must be nonmember, otherwise compiler is pissed
+//because one argument too much
+	template <class T1, class T2>
+	inline bool operator== (const pair<T1,T2>& l, const pair<T1,T2>& r)
+	{
+			if ((l.first == r.first) && (l.second == r.second))
+					return (true);
+			return (false);
+	}
+
+	template <class T1, class T2>
+	inline bool operator!= (const pair<T1,T2>& l, const pair<T1,T2>& r)
+	{
+			return (!(l == r));
+	}
+	
+	template <class T1, class T2>
+	inline bool operator< (const pair<T1,T2>& l, const pair<T1,T2>& r)
+	{
+		return l.first < r.first || (!(r.first < l.first) && l.second < r.second);
+	}
+
+	template <class T1, class T2>
+	inline bool operator<= (const pair<T1,T2>& l, const pair<T1,T2>& r)
+	{
+			return (!(r < l));
+	}
+	
+	template <class T1, class T2>
+	inline bool operator> (const pair<T1,T2>& l, const pair<T1,T2>& r)
+	{
+			return (r < l);
+	}
+
+	template <class T1, class T2>
+	inline bool operator>= (const pair<T1,T2>& l, const pair<T1,T2>& r)
+	{
+			return (!(l < r));
+	}
 
 
 //function template to return a pair object with two different types

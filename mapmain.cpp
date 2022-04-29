@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:50:25 by graja             #+#    #+#             */
-/*   Updated: 2022/04/27 11:15:19 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/29 18:02:10 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,9 @@ int	main(void)
 			std::cout << (*it).first << ", " << (*it).second << std::endl;
 			it++;
 	}
+	if (test > test2)
+			std::cout << "test is bigger " << std::endl;
+	else
+			std::cout << "test is smaller or equal " << std::endl;
 	return (0);
 }

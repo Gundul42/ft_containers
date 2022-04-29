@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/28 16:21:33 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/29 18:19:19 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,6 +273,56 @@ class map
 				return (_alloc);
 		}
 
+		//nonmember relational operators
+		template <class U, class V, class C, class A>
+		friend bool operator== ( const map<U,V,C,A>& lhs, const map<U,V,C,A>& rhs )
+		{
+//			map<U,V,C,A>	lcpy(lhs);
+//			map<U,V,C,A>	rcpy(rhs);
+
+		if (lhs.size() != rhs.size())
+			return (false);
+		return (equal(lhs.begin(), lhs.end(), rhs.begin()));
+		}
+		
+		template <class U, class V, class C, class A>
+		friend bool operator!= ( const map<U,V,C,A>& lhs, const map<U,V,C,A>& rhs )
+		{
+		return (!(lhs == rhs));
+		}
+	
+		template <class U, class V, class C, class A>
+		friend bool operator< ( const map<U,V,C,A>& lhs, const map<U,V,C,A>& rhs )
+		{
+		//	map<U,V,C,A>	lcpy(lhs);
+		//	map<U,V,C,A>	rcpy(rhs);
+
+			return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		}
+
+		template <class U, class V, class C, class A>
+		friend bool operator> ( const map<U,V,C,A>& lhs, const map<U,V,C,A>& rhs )
+		{
+			return (!(lhs <= rhs));
+		}
+		
+		template <class U, class V, class C, class A>
+		friend bool operator>=( const map<U,V,C,A>& lhs, const map<U,V,C,A>& rhs )
+		{
+				return (rhs < lhs);
+		}
+		
+		template <class U, class V, class C, class A>
+		friend bool operator<=( const map<U,V,C,A>& lhs, const map<U,V,C,A>& rhs )
+		{
+		//	map<U,V,C,A>	lcpy(lhs);
+		//	map<U,V,C,A>	rcpy(rhs);
+
+			if (equal(lhs.begin(), lhs.end(), rhs.begin()))
+				return (true);
+			return (lexicographical_compare(lhs.begin(), lhs.end(),
+						rhs.begin(), rhs.end()));
+		}
 };
 
 } //end namespace

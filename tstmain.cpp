@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setmain.cpp                                        :+:      :+:    :+:   */
+/*   tstmain.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 18:22:52 by graja             #+#    #+#             */
-/*   Updated: 2022/04/28 17:58:10 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/28 19:01:17 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 
-#include "set.hpp"
+#include "vector.hpp"
 #include "utility.hpp"
 
 //#include <set>
@@ -20,22 +20,22 @@
 int	main(void)
 {
 
-	ft::set<int>					test;
-	ft::set<int>::iterator			it;
+	ft::vector<int>					test;
+	ft::vector<int>::iterator			it;
 
-	test.insert(50);
-	test.insert(20);
-	test.insert(65);
-	test.insert(15);
-	test.insert(25);
-	test.insert(55);
-	test.insert(70);
-	test.insert(14);
-	test.erase(14);
-	test.insert(80);
-	test.insert(68);
-	test.insert(90);
-	test.insert(666);
+	test.push_back(50);
+	test.push_back(20);
+	test.push_back(65);
+	test.push_back(15);
+	test.push_back(25);
+	test.push_back(55);
+	test.push_back(70);
+	test.push_back(14);
+	//test.erase(14);
+	test.push_back(80);
+	test.push_back(68);
+	test.push_back(90);
+	test.push_back(666);
 	std::cout << "Size of container is " << test.size() << std::endl;
 	it = test.begin();
 	while (it != test.end())
@@ -43,7 +43,8 @@ int	main(void)
 			std::cout << *it << ", ";
 			it++;
 	}
-	ft::set<int>					s1(test);
+	ft::vector<int>					s1;
+	s1 = test;
 	//s1 = test;
 	if (s1 == test)
 		std::cout << std::endl << "equal" << std::endl;

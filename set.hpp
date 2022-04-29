@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/28 16:17:36 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/28 18:46:33 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ class set
 			_tree.clear();
 			while (in != cpy.end())
 			{
-				_tree.insert(*in);
+				_tree.insert(make_pair(*in, true));
 				in++;
 			}
 		}
@@ -92,7 +92,7 @@ class set
 
 			while (in != right.end())
 			{
-				this->_tree.insert(*in);
+				_tree.insert(make_pair(*in, true));
 				in++;
 			}
 			return (*this);
@@ -265,6 +265,50 @@ class set
 				return (_alloc);
 		}
 
+		//nonmember relational operators
+		template <class U, class C, class A>
+		friend bool operator== ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		{
+		if (lhs.size() != rhs.size())
+			return (false);
+		return (equal(lhs.begin(), lhs.end(), rhs.begin()));
+		}
+		
+		template <class U, class C, class A>
+		friend bool operator!= ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		{
+		return (!(lhs == rhs));
+		}
+	
+		template <class U, class C, class A>
+		friend bool operator< ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		{
+			return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		}
+
+		template <class U, class C, class A>
+		friend bool operator> ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		{
+			return (!(lhs <= rhs));
+		}
+		
+		template <class U, class C, class A>
+		friend bool operator>=( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		{
+				return (rhs < lhs);
+		}
+		
+		template <class U, class C, class A>
+		friend bool operator<=( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		{
+			set<U,C,A>	lcpy(lhs);
+			set<U,C,A>	rcpy(rhs);
+
+			if (equal(lcpy.begin(), lcpy.end(), rcpy.begin()))
+				return (true);
+			return (lexicographical_compare(lcpy.begin(), lcpy.end(),
+						rcpy.begin(), rcpy.end()));
+		}
 };
 
 } //end namespace
