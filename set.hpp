@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 09:44:15 by graja             #+#    #+#             */
-/*   Updated: 2022/04/30 12:50:14 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/30 15:05:30 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ class set
 
 			while (first != last)
 			{
-				_tree.insert(make_pair(*first, true));
+				_tree.insert(ft::make_pair(*first, true));
 				first++;
 			}
 		}
@@ -85,7 +85,7 @@ class set
 			_tree.clear();
 			while (in != cpy.end())
 			{
-				_tree.insert(make_pair(*in, true));
+				_tree.insert(ft::make_pair(*in, true));
 				in++;
 			}
 		}
@@ -96,7 +96,7 @@ class set
 
 			while (in != right.end())
 			{
-				this->_tree.insert(make_pair(*in, true));
+				this->_tree.insert(ft::make_pair(*in, true));
 				in++;
 			}
 			return (*this);
@@ -154,15 +154,15 @@ class set
 			iterator	in(find(val));
 			
 			if (in != iterator())
-				return (make_pair(in, false));
-			in = iterator(_tree.insert(make_pair(val, true)));
-			return (make_pair(in, true));
+				return (ft::make_pair(in, false));
+			in = iterator(_tree.insert(ft::make_pair(val, true)));
+			return (ft::make_pair(in, true));
 		}
 
 		iterator insert(iterator pos, const value_type& val)
 		{
 			if (pos != iterator())
-				return (_tree.insert(make_pair(val, true)));
+				return (_tree.insert(ft::make_pair(val, true)));
 			return (iterator());
 		}
 		
@@ -224,7 +224,7 @@ class set
 
 			if (it == end())
 			{
-				insert(make_pair(k, mapped_type()));
+				insert(ft::make_pair(k, mapped_type()));
 				it = find(k);
 			}
 			return ((*it).second);
@@ -268,7 +268,7 @@ class set
 
 		pair<iterator, iterator>	equal_range(key_type const & key)
 		{
-				return (make_pair(lower_bound(key), upper_bound(key)));
+				return (ft::make_pair(lower_bound(key), upper_bound(key)));
 		}
 
 		allocator_type get_allocator() const
@@ -276,58 +276,49 @@ class set
 				return (_alloc);
 		}
 
+};
+
 		//nonmember relational operators
 		template <class U, class C, class A>
-		friend bool operator== ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		 bool operator== ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
 		{
-//			map<U,C,A>	lcpy(lhs);
-//			map<U,C,A>	rcpy(rhs);
-
 		if (lhs.size() != rhs.size())
 			return (false);
 		return (equal(lhs.begin(), lhs.end(), rhs.begin()));
 		}
 		
 		template <class U, class C, class A>
-		friend bool operator!= ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		 bool operator!= ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
 		{
 		return (!(lhs == rhs));
 		}
 	
 		template <class U, class C, class A>
-		friend bool operator< ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		 bool operator< ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
 		{
-		//	map<U,C,A>	lcpy(lhs);
-		//	map<U,C,A>	rcpy(rhs);
-
 			return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 		}
 
 		template <class U, class C, class A>
-		friend bool operator> ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		 bool operator> ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
 		{
 			return (!(lhs <= rhs));
 		}
 		
 		template <class U, class C, class A>
-		friend bool operator>=( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		 bool operator>=( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
 		{
 				return (rhs < lhs);
 		}
 		
 		template <class U, class C, class A>
-		friend bool operator<=( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		 bool operator<=( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
 		{
-		//	map<U,C,A>	lcpy(lhs);
-		//	map<U,C,A>	rcpy(rhs);
-
 			if (equal(lhs.begin(), lhs.end(), rhs.begin()))
 				return (true);
 			return (lexicographical_compare(lhs.begin(), lhs.end(),
 						rhs.begin(), rhs.end()));
 		}
-};
-
 } //end namespace
 
 #endif

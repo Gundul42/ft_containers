@@ -6,12 +6,12 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
-/*   Updated: 2022/04/30 13:49:52 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/30 14:53:13 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RBT_ITERATOR_H
-# define RBT_ITERATOR_H
+#ifndef RBTS_ITERATOR_H
+# define RBTS_ITERATOR_H
 
 # include "iterator.hpp"
 # include "utility.hpp"
