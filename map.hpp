@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/30 15:29:25 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/30 16:24:30 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,7 +281,7 @@ class map
 		{
 		if (lhs.size() != rhs.size())
 			return (false);
-		return (equal(lhs.begin(), lhs.end(), rhs.begin()));
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 		}
 		
 		template <class U, class V, class C, class A>
@@ -293,7 +293,7 @@ class map
 		template <class U, class V, class C, class A>
 		 bool operator< ( const map<U,V,C,A>& lhs, const map<U,V,C,A>& rhs )
 		{
-			return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+			return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 		}
 
 		template <class U, class V, class C, class A>
@@ -311,9 +311,9 @@ class map
 		template <class U, class V, class C, class A>
 		 bool operator<=( const map<U,V,C,A>& lhs, const map<U,V,C,A>& rhs )
 		{
-			if (equal(lhs.begin(), lhs.end(), rhs.begin()))
+			if (ft::equal(lhs.begin(), lhs.end(), rhs.begin()))
 				return (true);
-			return (lexicographical_compare(lhs.begin(), lhs.end(),
+			return (ft::lexicographical_compare(lhs.begin(), lhs.end(),
 						rhs.begin(), rhs.end()));
 		}
 
