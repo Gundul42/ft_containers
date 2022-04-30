@@ -1,17 +1,19 @@
-#include "set.hpp"
-#include "vector.hpp"
-#include "map.hpp"
+
+#include <set>
+#include <vector>
+#include <map>
 #include <string>
+#include <iostream>
 
 int main(void)
 {
 		std::string					str;
-		ft::set<int>				S2;
-		ft::set<std::string>		S1;
-		ft::vector<char>			V1;
-		ft::vector<char>			V2;
-		ft::map<std::string, long>	M1;
-		ft::map<std::string, long>	M2;
+		std::set<int>				S2;
+		std::set<std::string>		S1;
+		std::vector<char>			V1;
+		std::vector<char>			V2;
+		std::map<std::string, long>	M1;
+		std::map<std::string, long>	M2;
 
 		S1.insert("Kuemmel");
 		S1.insert("Luemmel");

@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/28 13:53:43 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/30 16:03:54 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -394,52 +394,58 @@ class vector
 			}
 		}
 
+}; //end class
+	
 		//nonmember relational operators
-		friend bool	operator== (const vector<T> & lhs, const vector<T> & rhs)
+		template <typename U, typename A>
+		bool	operator== (const vector<U,A> & lhs, const vector<U,A> & rhs)
 		{
-			vector<T>	lcpy(lhs);
-			vector<T>	rcpy(rhs);
+		//	vector<T>	lcpy(lhs);
+		//	vector<T>	rcpy(rhs);
 
 		if (lhs.size() != rhs.size())
 			return (false);
-		return (equal(lcpy.begin(), lcpy.end(), rcpy.begin()));
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 		}
 		
-		friend bool	operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		template <typename U, typename A>
+		bool	operator!= (const vector<U,A> & lhs, const vector<U,A> & rhs)
 		{
 		return (!(lhs == rhs));
 		}
 	
-		friend bool	operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		template <typename U, typename A>
+		bool	operator<(const vector<U,A> & lhs, const vector<U,A> & rhs)
 		{
-			vector<T>	lcpy(lhs);
-			vector<T>	rcpy(rhs);
+			//vector<T>	lcpy(lhs);
+			//vector<T>	rcpy(rhs);
 
-			return (lexicographical_compare(lcpy.begin(), lcpy.end(), rcpy.begin(), rcpy.end()));
+			return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 		}
 
-		friend bool	operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		template <typename U, typename A>
+		bool	operator>(const vector<U,A> & lhs, const vector<U,A> & rhs)
 		{
 			return (!(lhs <= rhs));
 		}
 		
-		friend bool	operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		template <typename U, typename A>
+		bool	operator>=(const vector<U,A> & lhs, const vector<U,A> & rhs)
 		{
 				return (rhs < lhs);
 		}
 		
-		friend bool 	operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		template <typename U, typename A>
+		bool 	operator<= (const vector<U,A> & lhs, const vector<U,A> & rhs)
                 {
-			vector<T>	lcpy(lhs);
-			vector<T>	rcpy(rhs);
+			//vector<T>	lcpy(lhs);
+			//vector<T>	rcpy(rhs);
 
-			if (equal(lcpy.begin(), lcpy.end(), rcpy.begin()))
+			if (ft::equal(lhs.begin(), lhs.end(), rhs.begin()))
 				return (true);
-			return (lexicographical_compare(lcpy.begin(), lcpy.end(),
-						rcpy.begin(), rcpy.end()));
+			return (ft::lexicographical_compare(lhs.begin(), lhs.end(),
+						rhs.begin(), rhs.end()));
 		}
-}; //end class
-	
 	
 
 
