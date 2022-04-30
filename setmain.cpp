@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 18:22:52 by graja             #+#    #+#             */
-/*   Updated: 2022/04/30 12:47:02 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/30 13:55:23 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,11 @@ int	main(void)
 		std::cout << std::endl << "equal" << std::endl;
 	std::cout << std::endl;
 	rit = test.rbegin();
-//			std::cout << (*rit) << ", ";
-			/*
 	while (rit != test.rend())
 	{
-			std::cout << (*rit).first << ", ";
-			it++;
-	}*/
+			std::cout << (*rit) << ", ";
+			rit++;
+	}
+	std::cout << std::endl;
 	return (0);
 }
