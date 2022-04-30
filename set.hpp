@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/28 18:46:33 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/30 09:41:51 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,13 @@ class set
 		set(set const & cpy)
 		{
 			iterator	in = cpy.begin();
+			value_type	tmp;
 			
 			_tree.clear();
 			while (in != cpy.end())
 			{
-				_tree.insert(make_pair(*in, true));
+				tmp = *in;
+				_tree.insert(tmp);
 				in++;
 			}
 		}
@@ -92,7 +94,7 @@ class set
 
 			while (in != right.end())
 			{
-				_tree.insert(make_pair(*in, true));
+				this->_tree.insert(*in);
 				in++;
 			}
 			return (*this);
