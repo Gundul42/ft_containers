@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RBT_set_iterator.hpp                               :+:      :+:    :+:   */
+/*   RBTs_iterator.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/27 14:46:41 by graja             #+#    #+#             */
-/*   Updated: 2022/04/30 09:41:46 by graja            ###   ########.fr       */
+/*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
+/*   Updated: 2022/04/30 12:54:42 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RBT_SET_ITERATOR_H
-# define RBT_SET_ITERATOR_H
+#ifndef RBT_ITERATOR_H
+# define RBT_ITERATOR_H
 
 # include "iterator.hpp"
 # include "utility.hpp"
@@ -20,41 +20,42 @@ namespace ft
 {
 
 template <typename Key, bool is_const>
-class RBT_set_iterator : public ft::iterator<std::bidirectional_iterator_tag, Key>
+class RBTs_iterator : public ft::iterator<std::bidirectional_iterator_tag, Key>
 {
 	public:
 		typedef	Key												key_type;
-		typedef	key_type										value_type;
+		typedef bool											mapped_type;
+		typedef	pair<const key_type, mapped_type>				value_type;
 		typedef	std::size_t										size_type;
 		typedef std::ptrdiff_t									difference_type;
 		typedef	const value_type &								const_reference;
 
 	private:
-		typedef typename RBtree<key_type, bool>::iter			RBnode;
-		typedef typename RBtree<key_type, bool>::const_iter		cRBnode;
-		typedef typename choose<is_const, cRBnode , RBnode >::type	RB_type;
+		typedef typename RBtree<key_type, mapped_type>::iter			RBsnode;
+		typedef typename RBtree<key_type, mapped_type>::const_iter		cRBsnode;
+		typedef typename choose<is_const, cRBsnode , RBsnode >::type	RBs_type;
 		
-		RB_type	_p;
+		RBs_type	_p;
 
 	public:
-		RBT_set_iterator(void) :_p(NULL) {}
+		RBTs_iterator(void) :_p(NULL) {}
 
-		RBT_set_iterator(RB_type in) :_p(in) {}
-		~RBT_set_iterator(void) {}
+		RBTs_iterator(RBs_type in) :_p(in) {}
+		~RBTs_iterator(void) {}
 
 		template<typename fst, bool cval>
-		RBT_set_iterator(const RBT_set_iterator<fst, cval> & r) : _p(r.getPtr()) {}
+		RBTs_iterator(const RBTs_iterator<fst, cval> & r) : _p(r.getPtr()) {}
 
-		RB_type	getPtr(void) const {return _p;}
+		RBs_type	getPtr(void) const {return _p;}
 
-		RBT_set_iterator(const RBT_set_iterator & cpy) : _p(cpy._p) {}
+		RBTs_iterator(const RBTs_iterator & cpy) : _p(cpy._p) {}
 
-		RBT_set_iterator & operator=(const RBT_set_iterator & right)
+		RBTs_iterator & operator=(const RBTs_iterator & right)
 			{this->_p = right._p; return (*this);}
 
-		RBT_set_iterator &	operator++() 
+		RBTs_iterator &	operator++() 
 		{
-			RB_type	tmp;
+			RBs_type	tmp;
         
 			if (!_p->right_child)
 			{
@@ -75,12 +76,12 @@ class RBT_set_iterator : public ft::iterator<std::bidirectional_iterator_tag, Ke
 			return (*this);
 		}
 
-		RBT_set_iterator	operator++(int) 
-			{RBT_set_iterator tmp(*this); operator++(); return tmp;}
+		RBTs_iterator	operator++(int) 
+			{RBTs_iterator tmp(*this); operator++(); return tmp;}
 
-		RBT_set_iterator&	operator--()
+		RBTs_iterator&	operator--()
 		{
-			RB_type	tmp;
+			RBs_type	tmp;
         
 			if (!_p->left_child)
 			{
@@ -100,60 +101,64 @@ class RBT_set_iterator : public ft::iterator<std::bidirectional_iterator_tag, Ke
 			}
 			return (*this);
 		}
-		RBT_set_iterator	operator--(int) 
-			{RBT_set_iterator tmp(*this); operator--(); return tmp;}
 
-		const value_type &	operator*() const 
+		RBTs_iterator	operator--(int) 
+			{RBTs_iterator tmp(*this); operator--(); return tmp;}
+
+		key_type const 	operator*() 
 		{
-			return ((*(_p->data)).first);
+			return ((_p->data->first));
 		}
 		
-		const value_type &	operator->() const 
+		key_type const	operator->() 
 		{
-			return ((*(_p->data)).first);
+			return ((_p->data).first);
 		}
 
-		bool	operator==(const RBT_set_iterator& rhs) const
+		bool	operator==(const RBTs_iterator& rhs) const
 			{return _p == rhs._p;}
-		bool	operator!=(const RBT_set_iterator& rhs) const
+		bool	operator!=(const RBTs_iterator& rhs) const
 			{return _p != rhs._p;}
 };
 
+
 template <typename Key, bool is_const>
-class RBT_reverse_set_iterator : public ft::iterator<std::bidirectional_iterator_tag, Key>
+class RBTs_reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag, Key>
 {
 	public:
 		typedef	Key												key_type;
-		typedef	key_type										value_type;
+		typedef bool											mapped_type;
+		typedef	pair<const key_type, mapped_type>				value_type;
 		typedef	std::size_t										size_type;
 		typedef std::ptrdiff_t									difference_type;
 		typedef	const value_type &								const_reference;
-		typedef typename RBtree<key_type, bool>::iter			RBnode;
-		typedef typename RBtree<key_type, bool>::const_iter		cRBnode;
-		typedef typename choose<is_const, cRBnode , RBnode >::type	RB_type;
 
 	private:
-		RB_type	_p;
+		typedef typename RBtree<key_type, mapped_type>::iter			RBsnode;
+		typedef typename RBtree<key_type, mapped_type>::const_iter		cRBsnode;
+		typedef typename choose<is_const, cRBsnode , RBsnode >::type	RBs_type;
+		
+		RBs_type	_p;
 
 	public:
-		RBT_reverse_set_iterator(void) :_p(NULL) {}
+		RBTs_reverse_iterator(void) :_p(NULL) {}
 
-		RBT_reverse_set_iterator(RB_type in) :_p(in) {}
-		~RBT_reverse_set_iterator(void) {}
+		RBTs_reverse_iterator(RBs_type in) :_p(in) {}
+		~RBTs_reverse_iterator(void) {}
 
 		template<typename fst, bool cval>
-		RBT_reverse_set_iterator(const RBT_reverse_set_iterator<fst, cval> & r) : _p(r.getPtr()) {}
+		RBTs_reverse_iterator(const RBTs_reverse_iterator<fst, cval> & r) : _p(r.getPtr()) {}
 
-		RB_type	getPtr(void) const {return _p;}
+		RBs_type	getPtr(void) const {return _p;}
 
-		RBT_reverse_set_iterator(const RBT_reverse_set_iterator & cpy) : _p(cpy._p) {}
+		RBTs_reverse_iterator(const RBTs_reverse_iterator & cpy) : _p(cpy._p) {}
 
-		RBT_reverse_set_iterator & operator=(const RBT_reverse_set_iterator & right)
+		RBTs_reverse_iterator & operator=(const RBTs_reverse_iterator & right)
 			{this->_p = right._p; return (*this);}
 
-		RBT_reverse_set_iterator &	operator++() 
+		RBTs_reverse_iterator &	operator++() 
 		{
-			RB_type	tmp;
+			RBs_type	tmp;
         
 			if (!_p->right_child)
 			{
@@ -174,12 +179,12 @@ class RBT_reverse_set_iterator : public ft::iterator<std::bidirectional_iterator
 			return (*this);
 		}
 
-		RBT_reverse_set_iterator	operator++(int) 
-			{RBT_reverse_set_iterator tmp(*this); operator--(); return tmp;}
+		RBTs_reverse_iterator	operator++(int) 
+			{RBTs_reverse_iterator tmp(*this); operator++(); return tmp;}
 
-		RBT_reverse_set_iterator&	operator--()
+		RBTs_reverse_iterator&	operator--()
 		{
-			RB_type	tmp;
+			RBs_type	tmp;
         
 			if (!_p->left_child)
 			{
@@ -199,8 +204,8 @@ class RBT_reverse_set_iterator : public ft::iterator<std::bidirectional_iterator
 			}
 			return (*this);
 		}
-		RBT_reverse_set_iterator	operator--(int) 
-			{RBT_reverse_set_iterator tmp(*this); operator++(); return tmp;}
+		RBTs_reverse_iterator	operator--(int) 
+			{RBTs_reverse_iterator tmp(*this); operator--(); return tmp;}
 
 		value_type &	operator*() 
 		{
@@ -212,12 +217,11 @@ class RBT_reverse_set_iterator : public ft::iterator<std::bidirectional_iterator
 			return ((_p->data));
 		}
 
-		bool	operator==(const RBT_reverse_set_iterator& rhs) const
+		bool	operator==(const RBTs_reverse_iterator& rhs) const
 			{return _p == rhs._p;}
-		bool	operator!=(const RBT_reverse_set_iterator& rhs) const
+		bool	operator!=(const RBTs_reverse_iterator& rhs) const
 			{return _p != rhs._p;}
 };
-
 
 } //end namespace
 

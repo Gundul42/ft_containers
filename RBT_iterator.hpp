@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
-/*   Updated: 2022/04/28 13:23:55 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/30 12:24:47 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ class RBT_reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag
 		RBT_reverse_iterator & operator=(const RBT_reverse_iterator & right)
 			{this->_p = right._p; return (*this);}
 
-		RBT_reverse_iterator &	operator++() 
+		RBT_reverse_iterator &	operator--() 
 		{
 			RB_type	tmp;
         
@@ -181,7 +181,7 @@ class RBT_reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag
 		RBT_reverse_iterator	operator++(int) 
 			{RBT_reverse_iterator tmp(*this); operator--(); return tmp;}
 
-		RBT_reverse_iterator&	operator--()
+		RBT_reverse_iterator&	operator++()
 		{
 			RB_type	tmp;
         

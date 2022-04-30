@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/30 09:41:51 by graja            ###   ########.fr       */
+/*   Created: 2022/04/30 09:44:15 by graja             #+#    #+#             */
+/*   Updated: 2022/04/30 12:50:14 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef SET_H
 # define SET_H
@@ -19,20 +20,22 @@
 # include "iterator.hpp"
 # include "utility.hpp"
 # include "RBtree.hpp"
-# include "RBT_set_iterator.hpp"
+//# include "RBT_iterator.hpp"
+# include "RBTs_iterator.hpp"
 
 namespace ft
 {
 
-template <typename Key, typename Compare = std::less<Key>, 
-	 typename Alloc = std::allocator<pair<const Key, bool > > >
+template <typename Key, typename Compare = std::less<Key>,
+		 typename Alloc = std::allocator<pair<const Key, bool > > >
 class set
 {
 	public:
 		typedef	Key												key_type;
 		typedef	bool											mapped_type;
-		typedef	pair<const key_type, mapped_type>				value_type;
+		typedef	Key /*pair<const key_type, mapped_type>*/		value_type;
 		typedef	Compare											key_compare;
+		typedef Compare											value_compare;
 		typedef	Alloc											allocator_type;
 		typedef	typename allocator_type::reference				reference;
 		typedef typename allocator_type::const_reference		const_reference;
@@ -40,13 +43,14 @@ class set
 		typedef typename allocator_type::const_pointer			const_pointer;
 		typedef	ptrdiff_t										difference_type;
 		typedef	size_t											size_type;
-		typedef RBT_set_iterator<Key, false>					iterator;
-		typedef RBT_set_iterator<Key, true>						const_iterator;
-		typedef RBT_reverse_set_iterator<Key, false>			reverse_iterator;
-		typedef RBT_reverse_set_iterator<Key, true>				const_reverse_iterator;
-		
+		typedef RBTs_iterator<Key, false>						iterator;
+		typedef RBTs_iterator<Key, true>						const_iterator;
+		typedef RBTs_reverse_iterator<Key, false>				reverse_iterator;
+		typedef RBTs_reverse_iterator<Key, true>				const_reverse_iterator;
+
 	private:
 
+		//private members
 		RBtree<key_type, mapped_type>	_tree;
 		allocator_type					_alloc;
 		key_compare						_comp;
@@ -69,7 +73,7 @@ class set
 
 			while (first != last)
 			{
-				_tree.insert(*first);
+				_tree.insert(make_pair(*first, true));
 				first++;
 			}
 		}
@@ -77,13 +81,11 @@ class set
 		set(set const & cpy)
 		{
 			iterator	in = cpy.begin();
-			value_type	tmp;
 			
 			_tree.clear();
 			while (in != cpy.end())
 			{
-				tmp = *in;
-				_tree.insert(tmp);
+				_tree.insert(make_pair(*in, true));
 				in++;
 			}
 		}
@@ -94,7 +96,7 @@ class set
 
 			while (in != right.end())
 			{
-				this->_tree.insert(*in);
+				this->_tree.insert(make_pair(*in, true));
 				in++;
 			}
 			return (*this);
@@ -102,7 +104,7 @@ class set
 
 		~set(void) {}
 
-		
+	/*	
 		class value_compare
 		{
 			friend class set;
@@ -121,36 +123,43 @@ class set
 					return comp(x.first, y.first);
 				}
 		};
-
+*/
 		//Iterators
 		
 		//points to smallest key !
-		iterator 		begin(void) {return (iterator(_tree.begin()));}
-		const_iterator	begin(void) const{return (const_iterator(_tree.begin()));}
-		
-		iterator 		end(void){return (iterator());}
-		const_iterator	end(void) const {return (const_iterator());}
+		iterator begin(void) const
+		{
+		return (iterator(_tree.begin()));
+		}
+
+		iterator end(void) const
+		{
+			return (iterator());
+		}
 
 		//points to largest key !!
-		reverse_iterator		rbegin(void) {return (reverse_iterator(_tree.rbegin()));}
-		const_reverse_iterator	rbegin(void) const {return (const_reverse_iterator(_tree.rbegin()));}
-		
-		reverse_iterator 		rend(void) {return (reverse_iterator());}
-		const_reverse_iterator	rend(void) const {return (const_reverse_iterator());}
+		reverse_iterator rbegin(void) const
+		{
+			return (reverse_iterator(_tree.rbegin()));
+		}
+
+		reverse_iterator rend(void) const
+		{
+			return (reverse_iterator());
+		}
 		
 		//Modifiers
-		pair<iterator, bool>	insert(key_type const & key)
+		pair<iterator, bool>	insert(value_type const & val)
 		{
-			value_type	val = make_pair(key, true);
-			iterator	in(find(val.first));
+			iterator	in(find(val));
 			
 			if (in != iterator())
 				return (make_pair(in, false));
-			in = iterator(_tree.insert(val));
+			in = iterator(_tree.insert(make_pair(val, true)));
 			return (make_pair(in, true));
 		}
 
-		iterator insert(iterator pos, const key_type& val)
+		iterator insert(iterator pos, const value_type& val)
 		{
 			if (pos != iterator())
 				return (_tree.insert(make_pair(val, true)));
@@ -271,6 +280,9 @@ class set
 		template <class U, class C, class A>
 		friend bool operator== ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
 		{
+//			map<U,C,A>	lcpy(lhs);
+//			map<U,C,A>	rcpy(rhs);
+
 		if (lhs.size() != rhs.size())
 			return (false);
 		return (equal(lhs.begin(), lhs.end(), rhs.begin()));
@@ -285,6 +297,9 @@ class set
 		template <class U, class C, class A>
 		friend bool operator< ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
 		{
+		//	map<U,C,A>	lcpy(lhs);
+		//	map<U,C,A>	rcpy(rhs);
+
 			return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 		}
 
@@ -303,13 +318,13 @@ class set
 		template <class U, class C, class A>
 		friend bool operator<=( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
 		{
-			set<U,C,A>	lcpy(lhs);
-			set<U,C,A>	rcpy(rhs);
+		//	map<U,C,A>	lcpy(lhs);
+		//	map<U,C,A>	rcpy(rhs);
 
-			if (equal(lcpy.begin(), lcpy.end(), rcpy.begin()))
+			if (equal(lhs.begin(), lhs.end(), rhs.begin()))
 				return (true);
-			return (lexicographical_compare(lcpy.begin(), lcpy.end(),
-						rcpy.begin(), rcpy.end()));
+			return (lexicographical_compare(lhs.begin(), lhs.end(),
+						rhs.begin(), rhs.end()));
 		}
 };
 

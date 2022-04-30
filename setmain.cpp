@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 18:22:52 by graja             #+#    #+#             */
-/*   Updated: 2022/04/28 17:58:10 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/30 12:47:02 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(void)
 
 	ft::set<int>					test;
 	ft::set<int>::iterator			it;
+	ft::set<int>::reverse_iterator			rit;
 
 	test.insert(50);
 	test.insert(20);
@@ -40,7 +41,7 @@ int	main(void)
 	it = test.begin();
 	while (it != test.end())
 	{
-			std::cout << *it << ", ";
+			std::cout << (*it) << ", ";
 			it++;
 	}
 	ft::set<int>					s1(test);
@@ -48,5 +49,13 @@ int	main(void)
 	if (s1 == test)
 		std::cout << std::endl << "equal" << std::endl;
 	std::cout << std::endl;
+	rit = test.rbegin();
+//			std::cout << (*rit) << ", ";
+			/*
+	while (rit != test.rend())
+	{
+			std::cout << (*rit).first << ", ";
+			it++;
+	}*/
 	return (0);
 }
