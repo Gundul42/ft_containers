@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 09:44:15 by graja             #+#    #+#             */
-/*   Updated: 2022/04/30 15:05:30 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/30 15:24:04 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ namespace ft
 {
 
 template <typename Key, typename Compare = std::less<Key>,
-		 typename Alloc = std::allocator<pair<const Key, bool > > >
+		 typename Alloc = std::allocator<ft::pair<const Key, bool > > >
 class set
 {
 	public:
 		typedef	Key												key_type;
 		typedef	bool											mapped_type;
-		typedef	Key /*pair<const key_type, mapped_type>*/		value_type;
+		typedef	Key 											value_type;
 		typedef	Compare											key_compare;
 		typedef Compare											value_compare;
 		typedef	Alloc											allocator_type;
@@ -149,7 +149,7 @@ class set
 		}
 		
 		//Modifiers
-		pair<iterator, bool>	insert(value_type const & val)
+		ft::pair<iterator, bool>	insert(value_type const & val)
 		{
 			iterator	in(find(val));
 			
@@ -266,7 +266,7 @@ class set
 			return (it);
 		}
 
-		pair<iterator, iterator>	equal_range(key_type const & key)
+		ft::pair<iterator, iterator>	equal_range(key_type const & key)
 		{
 				return (ft::make_pair(lower_bound(key), upper_bound(key)));
 		}
@@ -279,44 +279,44 @@ class set
 };
 
 		//nonmember relational operators
-		template <class U, class C, class A>
+		template <typename U, typename C, typename A>
 		 bool operator== ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
 		{
 		if (lhs.size() != rhs.size())
 			return (false);
-		return (equal(lhs.begin(), lhs.end(), rhs.begin()));
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 		}
 		
-		template <class U, class C, class A>
+		template <typename U, typename C, typename A>
 		 bool operator!= ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
 		{
 		return (!(lhs == rhs));
 		}
 	
-		template <class U, class C, class A>
+		template <typename U, typename C, typename A>
 		 bool operator< ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
 		{
-			return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+			return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 		}
 
-		template <class U, class C, class A>
+		template <typename U, typename C, typename A>
 		 bool operator> ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
 		{
 			return (!(lhs <= rhs));
 		}
 		
-		template <class U, class C, class A>
+		template <typename U, typename C, typename A>
 		 bool operator>=( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
 		{
 				return (rhs < lhs);
 		}
 		
-		template <class U, class C, class A>
+		template <typename U, typename C, typename A>
 		 bool operator<=( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
 		{
-			if (equal(lhs.begin(), lhs.end(), rhs.begin()))
+			if (ft::equal(lhs.begin(), lhs.end(), rhs.begin()))
 				return (true);
-			return (lexicographical_compare(lhs.begin(), lhs.end(),
+			return (ft::lexicographical_compare(lhs.begin(), lhs.end(),
 						rhs.begin(), rhs.end()));
 		}
 } //end namespace

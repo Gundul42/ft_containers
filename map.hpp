@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/30 14:12:23 by graja            ###   ########.fr       */
+/*   Updated: 2022/04/30 15:12:14 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ namespace ft
 {
 
 template <typename Key, typename T, typename Compare = std::less<Key>, 
-	 typename Alloc = std::allocator<pair<const Key, T > > >
+	 typename Alloc = std::allocator<ft::pair<const Key, T > > >
 class map
 {
 	public:
 		typedef	Key											key_type;
 		typedef	T											mapped_type;
-		typedef	pair<const key_type, mapped_type>			value_type;
+		typedef	ft::pair<const key_type, mapped_type>		value_type;
 		typedef	Compare										key_compare;
 		typedef	Alloc										allocator_type;
 		typedef	typename allocator_type::reference			reference;
@@ -146,14 +146,14 @@ class map
 		}
 		
 		//Modifiers
-		pair<iterator, bool>	insert(value_type const & val)
+		ft::pair<iterator, bool>	insert(value_type const & val)
 		{
 			iterator	in(find(val.first));
 			
 			if (in != iterator())
-				return (make_pair(in, false));
+				return (ft::make_pair(in, false));
 			in = iterator(_tree.insert(val));
-			return (make_pair(in, true));
+			return (ft::make_pair(in, true));
 		}
 
 		iterator insert(iterator pos, const value_type& val)
@@ -221,7 +221,7 @@ class map
 
 			if (it == end())
 			{
-				insert(make_pair(k, mapped_type()));
+				insert(ft::make_pair(k, mapped_type()));
 				it = find(k);
 			}
 			return ((*it).second);
@@ -263,9 +263,9 @@ class map
 			return (it);
 		}
 
-		pair<iterator, iterator>	equal_range(key_type const & key)
+		ft::pair<iterator, iterator>	equal_range(key_type const & key)
 		{
-				return (make_pair(lower_bound(key), upper_bound(key)));
+				return (ft::make_pair(lower_bound(key), upper_bound(key)));
 		}
 
 		allocator_type get_allocator() const
