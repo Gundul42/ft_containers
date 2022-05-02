@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 15:36:39 by graja             #+#    #+#             */
-/*   Updated: 2022/04/30 17:47:16 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/02 12:12:46 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ class reverse_iterator
 {
 		public:
 				typedef I												iterator_type;
-				typedef iterator_traits<I>::iterator_category			iterator_category;
-				typedef iterator_traits<I>::value_type					value_type;
-				typedef iterator_traits<I>::difference_type				difference_type;
-				typedef iterator_traits<I>::pointer						pointer;
-				typedef iterator_traits<I>::reference					reference;
+				typedef typename iterator_traits<I>::iterator_category			iterator_category;
+				typedef typename iterator_traits<I>::value_type					value_type;
+				typedef typename iterator_traits<I>::difference_type				difference_type;
+				typedef typename iterator_traits<I>::pointer						pointer;
+				typedef typename iterator_traits<I>::reference					reference;
 				
 		private:
 				iterator_type	_i;
@@ -95,7 +95,7 @@ class reverse_iterator
 				reverse_iterator(reverse_iterator<Iter> const & rev_it): _i(rev_it) {}
 
 				//base
-				iterator_type base() const {return _i}
+				iterator_type base() const {return _i;}
 
 				//operators
 				reference operator*() const 
