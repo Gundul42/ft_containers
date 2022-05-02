@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 15:36:39 by graja             #+#    #+#             */
-/*   Updated: 2022/05/02 15:00:18 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/02 15:50:49 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ class reverse_iterator
 				value_type	operator*() const 
 				{
 						iterator_type tmp(this->_i);
-						//tmp--;
+						//--tmp;
 
 						return ((*tmp));
 				}
@@ -172,7 +172,7 @@ class reverse_iterator
 template <class Iterator>
 bool operator== (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
 {
-		return (lhs == rhs);
+		return (lhs.base() == rhs.base());
 }
 
 template <class Iterator>
@@ -184,25 +184,25 @@ bool operator!= (const reverse_iterator<Iterator>& lhs, const reverse_iterator<I
 template <class Iterator>
 bool operator<  (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
 {
-		return (lhs < rhs);
+		return (lhs.base() < rhs.base());
 }
 
 template <class Iterator>
 bool operator<= (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
 {
-		return (lhs <= rhs);
+		return (lhs.base() <= rhs.base());
 }
 
 template <class Iterator>
 bool operator>  (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
 {
-		return (lhs > rhs);
+		return (lhs.base() > rhs.base());
 }
 
 template <class Iterator>
 bool operator>= (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
 {
-		return (lhs >= rhs);
+		return (lhs.base() >= rhs.base());
 }
 
 } //end namespace
