@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 15:36:39 by graja             #+#    #+#             */
-/*   Updated: 2022/05/02 12:12:46 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/02 14:54:09 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ template	<typename I>
 class reverse_iterator
 {
 		public:
-				typedef I												iterator_type;
+				typedef I														iterator_type;
 				typedef typename iterator_traits<I>::iterator_category			iterator_category;
 				typedef typename iterator_traits<I>::value_type					value_type;
-				typedef typename iterator_traits<I>::difference_type				difference_type;
-				typedef typename iterator_traits<I>::pointer						pointer;
+				typedef typename iterator_traits<I>::difference_type			difference_type;
+				typedef typename iterator_traits<I>::pointer					pointer;
 				typedef typename iterator_traits<I>::reference					reference;
 				
 		private:
@@ -88,23 +88,122 @@ class reverse_iterator
 
 		public:
 				//Constructors
-				reverse_iterator(void): _i(iterator_type()) {}
+				reverse_iterator(void) {}
 				explicit reverse_iterator(iterator_type it): _i(it) {}
 
 				template <typename Iter>
-				reverse_iterator(reverse_iterator<Iter> const & rev_it): _i(rev_it) {}
+				reverse_iterator(reverse_iterator<Iter> const & rev_it): _i(rev_it.base()) {}
 
 				//base
-				iterator_type base() const {return _i;}
+				iterator_type base() const {return this->_i;}
 
 				//operators
-				reference operator*() const 
+				value_type	operator*() const 
 				{
-						iterator_type tmp(_i);
+						iterator_type tmp(this->_i);
 						tmp--;
-						return (*tmp);
+
+						return ((*tmp));
+				}
+
+				reverse_iterator operator+ (difference_type n) const
+				{
+						reverse_iterator tmp(_i - n);
+
+						return (tmp);
+				}
+
+				reverse_iterator & operator++()
+				{
+						this->_i--;
+						return (*this);
+				}
+
+				reverse_iterator operator++(int)
+				{
+					reverse_iterator tmp(*this);
+					++(*this);
+					return tmp;
+				}
+
+				reverse_iterator& operator+= (difference_type n)
+				{
+						this->_i -= n;
+						return (*this);
+				}
+				
+				reverse_iterator operator- (difference_type n) const
+				{
+						reverse_iterator tmp(_i + n);
+
+						return (tmp);
+				}
+
+				reverse_iterator & operator--()
+				{
+						this->_i++;
+						return (*this);
+				}
+
+				reverse_iterator operator--(int)
+				{
+					reverse_iterator tmp(*this);
+					--(*this);
+					return tmp;
+				}
+
+				reverse_iterator& operator-= (difference_type n)
+				{
+						this->_i += n;
+						return (*this);
+				}
+
+				pointer operator->() const
+				{
+					  return &(operator*());
+				}
+
+				reference operator[] (difference_type n) const
+				{
+						return (this->base()[-n-1]);
 				}
 };
+
+template <class Iterator>
+bool operator== (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+{
+		return (lhs == rhs);
+}
+
+template <class Iterator>
+bool operator!= (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+{
+		return (lhs != rhs);
+}
+
+template <class Iterator>
+bool operator<  (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+{
+		return (lhs < rhs);
+}
+
+template <class Iterator>
+bool operator<= (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+{
+		return (lhs <= rhs);
+}
+
+template <class Iterator>
+bool operator>  (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+{
+		return (lhs > rhs);
+}
+
+template <class Iterator>
+bool operator>= (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+{
+		return (lhs >= rhs);
+}
 
 } //end namespace
 #endif

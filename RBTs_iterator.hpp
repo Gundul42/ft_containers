@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
-/*   Updated: 2022/04/30 14:53:13 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/02 14:51:49 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ namespace ft
 {
 
 template <typename Key, bool is_const>
-class RBTs_iterator : public ft::iterator<std::bidirectional_iterator_tag, bool>
+class RBTs_iterator : public ft::iterator<std::bidirectional_iterator_tag, Key>
 {
 	public:
 		typedef	Key												key_type;
 		typedef bool											mapped_type;
-		typedef	pair<const key_type, mapped_type>				value_type;
+		typedef	Key /*pair<const key_type, mapped_type>	*/		value_type;
 		typedef	std::size_t										size_type;
 		typedef std::ptrdiff_t									difference_type;
 		typedef	const value_type &								const_reference;
@@ -225,20 +225,21 @@ class RBTs_reverse_iterator : public ft::iterator<std::bidirectional_iterator_ta
 */
 
 template <typename Key, bool is_const>
-class RBTs_reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag, bool>
+class RBTs_reverse_iterator : public ft::iterator<std::bidirectional_iterator_tag, Key>
 {
 	public:
 		typedef	Key												key_type;
 		typedef bool											mapped_type;
-		typedef	pair<const key_type, mapped_type>				value_type;
+		typedef	Key /*pair<const key_type, mapped_type>*/		value_type;
 		typedef	std::size_t										size_type;
 		typedef std::ptrdiff_t									difference_type;
 		typedef	const value_type &								const_reference;
+
+	private:
 		typedef typename RBtree<key_type, mapped_type>::iter	RBsnode;
 		typedef typename RBtree<key_type, mapped_type>::const_iter	cRBsnode;
 		typedef typename choose<is_const, cRBsnode , RBsnode >::type	RBs_type;
 
-	private:
 		RBs_type	_p;
 
 	public:
