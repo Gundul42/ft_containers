@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 15:36:39 by graja             #+#    #+#             */
-/*   Updated: 2022/05/02 15:50:49 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/02 17:23:22 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ class reverse_iterator
 
 		public:
 				//Constructors
-				reverse_iterator(void) {}
+				reverse_iterator(void): _i(iterator_type()) {}
+
 				explicit reverse_iterator(iterator_type it): _i(it) {}
 
 				template <typename Iter>
