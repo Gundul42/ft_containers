@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/04/30 16:03:54 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/02 18:18:48 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <memory>
 # include "utility.hpp"
 # include "vec_iterator.hpp"
+# include "iterator.hpp"
 
 namespace ft
 {
@@ -36,8 +37,8 @@ class vector
 		typedef typename Alloc::const_pointer			const_pointer;
 		typedef V_iterator<value_type, false>			iterator;
 		typedef V_iterator<value_type, true>			const_iterator;
-		typedef V_reverse_iterator<value_type, false>	reverse_iterator;
-		typedef V_reverse_iterator<value_type, true>	const_reverse_iterator;
+		typedef ft::reverse_iterator<iterator>			reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 	private:
 

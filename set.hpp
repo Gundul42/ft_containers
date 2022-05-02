@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 09:44:15 by graja             #+#    #+#             */
-/*   Updated: 2022/05/02 15:48:43 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/02 18:32:55 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ class set
 		typedef	size_t											size_type;
 		typedef RBTs_iterator<Key, false>						iterator;
 		typedef RBTs_iterator<Key, true>						const_iterator;
-//		typedef RBTs_reverse_iterator<Key, false>				reverse_iterator;
-//		typedef RBTs_reverse_iterator<Key, true>				const_reverse_iterator;
 		typedef ft::reverse_iterator<iterator>					reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 
