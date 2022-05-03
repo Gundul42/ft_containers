@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 09:44:15 by graja             #+#    #+#             */
-/*   Updated: 2022/05/02 18:32:55 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/03 10:23:04 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ class set
 		{
 			while (first != last)
 			{
-				_tree.insert(*first);
+				_tree.insert(ft::make_pair(*first, true));
 				first++;
 			}
 		}
@@ -182,14 +182,14 @@ class set
 
 		void		erase(iterator pos)
 		{
-			_tree.erase((*pos).first);
+			_tree.erase((*pos));
 		}
 
 		void		erase(iterator first, iterator last)
 		{
 			while (first != last)
 			{
-				_tree.erase((*first).first);
+				_tree.erase((*first));
 				first++;
 			}
 		}
@@ -251,7 +251,7 @@ class set
 		{
 			iterator	it = begin();
 
-			while (it != end() && _comp((*it).first, key))
+			while (it != end() && _comp((*it), key))
 				it++;
 			return (it);
 		}
@@ -260,7 +260,7 @@ class set
 		{
 			iterator	it = begin();
 
-			while (it != end() && !_comp(key, (*it).first))
+			while (it != end() && !_comp(key, (*it)))
 				it++;
 			return (it);
 		}

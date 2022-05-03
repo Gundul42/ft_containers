@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/05/02 18:18:48 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/03 12:20:55 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ class vector
 
 	private:
 
-		pointer		_start;
-		size_type	_size;
-		size_type	_end_of_storage;
-		allocator_type	_alloc;
+		pointer				_start;
+		size_type			_size;
+		size_type			_end_of_storage;
+		allocator_type		_alloc;
 
 		void	_realloc(size_type newsize, size_type newcapacity)
 		{
@@ -86,8 +86,6 @@ class vector
 			_end_of_storage = n;
 
 			size_type	i = 0;
-			std::cout << "FILLER" << std::endl;
-
 			while (i < n)
 			{
 				_alloc.construct(&_start[i], val);
@@ -145,8 +143,8 @@ class vector
 		}
 
 		//Capacity member functions
-		size_type	size(void) const {return (_size);}
-		size_type	max_size(void) const {return (_alloc.max_size());}
+		size_type	size(void) const {return (this->_size);}
+		size_type	max_size(void) const {return (this->_alloc.max_size());}
 		void		resize(size_type n, value_type val = value_type())
 	       	{
 			size_type	i = size();

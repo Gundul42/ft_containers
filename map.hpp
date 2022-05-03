@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/04/30 16:24:30 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/03 12:56:48 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,11 @@ class map
 		typedef	size_t										size_type;
 		typedef RBT_iterator<Key, T, false>					iterator;
 		typedef RBT_iterator<Key, T, true>					const_iterator;
-		typedef RBT_reverse_iterator<Key, T, false>			reverse_iterator;
-		typedef RBT_reverse_iterator<Key, T, true>			const_reverse_iterator;
+		typedef ft::reverse_iterator<iterator>				reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		
 	private:
 
-		//private members
 		RBtree<key_type, mapped_type>	_tree;
 		allocator_type					_alloc;
 		key_compare						_comp;
@@ -70,7 +69,7 @@ class map
 
 			while (first != last)
 			{
-				_tree.insert(*first);
+				this->_tree.insert(*first);
 				first++;
 			}
 		}
@@ -79,10 +78,10 @@ class map
 		{
 			iterator	in = cpy.begin();
 			
-			_tree.clear();
+			this->_tree.clear();
 			while (in != cpy.end())
 			{
-				_tree.insert(*in);
+				this->_tree.insert(*in);
 				in++;
 			}
 		}
@@ -126,7 +125,7 @@ class map
 		//points to smallest key !
 		iterator begin(void) const
 		{
-		return (iterator(_tree.begin()));
+		return (iterator(this->_tree.begin()));
 		}
 
 		iterator end(void) const
@@ -137,7 +136,7 @@ class map
 		//points to largest key !!
 		reverse_iterator rbegin(void) const
 		{
-			return (reverse_iterator(_tree.rbegin()));
+			return (reverse_iterator(this->_tree.rbegin()));
 		}
 
 		reverse_iterator rend(void) const
@@ -152,14 +151,14 @@ class map
 			
 			if (in != iterator())
 				return (ft::make_pair(in, false));
-			in = iterator(_tree.insert(val));
+			in = iterator(this->_tree.insert(val));
 			return (ft::make_pair(in, true));
 		}
 
 		iterator insert(iterator pos, const value_type& val)
 		{
 			if (pos != iterator())
-				return (_tree.insert(val));
+				return (this->_tree.insert(val));
 			return (iterator());
 		}
 		
@@ -168,28 +167,30 @@ class map
 		{
 			while (first != last)
 			{
-				_tree.insert(*first);
+				this->_tree.insert(*first);
 				first++;
 			}
 		}
 
 		size_type	erase(key_type const & k)
 		{
-			return (_tree.erase(k));
+			return (this->_tree.erase(k));
 		}
 
 		void		erase(iterator pos)
 		{
-			_tree.erase((*pos).first);
+			this->_tree.erase((*pos).first);
 		}
 
 		void		erase(iterator first, iterator last)
 		{
 			while (first != last)
 			{
-				_tree.erase((*first).first);
+				std::cout << (*first).first << ", ";
+				this->_tree.erase((*first).first);
 				first++;
 			}
+			std::cout << std::endl;
 		}
 
 		void swap(map & scd)
@@ -204,15 +205,15 @@ class map
 
 		void		clear(void) 
 		{
-			_tree.clear();
+			this->_tree.clear();
 		}
 
 		//Capacity
-		bool		empty(void) const {return (_tree.empty());}
+		bool		empty(void) const {return (this->_tree.empty());}
 
-		size_type	size(void) const {return (_tree.size());}
+		size_type	size(void) const {return (this->_tree.size());}
 
-		size_type	max_size(void) const {return (_tree.max_size());}
+		size_type	max_size(void) const {return (this->_tree.max_size());}
 
 		//Element Access
 		mapped_type & operator[](const key_type & k)
@@ -235,12 +236,12 @@ class map
 		//operations
 		iterator	find(key_type const & key)
 		{
-			return (iterator(_tree.find(key)));
+			return (iterator(this->_tree.find(key)));
 		}
 		
 		size_type	count(key_type const & k)
 		{
-			if (_tree.find(k))
+			if (this->_tree.find(k))
 				return (1);
 			return (0);
 		}

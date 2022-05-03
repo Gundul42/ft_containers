@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/05/02 15:21:01 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/03 12:40:42 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -669,7 +669,7 @@ class	RBtree
 			std::cout << "\033[0m";
 		}
 		
-		size_type	max_size(void) const  {return (_alloc.max_size() / 5);}
+		size_type	max_size(void) const  {return (this->_alloc.max_size());}
 
 		//useful for iterators
 		iter	begin(void) const

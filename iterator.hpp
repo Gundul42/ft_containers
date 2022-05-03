@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 15:36:39 by graja             #+#    #+#             */
-/*   Updated: 2022/05/02 17:23:22 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/03 09:14:21 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ class reverse_iterator
 
 				reverse_iterator operator+ (difference_type n) const
 				{
-						reverse_iterator tmp(_i - n);
+						reverse_iterator tmp(-n + this->_i);
 
 						return (tmp);
 				}
@@ -135,7 +135,7 @@ class reverse_iterator
 				
 				reverse_iterator operator- (difference_type n) const
 				{
-						reverse_iterator tmp(_i + n);
+						reverse_iterator tmp(n + this->_i);
 
 						return (tmp);
 				}
