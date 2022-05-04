@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
-/*   Updated: 2022/05/03 09:04:08 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/04 15:27:24 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define RBT_ITERATOR_H
 
 # include "iterator.hpp"
+# include "RBtree.hpp"
 # include "utility.hpp"
 
 namespace ft
@@ -56,8 +57,10 @@ class RBT_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 		RBT_iterator &	operator++() 
 		{
 			RB_type	tmp;
-        
-			if (!_p->right_child)
+       		
+			if (!_p)
+					return (*this);
+			else if (!_p->right_child)
 			{
 				tmp = _p->parent;
 				while (tmp && tmp->data->first < _p->data->first)
@@ -82,7 +85,11 @@ class RBT_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 		RBT_iterator&	operator--()
 		{
 			RB_type	tmp;
-        
+   
+			if (!_p)
+			{
+				return (*this);
+			}
 			if (!_p->left_child)
 			{
 				tmp = _p->parent;
@@ -114,12 +121,17 @@ class RBT_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 			return ((_p->data));
 		}
 
-		bool	operator==(const RBT_iterator& rhs) const
-			{return _p == rhs._p;}
-		bool	operator!=(const RBT_iterator& rhs) const
-			{return _p != rhs._p;}
 };
 
+		template <typename L, typename U, bool is_const>
+		bool	operator==(const RBT_iterator<L, U, is_const> & lhs, 
+						const RBT_iterator<L, U, is_const> & rhs)
+			{return lhs.getPtr() == rhs.getPtr();}
+
+		template <typename L, typename U, bool is_const>
+		bool	operator!=(const RBT_iterator<L, U, is_const> & lhs, 
+						const RBT_iterator<L, U, is_const> & rhs)
+			{return lhs.getPtr() != rhs.getPtr();}
 } //end namespace
 
 #endif
