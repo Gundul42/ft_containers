@@ -17,28 +17,16 @@ int	main(void)
 		m1["Gargamel"] = 198;
 		m1["Aamel"] = 198;
 
-		mit2 = m1.rbegin();
-				std::cout << (*mit2).first << ", ";
-		std::cout << std::endl;
-		mit2 = m1.rend();
-		mit2--;
-				std::cout << (*mit2).first << ", ";
-		std::cout << std::endl;
-
 		mit1 = m1.begin();
-		std::cout << (*mit1).first << ", \n" ;
-		mit1 = m1.end();
-		mit1--;
-		std::cout << (*mit1).first << ", \n" ;
-		/*
 		while (mit1 != m1.end())
 		{
 				std::cout << (*mit1).first << ", ";
 				mit1++;
 		}
 		std::cout << std::endl;
-		
-		while (mit1 != m1.end())
+
+		mit2 = m1.rbegin();
+		while (mit2 != m1.rend())
 		{
 				std::cout << (*mit2).first << ", ";
 				mit2++;
@@ -52,7 +40,6 @@ int	main(void)
 				std::cout << "NULL" << std::endl;
 		else
 				std::cout << (*mit1).first << std::endl;
-*/
 		return (0);
 }
 
