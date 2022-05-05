@@ -1,6 +1,15 @@
 #include "map.hpp"
 #include <iostream>
 
+template<typename T, typename U>
+void	print_map(const ft::map<T, U>& m, std::string comment = "")
+{
+	std::cout << comment;
+	for (typename ft::map<T, U>::const_iterator it = m.begin(); it != m.end(); it++)
+		std::cout << it->first << " = " << it->second << "; ";
+	std::cout << '\n';
+}
+
 int	main(void)
 {
 		ft::map<std::string, int>	m1;
@@ -40,6 +49,7 @@ int	main(void)
 				std::cout << "NULL" << std::endl;
 		else
 				std::cout << (*mit1).first << std::endl;
+		print_map(m1);
 		return (0);
 }
 
