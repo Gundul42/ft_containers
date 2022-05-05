@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/05/04 16:28:43 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/05 13:20:55 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -676,7 +676,6 @@ class	RBtree
 		{
 			iter	tmp = this->_tree;
 
-			print(_tree);
 			while (tmp && tmp->left_child)
 				tmp = tmp->left_child;
 			return (tmp);
@@ -686,11 +685,8 @@ class	RBtree
 		{
 			iter	tmp = this->_tree;
 
-			print(_tree);
 			while (tmp && tmp->right_child)
 				tmp = tmp->right_child;
-			std::cout << tmp << std::endl;
-			print(tmp);
 			return (tmp);
 		}
 

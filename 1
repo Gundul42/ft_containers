@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
-/*   Updated: 2022/05/05 13:25:23 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/05 12:43:52 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ class RBT_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 					this->_p = right._p; 
 					this->_first = right._first; 
 					this->_last = right._last; 
-					return (*this);
-			}
+					return (*this);}
 
 		RBT_iterator &	operator++() 
 		{
@@ -98,8 +97,10 @@ class RBT_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 			RB_type	tmp;
   
 			if (!_p)
+			{
 					_p = _last;
-			else if (!_p->left_child)
+			}
+			if (!_p->left_child)
 			{
 				tmp = _p->parent;
 				while (tmp && tmp->data->first > _p->data->first)

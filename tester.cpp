@@ -8,7 +8,6 @@ int	main(void)
 		ft::map<std::string, int>::iterator	mit1;
 		ft::map<std::string, int>::reverse_iterator	mit2;
 
-
 		m1["LOLO"] = 192;
 		m1["luemmel"] = 193;
 		m1["Klais"] = 194;
@@ -21,7 +20,24 @@ int	main(void)
 		mit2 = m1.rbegin();
 				std::cout << (*mit2).first << ", ";
 		std::cout << std::endl;
+		mit2 = m1.rend();
+		mit2--;
+				std::cout << (*mit2).first << ", ";
+		std::cout << std::endl;
+
+		mit1 = m1.begin();
+		std::cout << (*mit1).first << ", \n" ;
+		mit1 = m1.end();
+		mit1--;
+		std::cout << (*mit1).first << ", \n" ;
 		/*
+		while (mit1 != m1.end())
+		{
+				std::cout << (*mit1).first << ", ";
+				mit1++;
+		}
+		std::cout << std::endl;
+		
 		while (mit1 != m1.end())
 		{
 				std::cout << (*mit2).first << ", ";
