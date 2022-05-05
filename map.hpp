@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/05/05 14:40:50 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/05 19:36:35 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ class map
 			while (first != last)
 			{
 				std::cout << (*first).first << ", ";
-				this->_tree.erase((*first).first);
+				this->erase(first);
 				first++;
 			}
 			std::cout << std::endl;

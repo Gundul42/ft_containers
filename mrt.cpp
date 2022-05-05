@@ -353,7 +353,6 @@ int main(int argc, char** argv) {
 	std::cout << std::boolalpha << (v1 >= v2) << std::endl;
 	std::cout << std::boolalpha << (v1 <= v2) << std::endl;
 
-	//fixit ft::swap(v1, v2);
 	v1.swap(v2);
 
 	print_vector(v1, 1);
@@ -399,10 +398,10 @@ int main(int argc, char** argv) {
 	ft::map<std::string, int> m3(m1);
 	ft::map<std::string, int>::iterator mit01 = m3.begin();
 	ft::map<std::string, int>::iterator mit02 = m3.end();
-	//mit02--;
+	mit02--;
 	ft::map<std::string, int>::reverse_iterator rmit01 = m3.rbegin();
 	ft::map<std::string, int>::reverse_iterator rmit02 = m3.rend();
-	//rmit02++;
+	rmit02++;
 	print_map(m3, "m3: ");
 
 	std::cout << "Begin --- Key: " << mit01->first << " | Value: " << mit01->second << std::endl;
@@ -416,19 +415,6 @@ int main(int argc, char** argv) {
 	std::cout << "m4 size = " << m4.max_size() << std::endl;
 
 	ft::map<std::string, int>::allocator_type mapalloc = m4.get_allocator();
-
-	/* map.at is c++11
-	try
-	{
-		m4.at("LOL");
-	}
-	catch (std::out_of_range const& exc)
-	{
-		std::cout << "Exception caught: " << exc.what() << '\n';
-	}
-
-	std::cout << "SSD mapped value: " << m4.at("SSD") << std::endl;
-	*/
 
 	ft::map<std::string, int> m5 = m4;
 
@@ -444,12 +430,10 @@ int main(int argc, char** argv) {
 
 	std::cout << "M6 size is " << m6.size() << std::endl;
 	m6.erase(m6.begin(), m6.end());
-	print_map(m6, "m6: ");
+	print_map(m6, "erased: m6: ");
 
 	m6.swap(m5);
-	print_map(m6, "m6: ");
-	swap(m5, m6);
-	print_map(m6, "m6: ");
+	print_map(m6, "swap m6: ");
 
 	std::cout << m5.count("RAM") << std::endl;
 	std::cout << m5.count("HDD") << std::endl;
@@ -576,8 +560,6 @@ int main(int argc, char** argv) {
 	print_set(s6, "s6: ");
 
 	s6.swap(s5);
-	print_set(s6, "s6: ");
-	swap(s5, s6);
 	print_set(s6, "s6: ");
 /*
 	std::cout << s5.count("RAM") << std::endl;

@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
-/*   Updated: 2022/05/02 18:32:37 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/05 15:03:55 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,28 +36,41 @@ class RBTs_iterator : public ft::iterator<std::bidirectional_iterator_tag, Key>
 		typedef typename choose<is_const, cRBsnode , RBsnode >::type	RBs_type;
 		
 		RBs_type	_p;
+		RBs_type	_first;
+		RBs_type	_last;
 
 	public:
 		RBTs_iterator(void) :_p(NULL) {}
 
-		RBTs_iterator(RBs_type in) :_p(in) {}
+		RBTs_iterator(RBs_type in, RBs_type f = NULL, RBs_type l = NULL) :
+				_p(in), _first(f), _last(l) {}
+
 		~RBTs_iterator(void) {}
 
 		template<typename fst, bool cval>
 		RBTs_iterator(const RBTs_iterator<fst, cval> & r) : _p(r.getPtr()) {}
 
 		RBs_type	getPtr(void) const {return _p;}
+		RBs_type	getf(void) const {return _first;}
+		RBs_type	getl(void) const {return _last;}
 
-		RBTs_iterator(const RBTs_iterator & cpy) : _p(cpy._p) {}
+		RBTs_iterator(const RBTs_iterator & cpy) : _p(cpy._p), _first(cpy._first), _last(cpy._last) {}
 
 		RBTs_iterator & operator=(const RBTs_iterator & right)
-			{this->_p = right._p; return (*this);}
+			{
+					this->_p = right._p; 
+					this->_first = right._first; 
+					this->_last = right._last; 
+					return (*this);
+			}
 
 		RBTs_iterator &	operator++() 
 		{
 			RBs_type	tmp;
         
-			if (!_p->right_child)
+			if (!_p)
+					_p = _first;
+			else if (!_p->right_child)
 			{
 				tmp = _p->parent;
 				while (tmp && tmp->data->first < _p->data->first)
@@ -83,7 +96,9 @@ class RBTs_iterator : public ft::iterator<std::bidirectional_iterator_tag, Key>
 		{
 			RBs_type	tmp;
         
-			if (!_p->left_child)
+			if (!_p)
+					_p = _last;
+			else if (!_p->left_child)
 			{
 				tmp = _p->parent;
 				while (tmp && tmp->data->first > _p->data->first)

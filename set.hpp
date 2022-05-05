@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 09:44:15 by graja             #+#    #+#             */
-/*   Updated: 2022/05/03 10:23:04 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/05 14:54:08 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,23 +128,24 @@ class set
 		//points to smallest key !
 		iterator begin(void) const
 		{
-		return (iterator(_tree.begin()));
+		return (iterator(this->_tree.begin(), this->_tree.begin(), this->_tree.rbegin()));
 		}
 
 		iterator end(void) const
 		{
-			return (iterator());
+			return (iterator(NULL, this->_tree.begin(), this->_tree.rbegin()));
 		}
 
 		//points to largest key !!
 		reverse_iterator rbegin(void) const
 		{
-			return (reverse_iterator(_tree.rbegin()));
+			return (reverse_iterator(
+				iterator(this->_tree.rbegin(), this->_tree.begin(), this->_tree.rbegin())));
 		}
 
 		reverse_iterator rend(void) const
 		{
-			return (reverse_iterator());
+			return (reverse_iterator(iterator(NULL, this->_tree.begin(), this->_tree.rbegin())));
 		}
 		
 		//Modifiers
