@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/05/05 19:36:35 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/06 14:10:01 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdexcept>
 # include <memory>
 # include "iterator.hpp"
+# include "vector.hpp"
 # include "utility.hpp"
 # include "RBtree.hpp"
 # include "RBT_iterator.hpp"
@@ -185,13 +186,20 @@ class map
 
 		void		erase(iterator first, iterator last)
 		{
+			ft::vector<key_type>	tmp;
+			typename ft::vector<key_type>::iterator	in;
+
 			while (first != last)
 			{
-				std::cout << (*first).first << ", ";
-				this->erase(first);
+				tmp.push_back((*first).first);
 				first++;
 			}
-			std::cout << std::endl;
+			in = tmp.begin();
+			while (in != tmp.end())
+			{
+					erase(*in);
+					in++;
+			}
 		}
 
 		void swap(map & scd)
@@ -219,14 +227,7 @@ class map
 		//Element Access
 		mapped_type & operator[](const key_type & k)
 		{
-			iterator	it = find(k);
-
-			if (it == end())
-			{
-				insert(ft::make_pair(k, mapped_type()));
-				it = find(k);
-			}
-			return ((*it).second);
+			return ((*((this->insert(ft::make_pair(k,mapped_type()))).first)).second);
 		}
 
 		//Observers
@@ -242,7 +243,7 @@ class map
 		
 		size_type	count(key_type const & k)
 		{
-			if (this->_tree.find(k))
+			if (this->_tree.find(k) != NULL)
 				return (1);
 			return (0);
 		}

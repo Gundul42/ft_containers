@@ -438,7 +438,9 @@ int main(int argc, char** argv) {
 	std::cout << m5.count("RAM") << std::endl;
 	std::cout << m5.count("HDD") << std::endl;
 
-	std::cout << (*m5.find("RAM")).second << std::endl;
+	if (m5.find("RAM") != m5.end())
+		std::cout << (*m5.find("RAM")).second << std::endl;
+	if (m5.find("UPS") != m5.end())
 	std::cout << (*m5.find("UPS")).second << std::endl;
 
 	ft::pair<ft::map<std::string, int>::iterator, ft::map<std::string, int>::iterator> range00 = m5.equal_range("PSU");

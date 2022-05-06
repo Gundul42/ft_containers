@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 13:25:31 by graja             #+#    #+#             */
-/*   Updated: 2022/04/26 13:35:16 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/05 19:57:02 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ class V_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 		
 };
 
+/*
 template <typename T, bool is_const>
 class V_reverse_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 {
@@ -219,6 +220,6 @@ class V_reverse_iterator : public ft::iterator<std::random_access_iterator_tag, 
 			return (tmp);
 		}
 };
-
+*/
 } //end namespace
 #endif

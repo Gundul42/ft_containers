@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
-/*   Updated: 2022/05/05 14:47:43 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/06 11:44:52 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,17 +117,25 @@ class RBT_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 			}
 			return (*this);
 		}
+
 		RBT_iterator	operator--(int) 
 			{RBT_iterator tmp(*this); operator--(); return tmp;}
 
 		value_type &	operator*() 
 		{
-			return (*(_p->data));
+				if (_p == NULL)
+				{
+					RBT_iterator	tmp(*this);
+
+					tmp++;
+					return *tmp;
+				}
+				return (*(_p->data));
 		}
 		
 		value_type *	operator->() 
 		{
-			return ((_p->data));
+			return (&(operator*()));
 		}
 		
 		template <typename L, typename U, bool is_c>
