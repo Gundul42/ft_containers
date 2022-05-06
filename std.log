@@ -1,4 +1,4 @@
-should be constant with the same seed: -148900723
+should be constant with the same seed: -451314751
 abcdefghijklmnopqrstuvwxyz
 vector1: [ ]
 vector2: [ 42 42 42 42 42 42 42 42 ]
@@ -75,40 +75,51 @@ After erase: CPU = 25; RAM = 20; SSD = 30; UPS = 0;
 m.size() = 4
 Copy constructed map: CPU = 25; RAM = 20; SSD = 30; UPS = 0; 
 m1 and m2 are equivalent: true
-Updated map: CPU = 25; PSU = 34; Peripherals = 12; RAM = 20; SSD = 30; UPS = 0; 
+Updated map: CPU = 25; PSU = 34; RAM = 20; SSD = 30; UPS = 0; sPeripherals = 12; 
 m1 and m2 are equivalent: false
 Swapped map: CPU = 25; RAM = 20; SSD = 30; UPS = 0; 
-m3: CPU = 25; PSU = 34; Peripherals = 12; RAM = 20; SSD = 30; UPS = 0; 
+m3: CPU = 25; PSU = 34; RAM = 20; SSD = 30; UPS = 0; sPeripherals = 12; 
 Begin --- Key: CPU | Value: 25
-m4: CPU = 25; PSU = 34; Peripherals = 12; RAM = 20; SSD = 30; 
+End   --- Key: sPeripherals | Value: 12
+Reverse Begin --- Key: sPeripherals | Value: 12
+Reverse End   --- Key: sPeripherals | Value: 12
+m4: CPU = 25; PSU = 34; RAM = 20; SSD = 30; UPS = 0; 
 m4 size = 5
 m4 size = 256204778801521550
 m2: CPU = 25; Mousepad = 5; RAM = 20; SSD = 30; UPS = 0; 
-m5: CPU = 25; Mousepad = 5; PSU = 34; Peripherals = 12; RAM = 20; SSD = 30; UPS = 0; 
-m6: Mousepad = 5; PSU = 34; Peripherals = 12; RAM = 20; SSD = 30; UPS = 0; 
+m5: CPU = 25; Mousepad = 5; PSU = 34; RAM = 20; SSD = 30; UPS = 0; 
+m6: Mousepad = 5; PSU = 34; RAM = 20; SSD = 30; UPS = 0; 
 m2: CPU = 25; Mousepad = 5; RAM = 20; SSD = 30; UPS = 0; 
-M6 size is 6
+M6 size is 5
 erased: m6: 
-swap m6: CPU = 25; Mousepad = 5; PSU = 34; Peripherals = 12; RAM = 20; SSD = 30; UPS = 0; 
+m6: CPU = 25; Mousepad = 5; PSU = 34; RAM = 20; SSD = 30; UPS = 0; 
+swapped with m5: 
 0
 0
--1798780528
--1798780528
- = -1798780528
- = -1798780528
- = -1798780528
- = -1798780528
-false
-true
-false
-true
-true
-false
+RAM not found
+UPS not found
+m5: 
+PSU = 34
+RAM = 20
+PSU = 34
+RAM = 20
+1) false
+2) true
+3) false
+4) true
+5) true
+6) false
 Python is lexicographically less than C: false
 false
 C is lexicographically less than C++: true
-true
+C comp C++ : true
 Key "SSD" is in the map: 1
+Key "Stereo" is in the map: 0
+Map is empty: true
+
+SET
+
+true
 false
 Initial set: CPU -> GPU -> RAM -> (end)
 Updated set: CPU -> GPU -> RAM -> SSD -> (end)

@@ -388,7 +388,7 @@ int main(int argc, char** argv) {
 
 	std::cout << std::boolalpha << "m1 and m2 are equivalent: " << (m1 == m2) << '\n';
 	m2["PSU"] = 34;
-	m2["Peripherals"] = 12;
+	m2["sPeripherals"] = 12;
 	print_map(m2, "Updated map: ");
 	std::cout << std::boolalpha << "m1 and m2 are equivalent: " << (m1 == m2) << '\n';
 
@@ -405,9 +405,9 @@ int main(int argc, char** argv) {
 	print_map(m3, "m3: ");
 
 	std::cout << "Begin --- Key: " << mit01->first << " | Value: " << mit01->second << std::endl;
-	//std::cout << "End   --- Key: " << mit02->first << " | Value: " << mit02->second << std::endl;
-	// fixit std::cout << "Reverse Begin --- Key: " << rmit01->first << " | Value: " << rmit01->second << std::endl;
-	// fixit std::cout << "Reverse End   --- Key: " << rmit02->first << " | Value: " << rmit02->second << std::endl;
+	std::cout << "End   --- Key: " << mit02->first << " | Value: " << mit02->second << std::endl;
+	std::cout << "Reverse Begin --- Key: " << rmit01->first << " | Value: " << rmit01->second << std::endl;
+	std::cout << "Reverse End   --- Key: " << rmit02->first << " | Value: " << rmit02->second << std::endl;
 
 	ft::map<std::string, int> m4(mit01, mit02);
 	print_map(m4, "m4: ");
@@ -433,28 +433,29 @@ int main(int argc, char** argv) {
 	print_map(m6, "erased: m6: ");
 
 	m6.swap(m5);
-	print_map(m6, "swap m6: ");
+	print_map(m6, "m6: ");
+	print_map(m5, "swapped with m5: ");
 
 	std::cout << m5.count("RAM") << std::endl;
 	std::cout << m5.count("HDD") << std::endl;
 
-	if (m5.find("RAM") != m5.end())
-		std::cout << (*m5.find("RAM")).second << std::endl;
-	if (m5.find("UPS") != m5.end())
-	std::cout << (*m5.find("UPS")).second << std::endl;
+	if (m5.find("RAM") == m5.end())
+			std::cout << "RAM not found" << std::endl;
+	if (m5.find("UPS") == m5.end())
+			std::cout << "UPS not found" << std::endl;
+	print_map(m5, "m5: ");
+	ft::pair<ft::map<std::string, int>::iterator, ft::map<std::string, int>::iterator> range00 = m6.equal_range("PSU");
 
-	ft::pair<ft::map<std::string, int>::iterator, ft::map<std::string, int>::iterator> range00 = m5.equal_range("PSU");
 	std::cout << range00.first->first << " = " << range00.first->second << std::endl;
 	std::cout << range00.second->first << " = " << range00.second->second << std::endl;
-	std::cout << (*m5.lower_bound("PSU")).first << " = " << (*m5.lower_bound("PSU")).second << std::endl;
-	std::cout << (*m5.upper_bound("PSU")).first << " = " << (*m5.upper_bound("PSU")).second << std::endl;
-
-	std::cout << std::boolalpha << (m3 == m5) << std::endl;
-	std::cout << std::boolalpha << (m3 != m5) << std::endl;
-	std::cout << std::boolalpha << (m3 <  m5) << std::endl;
-	std::cout << std::boolalpha << (m3 >  m5) << std::endl;
-	std::cout << std::boolalpha << (m3 >= m5) << std::endl;
-	std::cout << std::boolalpha << (m3 <= m5) << std::endl;
+	std::cout << (*m6.lower_bound("PSU")).first << " = " << (*m6.lower_bound("PSU")).second << std::endl;
+	std::cout << (*m6.upper_bound("PSU")).first << " = " << (*m6.upper_bound("PSU")).second << std::endl;
+	std::cout << "1) " << std::boolalpha << (m3 == m5) << std::endl;
+	std::cout << "2) " << std::boolalpha << (m3 != m5) << std::endl;
+	std::cout << "3) " << std::boolalpha << (m3 <  m5) << std::endl;
+	std::cout << "4) " << std::boolalpha << (m3 >  m5) << std::endl;
+	std::cout << "5) " << std::boolalpha << (m3 >= m5) << std::endl;
+	std::cout << "6) " << std::boolalpha << (m3 <= m5) << std::endl;
 
 	ft::map<std::string, int>::key_compare key_comp_map = m1.key_comp();
 	ft::map<std::string, int>::value_compare val_comp_map = m1.value_comp();
@@ -466,20 +467,20 @@ int main(int argc, char** argv) {
 	ft::map<std::string, int>::value_type value2_map = ft::make_pair("C++", 7);
 
 	std::cout << std::boolalpha << "C is lexicographically less than C++: " << val_comp_map(value1_map, value2_map) << '\n';
-	std::cout << (std::string("C") < std::string("C++")) << '\n';
+	std::cout << "C comp C++ : " << (std::string("C") < std::string("C++")) << '\n';
 
 	ft::map<std::string, int>::iterator it01 = m1.find("SSD");
 	(void)it01;
 	std::cout << "Key \"SSD\" is in the map: " << m1.count("SSD") << '\n';
-	//std::cout << "Key \"Stereo\" is in the map: " << m1.count("Stereo") << '\n';
-
-	//segfault m1.clear();
-	//std::cout << std::boolalpha << "Map is empty: " << m1.empty() << '\n';
+	std::cout << "Key \"Stereo\" is in the map: " << m1.count("Stereo") << '\n';
+	m1.clear();
+	std::cout << std::boolalpha << "Map is empty: " << m1.empty() << '\n';
 
 	/* set */
+	std::cout << std::endl << "SET" << std::endl << std::endl; 
 
 	ft::set<std::string> s1;
-	//std::cout << s1.empty() << std::endl;
+	std::cout << s1.empty() << std::endl;
 
 	s1.insert("CPU");
 	s1.insert("GPU");

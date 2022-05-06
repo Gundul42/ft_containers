@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 15:36:39 by graja             #+#    #+#             */
-/*   Updated: 2022/05/03 09:14:21 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:43:46 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,19 @@ class reverse_iterator
 				reverse_iterator(reverse_iterator<Iter> const & rev_it): _i(rev_it.base()) {}
 
 				//base
-				iterator_type base() const {return this->_i;}
+				iterator_type base(void) const {return this->_i;}
 
 				//operators
 				value_type	operator*() const 
 				{
-						iterator_type tmp(this->_i);
-						//--tmp;
-
-						return ((*tmp));
+						return (*base());
 				}
+
+				value_type * operator->() const 
+				{
+					  return &(*base());
+				}
+
 
 				reverse_iterator operator+ (difference_type n) const
 				{
@@ -157,11 +160,6 @@ class reverse_iterator
 				{
 						this->_i += n;
 						return (*this);
-				}
-
-				pointer operator->() const
-				{
-					  return &(operator*());
 				}
 
 				reference operator[] (difference_type n) const

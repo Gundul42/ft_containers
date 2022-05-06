@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/05/06 14:10:01 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:58:23 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,7 +302,7 @@ class map
 		template <class U, class V, class C, class A>
 		 bool operator> ( const map<U,V,C,A>& lhs, const map<U,V,C,A>& rhs )
 		{
-			return (!(lhs <= rhs));
+			return ((rhs < lhs));
 		}
 		
 		template <class U, class V, class C, class A>
@@ -314,10 +314,7 @@ class map
 		template <class U, class V, class C, class A>
 		 bool operator<=( const map<U,V,C,A>& lhs, const map<U,V,C,A>& rhs )
 		{
-			if (ft::equal(lhs.begin(), lhs.end(), rhs.begin()))
-				return (true);
-			return (ft::lexicographical_compare(lhs.begin(), lhs.end(),
-						rhs.begin(), rhs.end()));
+			return (!(rhs < lhs));
 		}
 
 } //end namespace
