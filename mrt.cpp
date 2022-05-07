@@ -628,12 +628,12 @@ int main(int argc, char** argv) {
 	std::cout << "Stack2 size: " << stack2.size() << '\n';
 	std::cout << "Stack0 size: " << stack0.size() << '\n';
 
-	std::cout << std::boolalpha << (stack0 == stack1) << std::endl;
-	std::cout << std::boolalpha << (stack0 != stack1) << std::endl;
-	std::cout << std::boolalpha << (stack0 <  stack1) << std::endl;
-	std::cout << std::boolalpha << (stack0 >  stack1) << std::endl;
-	std::cout << std::boolalpha << (stack0 >= stack1) << std::endl;
-	std::cout << std::boolalpha << (stack0 <= stack1) << std::endl;
+	std::cout << "1) " << std::boolalpha << (stack0 == stack1) << std::endl;
+	std::cout << "2) " << std::boolalpha << (stack0 != stack1) << std::endl;
+	std::cout << "3) " << std::boolalpha << (stack0 <  stack1) << std::endl;
+	std::cout << "4) " << std::boolalpha << (stack0 >  stack1) << std::endl;
+	std::cout << "5) " << std::boolalpha << (stack0 >= stack1) << std::endl;
+	std::cout << "6) " << std::boolalpha << (stack0 <= stack1) << std::endl;
 
 	time(&end);
 	double diff = difftime(end, start);
