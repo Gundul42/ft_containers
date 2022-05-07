@@ -567,14 +567,25 @@ int main(int argc, char** argv) {
 	std::cout << s5.count("RAM") << std::endl;
 	std::cout << s5.count("HDD") << std::endl;
 
-	std::cout << (*s5.find("RAM")) << std::endl;
-	std::cout << (*s5.find("UPS")) << std::endl;
-/*
-	ft::pair<ft::set<std::string>::iterator, ft::set<std::string>::iterator> srange00 = s5.equal_range("PSU");
+	//Dangerous !! find will return end() iterator if nothing was found
+	//trying to dereference end() will cause undefined behavior (UB)
+	std::cout << (*s6.find("RAM")) << std::endl;
+	std::cout << (*s6.find("PSU")) << std::endl;
+
+	//better this way !
+	if (s6.find("USP") == s6.end())
+			std::cout << "USP not found" << std::endl;
+	else
+			std::cout << "USP found" << std::endl;
+
+	//same here, equal_range returns a pair of iterators, take care that you
+	//are not going to try dereferencing end()
+	ft::pair<ft::set<std::string>::iterator, ft::set<std::string>::iterator> srange00 = s6.equal_range("PSU");
+
 	std::cout << *(srange00.first) << " = " << *(srange00.first) << std::endl;
 	std::cout << *(srange00.first) << " = " << *(srange00.second) << std::endl;
-	std::cout << (*m5.lower_bound("PSU")).first << " = " << (*m5.lower_bound("PSU")).second << std::endl;
-	std::cout << (*m5.upper_bound("PSU")).first << " = " << (*m5.upper_bound("PSU")).second << std::endl;
+	std::cout << (*m6.lower_bound("PSU")).first << " = " << (*m6.lower_bound("PSU")).second << std::endl;
+	std::cout << (*m6.upper_bound("PSU")).first << " = " << (*m6.upper_bound("PSU")).second << std::endl;
 
 	std::cout << std::boolalpha << (s3 == s5) << std::endl;
 	std::cout << std::boolalpha << (s3 != s5) << std::endl;
@@ -585,7 +596,7 @@ int main(int argc, char** argv) {
 	
 	s1.clear();
 	std::cout << std::boolalpha << "Set is empty: " << s1.empty() << '\n';
-*/
+
 	/* stack */
 
 	ft::stack<int> stack0;
