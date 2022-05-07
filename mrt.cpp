@@ -225,20 +225,17 @@ int main(int argc, char** argv) {
 
 	v7.at(3) = 42;
 
-	//try
-	//{
-	//	v7.at(42) = 666;
-	//} catch (std::out_of_range const& exc) {
-	//	std::cout << exc.what() << '\n';
-	//}
+	try
+	{
+		v7.at(42) = 666;
+	} catch (std::out_of_range const& exc) {
+		std::cout << exc.what() << '\n';
+	}
 
 	v7[4] = 84;
 	v7[2] = 84;
 
 	print_vector(v7, 7);
-
-	//ft::vector<int>::value_type* ptr = v7.data();
-	//std::cout << "Same element: " << (*ptr == *v7.begin()) << std::endl;
 
 	v7.push_back(66);
 	v7.push_back(97);
@@ -533,16 +530,16 @@ int main(int argc, char** argv) {
 	ft::set<std::string> s3(s1);
 	ft::set<std::string>::iterator sit01 = s3.begin();
 	ft::set<std::string>::iterator sit02 = s3.end();
-	//sit02--;
+	sit02--;
 	ft::set<std::string>::reverse_iterator rsit01 = s3.rbegin();
 	ft::set<std::string>::reverse_iterator rsit02 = s3.rend();
-	//rsit02++;
+	rsit02--;
 	print_set(s3, "s3: ");
 
 	std::cout << "Begin --- Key: " << *sit01 << std::endl;
-	//std::cout << "End   --- Key: " << *sit02 << std::endl;
+	std::cout << "End   --- Key: " << *sit02 << std::endl;
 	std::cout << "Reverse Begin --- Key: " << *rsit01 << std::endl;
-	//std::cout << "Reverse End   --- Key: " << *rsit02 << std::endl;
+	std::cout << "Reverse End   --- Key: " << *rsit02 << std::endl;
 
 	ft::set<std::string> s4(sit01, sit02);
 	print_set(s4, "s4: ");
@@ -566,13 +563,13 @@ int main(int argc, char** argv) {
 
 	s6.swap(s5);
 	print_set(s6, "s6: ");
-/*
+
 	std::cout << s5.count("RAM") << std::endl;
 	std::cout << s5.count("HDD") << std::endl;
 
 	std::cout << (*s5.find("RAM")) << std::endl;
 	std::cout << (*s5.find("UPS")) << std::endl;
-
+/*
 	ft::pair<ft::set<std::string>::iterator, ft::set<std::string>::iterator> srange00 = s5.equal_range("PSU");
 	std::cout << *(srange00.first) << " = " << *(srange00.first) << std::endl;
 	std::cout << *(srange00.first) << " = " << *(srange00.second) << std::endl;
