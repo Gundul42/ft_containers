@@ -30,6 +30,7 @@ it2 = v1.begin() + 3
 it3 = v1.end() - 2;
 
 *(it1): 0
+(it2 - it1): 3
 *(it1 + 1): 1
 *(1 + it1): 1
 *(it2 - 1): 2
@@ -53,6 +54,7 @@ it3 = v1.end() - 2;
 *(--it4): 5 -> 5
 *(it4 + 3): 2
 *(it4 - 3): 8
+it4 - it5: 6
 *cit1: 0
 *cit2: 3
 vector1: [ 55 1 2 3 4 5 6 7 8 9 10 11 ]
@@ -85,7 +87,7 @@ Reverse Begin --- Key: sPeripherals | Value: 12
 Reverse End   --- Key: sPeripherals | Value: 12
 m4: CPU = 25; PSU = 34; RAM = 20; SSD = 30; UPS = 0; 
 m4 size = 5
-m4 size = 461168601842738815
+m4 size = 461168601842738790
 m2: CPU = 25; Mousepad = 5; RAM = 20; SSD = 30; UPS = 0; 
 m5: CPU = 25; Mousepad = 5; PSU = 34; RAM = 20; SSD = 30; UPS = 0; 
 m6: Mousepad = 5; PSU = 34; RAM = 20; SSD = 30; UPS = 0; 
@@ -145,7 +147,7 @@ s4 size = 461168601842738790
 s2: CPU -> RAM -> SSD -> (end)
 s5: CPU -> PSU -> Peripherals -> RAM -> SSD -> (end)
 s6: PSU -> Peripherals -> RAM -> SSD -> (end)
-s6: Peripherals -> SSD -> (end)
+s6: (end)
 s6: CPU -> PSU -> Peripherals -> RAM -> SSD -> (end)
 stack0:
 [ 4 ]

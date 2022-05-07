@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 09:44:15 by graja             #+#    #+#             */
-/*   Updated: 2022/05/05 14:54:08 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/06 19:52:56 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <memory>
 # include "iterator.hpp"
 # include "utility.hpp"
+# include "vector.hpp"
 # include "RBtree.hpp"
-//# include "RBT_iterator.hpp"
 # include "RBTs_iterator.hpp"
 
 namespace ft
@@ -155,14 +155,14 @@ class set
 			
 			if (in != iterator())
 				return (ft::make_pair(in, false));
-			in = iterator(_tree.insert(ft::make_pair(val, true)));
+			in = iterator(this->_tree.insert(ft::make_pair(val, true)));
 			return (ft::make_pair(in, true));
 		}
 
 		iterator insert(iterator pos, const value_type& val)
 		{
 			if (pos != iterator())
-				return (_tree.insert(ft::make_pair(val, true)));
+				return (this->_tree.insert(ft::make_pair(val, true)));
 			return (iterator());
 		}
 		
@@ -171,27 +171,36 @@ class set
 		{
 			while (first != last)
 			{
-				_tree.insert(ft::make_pair(*first, true));
+				this->_tree.insert(ft::make_pair(*first, true));
 				first++;
 			}
 		}
 
 		size_type	erase(key_type const & k)
 		{
-			return (_tree.erase(k));
+			return (this->_tree.erase(k));
 		}
 
 		void		erase(iterator pos)
 		{
-			_tree.erase((*pos));
+			this->_tree.erase((*pos));
 		}
 
 		void		erase(iterator first, iterator last)
 		{
+			ft::vector<key_type>	tmp;
+			typename ft::vector<key_type>::iterator	in;
+
 			while (first != last)
 			{
-				_tree.erase((*first));
+				tmp.push_back(*first);
 				first++;
+			}
+			in = tmp.begin();
+			while (in != tmp.end())
+			{
+					erase(*in);
+					in++;
 			}
 		}
 
@@ -207,27 +216,20 @@ class set
 
 		void		clear(void) 
 		{
-			_tree.clear();
+			this->_tree.clear();
 		}
 
 		//Capacity
-		bool		empty(void) const {return (_tree.empty());}
+		bool		empty(void) const {return (this->_tree.empty());}
 
-		size_type	size(void) const {return (_tree.size());}
+		size_type	size(void) const {return (this->_tree.size());}
 
-		size_type	max_size(void) const {return (_tree.max_size());}
+		size_type	max_size(void) const {return (this->_tree.max_size());}
 
 		//Element Access
 		mapped_type & operator[](const key_type & k)
 		{
-			iterator	it = find(k);
-
-			if (it == end())
-			{
-				insert(ft::make_pair(k, mapped_type()));
-				it = find(k);
-			}
-			return ((*it).second);
+			return ((*((this->insert(ft::make_pair(k,mapped_type()))).first)).second);
 		}
 
 		//Observers
@@ -238,12 +240,12 @@ class set
 		//operations
 		iterator	find(key_type const & key)
 		{
-			return (iterator(_tree.find(key)));
+			return (iterator(this->_tree.find(key)));
 		}
 		
 		size_type	count(key_type const & k)
 		{
-			if (_tree.find(k))
+			if (this->_tree.find(k) != NULL)
 				return (1);
 			return (0);
 		}
@@ -278,6 +280,47 @@ class set
 
 };
 
+		//nonmember relational operators
+		template <class U, class C, class A>
+		 bool operator== ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		{
+		if (lhs.size() != rhs.size())
+			return (false);
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+		}
+		
+		template <class U, class C, class A>
+		 bool operator!= ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		{
+		return (!(lhs == rhs));
+		}
+	
+		template <class U, class C, class A>
+		 bool operator< ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		{
+			return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		}
+
+		template <class U, class C, class A>
+		 bool operator> ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		{
+			return ((rhs < lhs));
+		}
+		
+		template <class U, class C, class A>
+		 bool operator>=( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		{
+				return (rhs < lhs);
+		}
+		
+		template <class U, class C, class A>
+		 bool operator<=( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
+		{
+			return (!(rhs < lhs));
+		}
+
+
+/* OLD
 		//nonmember relational operators
 		template <typename U, typename C, typename A>
 		 bool operator== ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
@@ -319,6 +362,7 @@ class set
 			return (ft::lexicographical_compare(lhs.begin(), lhs.end(),
 						rhs.begin(), rhs.end()));
 		}
+		*/
 } //end namespace
 
 #endif

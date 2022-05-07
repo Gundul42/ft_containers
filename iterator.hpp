@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 15:36:39 by graja             #+#    #+#             */
-/*   Updated: 2022/05/06 17:43:46 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/07 10:20:51 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,13 @@ template <class Iterator>
 bool operator>= (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
 {
 		return (lhs.base() >= rhs.base());
+}
+
+template <class Iterator>
+typename reverse_iterator<Iterator>::difference_type operator-( const reverse_iterator<Iterator>& lhs,
+	const reverse_iterator<Iterator>& rhs)
+{
+		return (rhs.base() - lhs.base());
 }
 
 } //end namespace

@@ -295,6 +295,8 @@ int main(int argc, char** argv) {
 	std::cout << std::endl;
 
 	std::cout << "*(it1): " << *(it1) << std::endl;
+	std::cout << "(it2 - it1): " << (it2 - it1) << std::endl;
+
 
 	std::cout << "*(it1 + 1): " << *(it1 + 1) << std::endl;
 	std::cout << "*(1 + it1): " << *(1 + it1) << std::endl;
@@ -326,7 +328,7 @@ int main(int argc, char** argv) {
 
 	std::cout << "*(it4 + 3): " << *(it4 + 3) << std::endl;
 	std::cout << "*(it4 - 3): " << *(it4 - 3) << std::endl;
-	//fixit std::cout << "it4 - it5: " << it4 - it5 << std::endl;
+	std::cout << "it4 - it5: " << it4 - it5 << std::endl;
 
 	it1 = v1.begin();
 	it2 = v1.begin() + 3;

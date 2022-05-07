@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 13:25:31 by graja             #+#    #+#             */
-/*   Updated: 2022/05/05 19:57:02 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/07 10:07:51 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,14 @@ class V_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 		V_iterator & operator=(const V_iterator & right) {this->_p = right._p; return *this;}
 
 		pointer	getPtr(void) const {return _p;}
+
 		V_iterator&	operator++() {++_p;return *this;}
 		V_iterator	operator++(int) {V_iterator tmp(*this); operator++(); return tmp;}
 		V_iterator&	operator--() {--_p;return *this;}
 		V_iterator	operator--(int) {V_iterator tmp(*this); operator--(); return tmp;}
 		V_iterator &	operator+=(const size_type n) {_p = _p + n; return (*this);}
 		V_iterator &	operator-=(const size_type n) {_p = _p - n; return (*this);}
+
 		V_iterator 	operator-(const size_type n)
 			{
 				V_iterator	tmp(this->_p);
@@ -116,7 +118,7 @@ class V_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 			tmp._p = right._p - n;
 			return (tmp);
 		}
-		
+
 };
 
 /*
