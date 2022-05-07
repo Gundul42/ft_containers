@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/05/06 13:53:52 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/07 18:20:41 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -690,10 +690,6 @@ class	RBtree
 			return (tmp);
 		}
 
-		iter	nilnode(void) const
-		{
-			return (this->rbegin());
-		}
 };
 
 } //end namespace

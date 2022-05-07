@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 09:44:15 by graja             #+#    #+#             */
-/*   Updated: 2022/05/06 19:52:56 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/07 18:21:53 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,26 +103,6 @@ class set
 
 		~set(void) {}
 
-	/*	
-		class value_compare
-		{
-			friend class set;
-
-			protected:
-				key_compare	comp;
-				value_compare(Compare c) : comp(c) {}
-
-			public:
-				typedef bool 		result_type;
-				typedef value_type	first_argument_type;
-				typedef value_type	second_argument_type;
-
-				bool operator()(const value_type & x, const value_type & y) const
-				{
-					return comp(x.first, y.first);
-				}
-		};
-*/
 		//Iterators
 		
 		//points to smallest key !
@@ -319,50 +299,6 @@ class set
 			return (!(rhs < lhs));
 		}
 
-
-/* OLD
-		//nonmember relational operators
-		template <typename U, typename C, typename A>
-		 bool operator== ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
-		{
-		if (lhs.size() != rhs.size())
-			return (false);
-		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
-		}
-		
-		template <typename U, typename C, typename A>
-		 bool operator!= ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
-		{
-		return (!(lhs == rhs));
-		}
-	
-		template <typename U, typename C, typename A>
-		 bool operator< ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
-		{
-			return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
-		}
-
-		template <typename U, typename C, typename A>
-		 bool operator> ( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
-		{
-			return (!(lhs <= rhs));
-		}
-		
-		template <typename U, typename C, typename A>
-		 bool operator>=( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
-		{
-				return (rhs < lhs);
-		}
-		
-		template <typename U, typename C, typename A>
-		 bool operator<=( const set<U,C,A>& lhs, const set<U,C,A>& rhs )
-		{
-			if (ft::equal(lhs.begin(), lhs.end(), rhs.begin()))
-				return (true);
-			return (ft::lexicographical_compare(lhs.begin(), lhs.end(),
-						rhs.begin(), rhs.end()));
-		}
-		*/
 } //end namespace
 
 #endif

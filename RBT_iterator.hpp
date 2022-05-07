@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
-/*   Updated: 2022/05/06 11:44:52 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/07 18:18:30 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,15 +148,6 @@ class RBT_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 
 };
 
-		template <typename L, typename U, bool is_const>
-		bool	operator==(const RBT_iterator<L, U, is_const> & lhs, 
-						const RBT_iterator<L, U, is_const> & rhs)
-			{return lhs.getPtr() == rhs.getPtr();}
-
-		template <typename L, typename U, bool is_const>
-		bool	operator!=(const RBT_iterator<L, U, is_const> & lhs, 
-						const RBT_iterator<L, U, is_const> & rhs)
-			{return lhs.getPtr() != rhs.getPtr();}
 } //end namespace
 
 #endif

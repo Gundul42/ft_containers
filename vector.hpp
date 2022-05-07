@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/05/03 12:20:55 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/07 18:25:39 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -399,9 +399,6 @@ class vector
 		template <typename U, typename A>
 		bool	operator== (const vector<U,A> & lhs, const vector<U,A> & rhs)
 		{
-		//	vector<T>	lcpy(lhs);
-		//	vector<T>	rcpy(rhs);
-
 		if (lhs.size() != rhs.size())
 			return (false);
 		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
@@ -416,9 +413,6 @@ class vector
 		template <typename U, typename A>
 		bool	operator<(const vector<U,A> & lhs, const vector<U,A> & rhs)
 		{
-			//vector<T>	lcpy(lhs);
-			//vector<T>	rcpy(rhs);
-
 			return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 		}
 
@@ -437,9 +431,6 @@ class vector
 		template <typename U, typename A>
 		bool 	operator<= (const vector<U,A> & lhs, const vector<U,A> & rhs)
                 {
-			//vector<T>	lcpy(lhs);
-			//vector<T>	rcpy(rhs);
-
 			if (ft::equal(lhs.begin(), lhs.end(), rhs.begin()))
 				return (true);
 			return (ft::lexicographical_compare(lhs.begin(), lhs.end(),
