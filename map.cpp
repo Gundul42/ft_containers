@@ -66,7 +66,6 @@ int	main(void)
 {
 
 	ft::map<std::string, int> m1;
-	ft::map<std::string, int>::const_reverse_iterator mrev1;
 	ft::map<std::string, int>::reverse_iterator mrev2;
 	ft::map<std::string, int>::const_iterator mci1;
 	ft::map<std::string, int>::iterator mi1;
@@ -108,13 +107,17 @@ int	main(void)
 			std::cout << (*mrev2).first << std::endl;
 			mrev2++;
 	}
-	/*
+	
+	std::cout << "const_reverse_iterator" << std::endl;
+	ft::map<std::string, int>::const_reverse_iterator mrev1;
+	ft::map<std::string, int>::const_reverse_iterator mrev3;
 	mrev1 = m1.rbegin();
-	while (mrev1 != m1.rend())
+	mrev3 = m1.rend();
+	while (mrev1 != mrev3)
 	{
 			std::cout << (*mrev1).first << std::endl;
 			mrev1++;
 	}
-	*/
+	
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/05/09 11:26:10 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/09 16:46:46 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ class map
 		{
 			return (const_iterator(NULL, this->_tree.begin(), this->_tree.rbegin()));
 		}
+
 		//points to largest key !!
 		reverse_iterator rbegin(void)
 		{
@@ -153,7 +154,7 @@ class map
 		const_reverse_iterator rbegin(void) const
 		{
 			return (const_reverse_iterator(
-				iterator(this->_tree.rbegin(), this->_tree.begin(), this->_tree.rbegin())));
+				const_iterator(this->_tree.rbegin(), this->_tree.begin(), this->_tree.rbegin())));
 		}
 
 		reverse_iterator rend(void)
@@ -164,7 +165,7 @@ class map
 		const_reverse_iterator rend(void) const
 		{
 			return (const_reverse_iterator(
-				iterator(NULL, this->_tree.begin(), this->_tree.rbegin())));
+				const_iterator(NULL, this->_tree.begin(), this->_tree.rbegin())));
 		}
 
 		//Modifiers

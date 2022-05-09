@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 15:36:39 by graja             #+#    #+#             */
-/*   Updated: 2022/05/09 10:27:07 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/09 18:20:15 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,18 @@ class reverse_iterator
 				{
 						return (this->base()[-n-1]);
 				}
+/*
+		friend bool operator== (const reverse_iterator& lhs,
+                                const reverse_iterator& rhs)
+        {
+            return lhs->base() == rhs->base();
+        }
+
+        friend bool operator!= (const reverse_iterator& lhs,
+                                const reverse_iterator& rhs)
+        {
+            return !(lhs->base() == rhs->base());
+        }*/
 };
 
 template <class Iterator>
@@ -209,6 +221,21 @@ typename reverse_iterator<Iterator>::difference_type operator-( const reverse_it
 	const reverse_iterator<Iterator>& rhs)
 {
 		return (rhs.base() - lhs.base());
+}
+
+template <class Iterator>
+reverse_iterator<Iterator> operator+( typename reverse_iterator<Iterator>::difference_type n,
+		const reverse_iterator<Iterator>& rev_it)
+{
+		reverse_iterator<Iterator>								tmp(rev_it);
+		typename reverse_iterator<Iterator>::difference_type	i = 0;
+
+		while (i < n)
+		{
+				tmp++;
+				i++;
+		}
+		return (tmp);
 }
 
 } //end namespace
