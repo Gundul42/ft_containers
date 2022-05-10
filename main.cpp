@@ -649,44 +649,6 @@ int main(int argc, char** argv) {
 	s1.clear();
 	std::cout << std::boolalpha << "Set is empty: " << s1.empty() << '\n';
 
-	/* stack */
-
-	ft::stack<int> stack0;
-	stack0.push(1);
-	stack0.push(2);
-	stack0.push(3);
-	stack0.push(4);
-	print_stack(stack0, 0);
-
-	ft::stack<int> stack1 = stack0;
-	print_stack(stack1, 1);
-
-	ft::stack<int> stack2(stack1);
-	print_stack(stack2, 2);
-
-	stack1.pop();
-
-	stack2.pop();
-	stack2.pop();
-
-	std::cout << stack0.top() << std::endl;
-	std::cout << stack1.top() << std::endl;
-	std::cout << stack2.top() << std::endl;
-
-	stack2.pop();
-	stack2.pop();
-	std::cout << std::boolalpha << "Stack2 is empty: " << stack2.empty() << '\n';
-	std::cout << std::boolalpha << "Stack0 is empty: " << stack0.empty() << '\n';
-	std::cout << "Stack2 size: " << stack2.size() << '\n';
-	std::cout << "Stack0 size: " << stack0.size() << '\n';
-
-	std::cout << "1) " << std::boolalpha << (stack0 == stack1) << std::endl;
-	std::cout << "2) " << std::boolalpha << (stack0 != stack1) << std::endl;
-	std::cout << "3) " << std::boolalpha << (stack0 <  stack1) << std::endl;
-	std::cout << "4) " << std::boolalpha << (stack0 >  stack1) << std::endl;
-	std::cout << "5) " << std::boolalpha << (stack0 >= stack1) << std::endl;
-	std::cout << "6) " << std::boolalpha << (stack0 <= stack1) << std::endl;
-
 	ft::set<std::string>::reverse_iterator srev2;
 	ft::set<std::string>::const_iterator sci1;
 	ft::set<std::string>::iterator si1;
@@ -733,6 +695,44 @@ int main(int argc, char** argv) {
 			std::cout << (*srev1) << std::endl;
 			srev1++;
 	}
+	/* stack */
+
+	ft::stack<int> stack0;
+	stack0.push(1);
+	stack0.push(2);
+	stack0.push(3);
+	stack0.push(4);
+	print_stack(stack0, 0);
+
+	ft::stack<int> stack1 = stack0;
+	print_stack(stack1, 1);
+
+	ft::stack<int> stack2(stack1);
+	print_stack(stack2, 2);
+
+	stack1.pop();
+
+	stack2.pop();
+	stack2.pop();
+
+	std::cout << stack0.top() << std::endl;
+	std::cout << stack1.top() << std::endl;
+	std::cout << stack2.top() << std::endl;
+
+	stack2.pop();
+	stack2.pop();
+	std::cout << std::boolalpha << "Stack2 is empty: " << stack2.empty() << '\n';
+	std::cout << std::boolalpha << "Stack0 is empty: " << stack0.empty() << '\n';
+	std::cout << "Stack2 size: " << stack2.size() << '\n';
+	std::cout << "Stack0 size: " << stack0.size() << '\n';
+
+	std::cout << "1) " << std::boolalpha << (stack0 == stack1) << std::endl;
+	std::cout << "2) " << std::boolalpha << (stack0 != stack1) << std::endl;
+	std::cout << "3) " << std::boolalpha << (stack0 <  stack1) << std::endl;
+	std::cout << "4) " << std::boolalpha << (stack0 >  stack1) << std::endl;
+	std::cout << "5) " << std::boolalpha << (stack0 >= stack1) << std::endl;
+	std::cout << "6) " << std::boolalpha << (stack0 <= stack1) << std::endl;
+
 	time(&end);
 	double diff = difftime(end, start);
 	int	tme = static_cast<int> (diff);

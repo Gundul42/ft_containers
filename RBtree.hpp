@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 15:14:23 by graja             #+#    #+#             */
-/*   Updated: 2022/05/08 08:55:51 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/10 11:01:30 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -670,7 +670,7 @@ class	RBtree
 		}
 		
 		size_type	max_size(void) const {return (this->_alloc.max_size());}
-
+		
 		//useful for iterators
 		iter	begin(void) const
 		{
