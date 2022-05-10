@@ -65,52 +65,52 @@ void print_set(const ft::set<T>& s, std::string comment = "")
 int	main(void)
 {
 
-	ft::set<std::string> m1;
-	ft::set<std::string>::reverse_iterator mrev2;
-	ft::set<std::string>::const_iterator mci1;
-	ft::set<std::string>::iterator mi1;
+	ft::set<std::string> s1;
+	ft::set<std::string>::reverse_iterator srev2;
+	ft::set<std::string>::const_iterator sci1;
+	ft::set<std::string>::iterator si1;
 
-	std::cout << m1.empty() << std::endl;
+	std::cout << s1.empty() << std::endl;
 
-	m1.insert("CPU");
-	m1.insert("GPU");
-	m1.insert("RAM");
+	s1.insert("CPU");
+	s1.insert("GPU");
+	s1.insert("RAM");
 
-	std::cout << m1.empty() << std::endl;
+	std::cout << s1.empty() << std::endl;
 
-	print_set(m1, "Initial map: ");
+	print_set(s1, "Initial map: ");
 
 
-	mci1 = m1.begin();
+	sci1 = s1.begin();
 	std::cout << "const iterator" << std::endl;
-	while (mci1 != m1.end())
+	while (sci1 != s1.end())
 	{
-			std::cout << (*mci1) << std::endl;
-			mci1++;
+			std::cout << (*sci1) << std::endl;
+			sci1++;
 	}
 	std::cout << "iterator" << std::endl;
-	mi1 = m1.begin();
-	while (mi1 != m1.end())
+	si1 = s1.begin();
+	while (si1 != s1.end())
 	{
-			std::cout << (*mi1) << std::endl;
-			mi1++;
+			std::cout << (*si1) << std::endl;
+			si1++;
 	}
 	std::cout << "reverse_iterator" << std::endl;
-	mrev2 = m1.rbegin();
-	while (mrev2 != m1.rend())
+	srev2 = s1.rbegin();
+	while (srev2 != s1.rend())
 	{
-			std::cout << (*mrev2) << std::endl;
-			mrev2++;
+			std::cout << (*srev2) << std::endl;
+			srev2++;
 	}
 	std::cout << "const_reverse_iterator" << std::endl;
-	ft::set<std::string>::const_reverse_iterator mrev1;
-	ft::set<std::string>::const_reverse_iterator mrev3;
-	mrev1 = m1.rbegin();
-	mrev3 = m1.rend();
-	while (mrev1 != m1.rend()) //rev3)
+	ft::set<std::string>::const_reverse_iterator srev1;
+	ft::set<std::string>::const_reverse_iterator srev3;
+	srev1 = s1.rbegin();
+	srev3 = s1.rend();
+	while (srev1 != s1.rend()) //rev3)
 	{
-			std::cout << (*mrev1) << std::endl;
-			mrev1++;
+			std::cout << (*srev1) << std::endl;
+			srev1++;
 	}
 	return (0);
 }

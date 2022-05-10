@@ -687,6 +687,52 @@ int main(int argc, char** argv) {
 	std::cout << "5) " << std::boolalpha << (stack0 >= stack1) << std::endl;
 	std::cout << "6) " << std::boolalpha << (stack0 <= stack1) << std::endl;
 
+	ft::set<std::string>::reverse_iterator srev2;
+	ft::set<std::string>::const_iterator sci1;
+	ft::set<std::string>::iterator si1;
+
+	std::cout << s1.empty() << std::endl;
+
+	s1.insert("CPU");
+	s1.insert("GPU");
+	s1.insert("RAM");
+
+	std::cout << s1.empty() << std::endl;
+
+	print_set(s1, "Initial map: ");
+
+
+	sci1 = s1.begin();
+	std::cout << "const iterator" << std::endl;
+	while (sci1 != s1.end())
+	{
+			std::cout << (*sci1) << std::endl;
+			sci1++;
+	}
+	std::cout << "iterator" << std::endl;
+	si1 = s1.begin();
+	while (si1 != s1.end())
+	{
+			std::cout << (*si1) << std::endl;
+			si1++;
+	}
+	std::cout << "reverse_iterator" << std::endl;
+	srev2 = s1.rbegin();
+	while (srev2 != s1.rend())
+	{
+			std::cout << (*srev2) << std::endl;
+			srev2++;
+	}
+	std::cout << "const_reverse_iterator" << std::endl;
+	ft::set<std::string>::const_reverse_iterator srev1;
+	ft::set<std::string>::const_reverse_iterator srev3;
+	srev1 = s1.rbegin();
+	srev3 = s1.rend();
+	while (srev1 != s1.rend()) //rev3)
+	{
+			std::cout << (*srev1) << std::endl;
+			srev1++;
+	}
 	time(&end);
 	double diff = difftime(end, start);
 	int	tme = static_cast<int> (diff);
