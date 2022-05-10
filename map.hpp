@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 17:28:46 by graja             #+#    #+#             */
-/*   Updated: 2022/05/09 16:46:46 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/10 07:20:07 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ class map
 
 		map(map const & cpy)
 		{
-			iterator	in = cpy.begin();
+			const_iterator	in = cpy.begin();
 			
 			this->_tree.clear();
 			while (in != cpy.end())
@@ -89,7 +89,7 @@ class map
 
 		map & operator=(map const & right)
 		{
-			iterator	in = right.begin();
+			const_iterator	in = right.begin();
 
 			while (in != right.end())
 			{

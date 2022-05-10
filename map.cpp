@@ -113,11 +113,10 @@ int	main(void)
 	ft::map<std::string, int>::const_reverse_iterator mrev3;
 	mrev1 = m1.rbegin();
 	mrev3 = m1.rend();
-	while (mrev1 != mrev3)
+	while (mrev1 != m1.rend())
 	{
 			std::cout << (*mrev1).first << std::endl;
 			mrev1++;
 	}
-	
 	return (0);
 }
