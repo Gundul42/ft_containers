@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 09:30:11 by graja             #+#    #+#             */
-/*   Updated: 2022/05/08 10:45:37 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/10 09:11:30 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ class vector
 			_alloc.construct(_start + _size,  data);
 			_size++;
 		}
-
+/*
 		void		swap(vector<T> & swp)
 		{
 			vector<T>	tmp(*this);
@@ -242,6 +242,28 @@ class vector
 			*this = swp;
 			swp = tmp;
 		}
+*/
+		void		swap(vector<T> & swp)
+		{
+			pointer				tstart;
+			size_type			tsize;
+			size_type			tend_of_storage;
+			allocator_type		talloc;
+    
+			tstart = swp._start;
+			tsize = swp._size;
+			tend_of_storage = swp._end_of_storage;
+			talloc = swp._alloc;
+			swp._start = this->_start;
+			swp._size = this->_size;
+			swp._end_of_storage = this->_end_of_storage;
+			swp._alloc = this->_alloc;
+			this->_start = tstart;
+			this->_size = tsize;
+			this->_end_of_storage = tend_of_storage;
+			this->_alloc = talloc;
+		}
+
 
 		void		clear(void) {_realloc(0, capacity());}
 

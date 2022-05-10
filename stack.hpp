@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 12:39:48 by graja             #+#    #+#             */
-/*   Updated: 2022/05/08 10:24:25 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/10 09:44:58 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ class stack
 
 			friend bool operator> (const stack & lhs, const stack & rhs)
 			{
-					return (lhs.c > rhs.c);
+					return !(operator<(lhs, rhs));
 			}
 
 			friend bool operator>= (const stack & lhs, const stack & rhs)
@@ -114,7 +114,7 @@ class stack
 
 			friend bool operator<= (const stack & lhs, const stack & rhs)
 			{
-					return (lhs.c <= rhs.c);
+					return (!(operator<(rhs.c, lhs.c)));
 			}
 
 };
