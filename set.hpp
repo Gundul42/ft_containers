@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 09:44:15 by graja             #+#    #+#             */
-/*   Updated: 2022/05/07 18:21:53 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/10 08:05:45 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ class set
 
 		set(set const & cpy)
 		{
-			iterator	in = cpy.begin();
+			const_iterator	in = cpy.begin();
 			
 			_tree.clear();
 			while (in != cpy.end())
@@ -91,7 +91,7 @@ class set
 
 		set & operator=(set const & right)
 		{
-			iterator	in = right.begin();
+			const_iterator	in = right.begin();
 
 			while (in != right.end())
 			{
@@ -106,28 +106,50 @@ class set
 		//Iterators
 		
 		//points to smallest key !
-		iterator begin(void) const
+		iterator begin(void) 
 		{
 		return (iterator(this->_tree.begin(), this->_tree.begin(), this->_tree.rbegin()));
 		}
 
-		iterator end(void) const
+		const_iterator begin(void) const
+		{
+		return (const_iterator(this->_tree.begin(), this->_tree.begin(), this->_tree.rbegin()));
+		}
+
+		iterator end(void) 
 		{
 			return (iterator(NULL, this->_tree.begin(), this->_tree.rbegin()));
 		}
 
+		const_iterator end(void) const
+		{
+			return (const_iterator(NULL, this->_tree.begin(), this->_tree.rbegin()));
+		}
+
 		//points to largest key !!
-		reverse_iterator rbegin(void) const
+		reverse_iterator rbegin(void)
 		{
 			return (reverse_iterator(
 				iterator(this->_tree.rbegin(), this->_tree.begin(), this->_tree.rbegin())));
 		}
 
-		reverse_iterator rend(void) const
+		const_reverse_iterator rbegin(void) const
+		{
+			return (const_reverse_iterator(
+				const_iterator(this->_tree.rbegin(), this->_tree.begin(), this->_tree.rbegin())));
+		}
+
+		reverse_iterator rend(void)
 		{
 			return (reverse_iterator(iterator(NULL, this->_tree.begin(), this->_tree.rbegin())));
 		}
 		
+		const_reverse_iterator rend(void) const
+		{
+			return (const_reverse_iterator(
+					const_iterator(NULL, this->_tree.begin(), this->_tree.rbegin())));
+		}
+
 		//Modifiers
 		ft::pair<iterator, bool>	insert(value_type const & val)
 		{

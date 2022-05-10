@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
-/*   Updated: 2022/05/09 18:18:40 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/10 08:17:13 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,10 @@ class RBT_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 			return (&(operator*()));
 		}
 		
+		//This has to be a template, because we have two iterators in
+		//one, only differing by the bool is_c which is actually pointing
+		//out if it is const or not. So we need this to compare one with
+		//the other or compiler will hit us straight in the face !
 		template <typename L, typename U, bool is_c>
 		bool	operator==(const RBT_iterator<L, U, is_c> & lhs) const
 			{return lhs.getPtr() == this->getPtr();}

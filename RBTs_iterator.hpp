@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 08:02:45 by graja             #+#    #+#             */
-/*   Updated: 2022/05/05 15:03:55 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/10 08:17:00 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,17 @@ class RBTs_iterator : public ft::iterator<std::bidirectional_iterator_tag, Key>
 			return ((_p->data).first);
 		}
 
-		bool	operator==(const RBTs_iterator& rhs) const
-			{return _p == rhs._p;}
-		bool	operator!=(const RBTs_iterator& rhs) const
-			{return _p != rhs._p;}
+		//This has to be a template, because we have two iterators in
+		//one, only differing by the bool is_c which is actually pointing
+		//out if it is const or not. So we need this to compare one with
+		//the other or compiler will hit us straight in the face !
+		template <typename L, bool is_c>
+		bool	operator==(const RBTs_iterator<L, is_c> & lhs) const
+			{return lhs.getPtr() == this->getPtr();}
+
+		template <typename L, bool is_c>
+		bool	operator!=(const RBTs_iterator<L, is_c> & lhs) const
+			{return lhs.getPtr() != this->getPtr();}
 };
 
 } //end namespace
