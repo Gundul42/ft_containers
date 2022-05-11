@@ -6,7 +6,7 @@
 #include <deque>
 #include <time.h>
 
-#if 0 //CREATE A REAL STL EXAMPLE
+#if 1 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
 	#include <vector>
@@ -62,7 +62,7 @@ void print_set(const ft::set<T>& s, std::string comment = "")
 
 #include <stdlib.h>
 
-#define MAX_RAM 2294967296
+#define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096
 struct Buffer
 {

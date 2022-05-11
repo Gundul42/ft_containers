@@ -6,7 +6,7 @@
 /*   By: graja <graja@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 15:30:52 by graja             #+#    #+#             */
-/*   Updated: 2022/04/29 18:58:23 by graja            ###   ########.fr       */
+/*   Updated: 2022/05/10 11:54:13 by graja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,12 +202,12 @@ template<> struct is_integral<signed char> {static const bool value = true;};
 template<> struct is_integral<short int> {static const bool value = true;};
 template<> struct is_integral<int> {static const bool value = true;};
 template<> struct is_integral<long int> {static const bool value = true;};
-template<> struct is_integral<long long int> {static const bool value = true;};
+//template<> struct is_integral<long long int> {static const bool value = true;};
 template<> struct is_integral<unsigned char> {static const bool value = true;};
 template<> struct is_integral<unsigned short int> {static const bool value = true;};
 template<> struct is_integral<unsigned int> {static const bool value = true;};
 template<> struct is_integral<unsigned long int> {static const bool value = true;};
-template<> struct is_integral<unsigned long long int> {static const bool value = true;};
+//template<> struct is_integral<unsigned long long int> {static const bool value = true;};
 
 } //end namespace
 
